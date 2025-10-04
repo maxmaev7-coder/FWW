@@ -1,0 +1,56 @@
+:root{
+  --print-col-gap: 1mm;   /* между юнитом и сеткой мини-карт */
+  --print-gap:     .1.5mm;  /* зазор между мини-картами */
+  --u-w: 63.5mm; --u-h: 88.9mm;
+  --m-w: 44mm;   --m-h: 30mm;
+}
+
+@page { size: A4; margin: 10mm; } /* поля страницы */
+
+@media print{
+  /* Печатаем только лист; UI скрываем */
+  html,body{ background:#fff; color:#000; }
+  body *{ visibility:hidden !important; }
+  .print-sheet, .print-sheet *{ visibility:visible !important; }
+  .print-sheet{ display:block !important; position:relative; }
+
+  .print-row{
+    display:grid;
+    grid-template-columns: var(--u-w) var(--print-col-gap) 1fr;
+    grid-template-areas: "unit gap minis";
+    align-items:start;
+    margin: 0 0 2mm 0;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+
+  .print-unit{
+    grid-area: unit;
+    width:var(--u-w); height:var(--u-h);
+    display:flex; align-items:center; justify-content:center; background:#fff;
+  }
+  .print-unit > img{
+    max-width:100%; max-height:100%; object-fit:contain;
+  }
+
+  .mini-grid{
+    grid-area:minis;
+    display:grid;
+    /* фиксированная ширина колонки = ширина мини-карты, чтобы НЕ растягивались */
+    grid-template-columns: repeat(auto-fit, var(--m-w));
+    grid-auto-rows: var(--m-h);
+    gap: var(--print-gap) !important;
+    justify-content:start !important;
+    align-content:start !important;
+  }
+
+  .print-mini{
+    width:var(--m-w); height:var(--m-h);
+    display:flex; align-items:center; justify-content:center; background:#fff;
+  }
+  .print-mini > img{
+    max-width:100%; max-height:100%; object-fit:contain;
+  }
+
+  /* точная передача цвета при печати */
+  *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

@@ -1,0 +1,6152 @@
+[
+{
+"id": "1st-recon-sharpshooter",
+"name": "1st Recon Sharpshooter",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 113
+},
+{
+"id": "a-2018",
+"name": "A-2018",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 104
+},
+{
+"id": "ack-ack",
+"name": "Ack Ack",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 80
+},
+{
+"id": "alien",
+"name": "Alien",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Alien Blaster"
+],
+"cost": 105
+},
+{
+"id": "alpha-mongrel",
+"name": "Alpha Mongrel",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mongrel Bite"
+],
+"cost": 85
+},
+{
+"id": "arcade-gannon",
+"name": "Arcade Gannon",
+"factions": [
+"Enclave",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 51
+},
+{
+"id": "arlen-glass",
+"name": "Arlen Glass",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 36
+},
+{
+"id": "armored-trainee",
+"name": "Armored Trainee",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 32
+},
+{
+"id": "aspirant-goddard",
+"name": "Aspirant Goddard",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"T-60 Power Armor"
+],
+"cost": 114
+},
+{
+"id": "assaultron",
+"name": "Assaultron",
+"factions": [
+"Enclave",
+"Robots",
+"Gunners"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Assaultron Head Laser",
+"Assaultron Swipe"
+],
+"cost": 249
+},
+{
+"id": "avery",
+"name": "Avery",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 70
+},
+{
+"id": "aviator",
+"name": "Aviator",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Aviator Cap"
+],
+"cost": 90
+},
+{
+"id": "battered-assaultron",
+"name": "Battered Assaultron",
+"factions": [
+"Raiders",
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Assaultron Swipe",
+"Battered Assaultron Head Laser"
+],
+"cost": 120
+},
+{
+"id": "battered-gen-1-synth",
+"name": "Battered Gen 1 Synth",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 24
+},
+{
+"id": "battered-protectron",
+"name": "Battered Protectron",
+"factions": [
+"Raiders",
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Protectron Hand Laser"
+],
+"cost": 40
+},
+{
+"id": "battered-sentry-bot",
+"name": "Battered Sentry Bot",
+"factions": [
+"Raiders",
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Missile Launcher",
+"Empty Minigun"
+],
+"cost": 154
+},
+{
+"id": "bedlam",
+"name": "Bedlam",
+"factions": [
+"Raiders",
+"Forged"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 56
+},
+{
+"id": "behemoth",
+"name": "Behemoth",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Behemoth Rock Throw",
+"Fire Hydrant Bat"
+],
+"cost": 235
+},
+{
+"id": "bloated-glowing-one",
+"name": "Bloated Glowing One",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Bloated Glowing One Swipe"
+],
+"cost": 198
+},
+{
+"id": "boone",
+"name": "Boone",
+"factions": [
+"NCR",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 100
+},
+{
+"id": "brahmin",
+"name": "Brahmin",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Brahmin Trample"
+],
+"cost": 30
+},
+{
+"id": "brahmin",
+"name": "Brahmin",
+"factions": [],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 30
+},
+{
+"id": "brick",
+"name": "Brick",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Eugene",
+"Bloody Mess Perk"
+],
+"cost": 78
+},
+{
+"id": "brute",
+"name": "Brute",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 77
+},
+{
+"id": "butch",
+"name": "Butch",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Pipboy",
+"Switch Blade"
+],
+"cost": 117
+},
+{
+"id": "butcher",
+"name": "Butcher",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 46
+},
+{
+"id": "cait",
+"name": "Cait",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"May choose any 1 chem for free"
+],
+"cost": 74
+},
+{
+"id": "cass",
+"name": "Cass",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 56
+},
+{
+"id": "centaur",
+"name": "Centaur",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Centaur Lash",
+"Centaur Spit"
+],
+"cost": 65
+},
+{
+"id": "centurion",
+"name": "Centurion",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 57
+},
+{
+"id": "charon",
+"name": "Charon",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 61
+},
+{
+"id": "chief-hanlon",
+"name": "Chief Hanlon",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 73
+},
+{
+"id": "child-of-atom",
+"name": "Child of Atom",
+"factions": [
+"CoA"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 46
+},
+{
+"id": "codsworth",
+"name": "Codsworth",
+"factions": [
+"Robots",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Mr Handy Flamer",
+"Mr Handy Buzzsaw"
+],
+"cost": 105
+},
+{
+"id": "colonel-autumn",
+"name": "Colonel Autumn",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 95
+},
+{
+"id": "conrad-kellogg",
+"name": "Conrad Kellogg",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Kellogg's Pistol"
+],
+"cost": 87
+},
+{
+"id": "courser",
+"name": "Courser",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 120
+},
+{
+"id": "curie",
+"name": "Curie",
+"factions": [
+"Robots",
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Mr Handy Buzzsaw",
+"Mr Handy Laser Pistol"
+],
+"cost": 90
+},
+{
+"id": "deacon",
+"name": "Deacon",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 75
+},
+{
+"id": "deatchlaw-matriarch",
+"name": "Deatchlaw Matriarch",
+"factions": [],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Matriach Swipe",
+"Trample",
+"Roar",
+"Active",
+"Hit and Run",
+"Tail Sweep",
+"Head Butt",
+"Haymaker",
+"Rage"
+],
+"cost": 550
+},
+{
+"id": "deathclaw",
+"name": "Deathclaw",
+"factions": [
+"Creatures",
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Deathclaw Crush",
+"Deathclaw Swipe"
+],
+"cost": 220
+},
+{
+"id": "deathclaw-matriarch-i",
+"name": "Deathclaw Matriarch I",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Matriarch Swipe",
+"Trample",
+"Roar",
+"Active",
+"Hit and\nRun",
+"Tail Sweep",
+"Head Butt",
+"Haymaker",
+"Rage"
+],
+"cost": 230
+},
+{
+"id": "deathclaw-matriarch-ii",
+"name": "Deathclaw Matriarch II",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Matriarch Swipe",
+"Trample",
+"Roar",
+"Active",
+"Hit and\nRun",
+"Tail Sweep",
+"Head Butt",
+"Haymaker",
+"Rage"
+],
+"cost": 190
+},
+{
+"id": "deidre",
+"name": "Deidre",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 50
+},
+{
+"id": "desdemona",
+"name": "Desdemona",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 97
+},
+{
+"id": "disciple",
+"name": "Disciple",
+"factions": [
+"CoA"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 84
+},
+{
+"id": "dog-v1",
+"name": "Dog V1",
+"factions": [],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 70
+},
+{
+"id": "dog",
+"name": "Dog**",
+"factions": [
+"Raiders",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 67
+},
+{
+"id": "dogmeat-guard-dog",
+"name": "Dogmeat Guard Dog",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 69
+},
+{
+"id": "dogmeat-scout-v1",
+"name": "Dogmeat Scout V1",
+"factions": [],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 86
+},
+{
+"id": "dogmeat-scout",
+"name": "Dogmeat Scout**",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 77
+},
+{
+"id": "dogmeat-v1",
+"name": "Dogmeat V1",
+"factions": [],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 83
+},
+{
+"id": "dogmeat",
+"name": "Dogmeat**",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Dog Bite"
+],
+"cost": 75
+},
+{
+"id": "domesticated-deathclaw",
+"name": "Domesticated Deathclaw",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 230
+},
+{
+"id": "donovan",
+"name": "Donovan",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Robot Repair Kit",
+"Power Armor Patch"
+],
+"cost": 70
+},
+{
+"id": "dr.-carrington",
+"name": "Dr. Carrington",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 57
+},
+{
+"id": "drummer-boy",
+"name": "Drummer Boy",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "ed-e",
+"name": "ED-E",
+"factions": [
+"Enclave",
+"Robots",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Eyebot Tesla Canon"
+],
+"cost": 67
+},
+{
+"id": "elder-lyons",
+"name": "Elder Lyons",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 52
+},
+{
+"id": "elder-maxson",
+"name": "Elder Maxson",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Elder Paint"
+],
+"cost": 101
+},
+{
+"id": "enclave-soldier",
+"name": "Enclave Soldier",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 87
+},
+{
+"id": "enclave-trainee",
+"name": "Enclave Trainee",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 28
+},
+{
+"id": "engineer",
+"name": "Engineer",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Cleanroom Suit"
+],
+"cost": 45
+},
+{
+"id": "enslaved-tech",
+"name": "Enslaved Tech",
+"factions": [
+"Super Mutants",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 32
+},
+{
+"id": "eyebot",
+"name": "Eyebot",
+"factions": [
+"BoS",
+"Enclave",
+"Robots",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Eyebot Laser"
+],
+"cost": 47
+},
+{
+"id": "fawkes",
+"name": "Fawkes",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 89
+},
+{
+"id": "feral-ghoul",
+"name": "Feral Ghoul",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Feral Ghoul Swipe"
+],
+"cost": 49
+},
+{
+"id": "field-scribe",
+"name": "Field Scribe",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 41
+},
+{
+"id": "field-scribe-shield",
+"name": "Field Scribe Shield",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 35
+},
+{
+"id": "fist",
+"name": "Fist",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 72
+},
+{
+"id": "fog-crawler",
+"name": "Fog Crawler",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Fog Crawler Claw",
+"Fog Crawler Ground Pound"
+],
+"cost": 288
+},
+{
+"id": "forged",
+"name": "Forged",
+"factions": [
+"Raiders",
+"Forged"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 37
+},
+{
+"id": "frank-horrigan-i",
+"name": "Frank Horrigan I",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Horrigan's Knife",
+"Horrigan's Plasma Gun"
+],
+"cost": 210
+},
+{
+"id": "frank-horrigan-ii",
+"name": "Frank Horrigan II",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Horrigan's Knife",
+"Horrigan's Plasma Gun"
+],
+"cost": 236
+},
+{
+"id": "frank-horrigan-iii",
+"name": "Frank Horrigan III",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Horrigan's Knife",
+"Horrigan's Plasma Gun"
+],
+"cost": 149
+},
+{
+"id": "gen-1-synth",
+"name": "Gen 1 Synth",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 30
+},
+{
+"id": "general-lee-oliver",
+"name": "General Lee Oliver",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 72
+},
+{
+"id": "ghoul",
+"name": "Ghoul",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 31
+},
+{
+"id": "glory",
+"name": "Glory",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 65
+},
+{
+"id": "glowing-bloatbug",
+"name": "Glowing Bloatbug",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Glowing Bloodbug Proboscis and Blood Spray"
+],
+"cost": 110
+},
+{
+"id": "glowing-bloatfly",
+"name": "Glowing Bloatfly",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Glowing Bloatfly Larva"
+],
+"cost": 79
+},
+{
+"id": "glowing-radroach-swarm",
+"name": "Glowing Radroach Swarm",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Glowing Radroach Swarm Bite"
+],
+"cost": 45
+},
+{
+"id": "glowing-stingwing",
+"name": "Glowing Stingwing",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Glowing Stingwing Strike"
+],
+"cost": 102
+},
+{
+"id": "glowing-yao-guai",
+"name": "Glowing Yao Guai",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Glowing Yao Guai Swipe"
+],
+"cost": 188
+},
+{
+"id": "grognak",
+"name": "Grognak",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Grognak's Sword and Axe"
+],
+"cost": 150
+},
+{
+"id": "gunner-commander",
+"name": "Gunner Commander",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 75
+},
+{
+"id": "gunner-conscript",
+"name": "Gunner Conscript",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 33
+},
+{
+"id": "gunner-private",
+"name": "Gunner Private",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 46
+},
+{
+"id": "gunner-sergeant",
+"name": "Gunner Sergeant",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 60
+},
+{
+"id": "hammer",
+"name": "Hammer",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 73
+},
+{
+"id": "hancock",
+"name": "Hancock",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "hellfire-trooper",
+"name": "Hellfire Trooper",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 100
+},
+{
+"id": "holly",
+"name": "Holly",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 59
+},
+{
+"id": "hound-master",
+"name": "Hound Master",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 82
+},
+{
+"id": "initiate",
+"name": "Initiate",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 35
+},
+{
+"id": "initiate-blade",
+"name": "Initiate Blade",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 34
+},
+{
+"id": "jake-finch",
+"name": "Jake Finch",
+"factions": [
+"Raiders",
+"Survivors",
+"Forged"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Shishkebab*"
+],
+"cost": 63
+},
+{
+"id": "jones",
+"name": "Jones",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 39
+},
+{
+"id": "knight",
+"name": "Knight",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 53
+},
+{
+"id": "knight-patrol",
+"name": "Knight Patrol",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 35
+},
+{
+"id": "knight-patrol-blade",
+"name": "Knight Patrol (Blade)",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 34
+},
+{
+"id": "knight-tech",
+"name": "Knight Tech",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 50
+},
+{
+"id": "knight-captain-cade",
+"name": "Knight-Captain Cade",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "lancer",
+"name": "Lancer",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 58
+},
+{
+"id": "lancer-captain-kells",
+"name": "Lancer-Captain Kells",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Airship Captain`s Hat"
+],
+"cost": 70
+},
+{
+"id": "legate-lanius",
+"name": "Legate Lanius",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 108
+},
+{
+"id": "legion-explorer",
+"name": "Legion Explorer",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 56
+},
+{
+"id": "legion-mongrel",
+"name": "Legion Mongrel",
+"factions": [
+"Caesar's Legion",
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mongrel Bite"
+],
+"cost": 65
+},
+{
+"id": "legion-scout",
+"name": "Legion Scout",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 71
+},
+{
+"id": "lieutenant",
+"name": "Lieutenant",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 57
+},
+{
+"id": "lieutenant-clint",
+"name": "Lieutenant Clint",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Laser Rifle",
+"Enrage Mod"
+],
+"cost": 122
+},
+{
+"id": "lieutenant-gorobets",
+"name": "Lieutenant Gorobets",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 69
+},
+{
+"id": "lily",
+"name": "Lily",
+"factions": [
+"Super Mutants",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 101
+},
+{
+"id": "lone-wanderer",
+"name": "Lone Wanderer",
+"factions": [
+"BoS",
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"T-45 Power armor"
+],
+"cost": 125
+},
+{
+"id": "lorenzo-cabot",
+"name": "Lorenzo Cabot",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lorenzo's Artifact Gun"
+],
+"cost": 79
+},
+{
+"id": "lucas-sims",
+"name": "Lucas Sims",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Sheriffs Outfit"
+],
+"cost": 107
+},
+{
+"id": "lucius",
+"name": "Lucius",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "madison-li",
+"name": "Madison Li",
+"factions": [
+"BoS",
+"Institute",
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 57
+},
+{
+"id": "mama-murphy",
+"name": "Mama Murphy",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"May choose any 2 chems for free"
+],
+"cost": 80
+},
+{
+"id": "marcus",
+"name": "Marcus",
+"factions": [
+"Super Mutants",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Marcus Punch"
+],
+"cost": 100
+},
+{
+"id": "master",
+"name": "Master",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 87
+},
+{
+"id": "minuteman",
+"name": "Minuteman",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 52
+},
+{
+"id": "mirelurk",
+"name": "Mirelurk",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mirelurk Claw"
+],
+"cost": 62
+},
+{
+"id": "mirelurk-hatchling",
+"name": "Mirelurk Hatchling",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mirelurk Hatchlings Claw"
+],
+"cost": 18
+},
+{
+"id": "mirelurk-hunter",
+"name": "Mirelurk Hunter",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mirelurk Hunter Claw and Mirelurk Hunter Acid"
+],
+"cost": 167
+},
+{
+"id": "mirelurk-queen",
+"name": "Mirelurk Queen",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mirelurk Queen Brood",
+"Mirelurk Queen Claw",
+"Mirelurk Queen Acid"
+],
+"cost": 230
+},
+{
+"id": "miss-nanny",
+"name": "Miss Nanny",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Mr. Handy Buzzsaw and Mr. Handy Laser"
+],
+"cost": 67
+},
+{
+"id": "mister-tims",
+"name": "Mister Tims",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 72
+},
+{
+"id": "moira-brown",
+"name": "Moira Brown",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Mole Rat Repellent Stick",
+"x2\nFragmentation Mine"
+],
+"cost": 51
+},
+{
+"id": "mole-rat",
+"name": "Mole Rat",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mole Rat Bite"
+],
+"cost": 17
+},
+{
+"id": "mongrel",
+"name": "Mongrel",
+"factions": [
+"Creatures",
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mongrel Bite"
+],
+"cost": 63
+},
+{
+"id": "mr-gutsy",
+"name": "Mr Gutsy",
+"factions": [
+"Robots",
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Up to 3  weapons with Mr. Handy in their title"
+],
+"cost": 112
+},
+{
+"id": "mr-handy",
+"name": "Mr Handy",
+"factions": [
+"Robots",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mr Handy Flamer",
+"Mr Handy Buzzsaw"
+],
+"cost": 82
+},
+{
+"id": "mutant-hound",
+"name": "Mutant Hound",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Hound Bite"
+],
+"cost": 60
+},
+{
+"id": "mutant-hound-fiend",
+"name": "Mutant Hound Fiend",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Hound Bite"
+],
+"cost": 68
+},
+{
+"id": "ncr-civilian-ranger",
+"name": "NCR Civilian Ranger",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 66
+},
+{
+"id": "ncr-heavy-trooper",
+"name": "NCR Heavy Trooper",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 50
+},
+{
+"id": "ncr-patrol-ranger",
+"name": "NCR Patrol Ranger",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 50
+},
+{
+"id": "ncr-trooper",
+"name": "NCR Trooper",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 31
+},
+{
+"id": "ncr-trooper-mp",
+"name": "NCR Trooper MP",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 30
+},
+{
+"id": "ncr-veteran-ranger",
+"name": "NCR Veteran Ranger",
+"factions": [
+"NCR"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 86
+},
+{
+"id": "nick-valentine",
+"name": "Nick Valentine",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 66
+},
+{
+"id": "nightkin",
+"name": "Nightkin",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 75
+},
+{
+"id": "nuka-girl",
+"name": "Nuka Girl",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 98
+},
+{
+"id": "overlord",
+"name": "Overlord",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 119
+},
+{
+"id": "p.a.m",
+"name": "P.A.M",
+"factions": [
+"Robots",
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Assaultron Swipe"
+],
+"cost": 100
+},
+{
+"id": "paladin",
+"name": "Paladin",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 77
+},
+{
+"id": "paladin-danse",
+"name": "Paladin Danse",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 88
+},
+{
+"id": "patroller",
+"name": "Patroller",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 59
+},
+{
+"id": "piper",
+"name": "Piper",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 54
+},
+{
+"id": "police-protectron",
+"name": "Police Protectron",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Hand Shock"
+],
+"cost": 73
+},
+{
+"id": "praetorian-guard",
+"name": "Praetorian Guard",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "preacher",
+"name": "Preacher",
+"factions": [
+"CoA"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 60
+},
+{
+"id": "preston-garvey",
+"name": "Preston Garvey",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Long Barrel Mod for Laser Musket"
+],
+"cost": 109
+},
+{
+"id": "prime-legionary",
+"name": "Prime Legionary",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 32
+},
+{
+"id": "protectron",
+"name": "Protectron",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Protectron Hand Laser"
+],
+"cost": 63
+},
+{
+"id": "protectron-fire-brigadier",
+"name": "Protectron Fire Brigadier",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Hand Cyrojet"
+],
+"cost": 70
+},
+{
+"id": "psycho",
+"name": "Psycho",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 40
+},
+{
+"id": "psycho-outlaw",
+"name": "Psycho Outlaw",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 41
+},
+{
+"id": "putrid-glowing-one",
+"name": "Putrid Glowing One",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Putrid Glowing One Swipe"
+],
+"cost": 181
+},
+{
+"id": "rabit-mole-rat",
+"name": "Rabit Mole Rat",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Rabit Mole Rat Bite"
+],
+"cost": 27
+},
+{
+"id": "radroach-swarm",
+"name": "Radroach Swarm",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Radroach Swarm Bite"
+],
+"cost": 25
+},
+{
+"id": "radscorpion",
+"name": "Radscorpion",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Radscorpion Princers & Sting"
+],
+"cost": 85
+},
+{
+"id": "radstag",
+"name": "Radstag",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Radstag Gore"
+],
+"cost": 71
+},
+{
+"id": "radstag-doe",
+"name": "Radstag Doe",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Radstage Doe Gore"
+],
+"cost": 60
+},
+{
+"id": "raider",
+"name": "Raider",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 36
+},
+{
+"id": "raider-outlaw",
+"name": "Raider Outlaw",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 34
+},
+{
+"id": "railroad-heavy",
+"name": "Railroad Heavy",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 53
+},
+{
+"id": "raul",
+"name": "Raul",
+"factions": [
+"Super Mutants",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 62
+},
+{
+"id": "recon-knight",
+"name": "Recon Knight",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 51
+},
+{
+"id": "recruit-legionary",
+"name": "Recruit Legionary",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 26
+},
+{
+"id": "reilly",
+"name": "Reilly",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 65
+},
+{
+"id": "rex",
+"name": "Rex",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 69
+},
+{
+"id": "robobrain",
+"name": "Robobrain",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 85
+},
+{
+"id": "ronnie-shaw",
+"name": "Ronnie Shaw",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 94
+},
+{
+"id": "rosa-meitner",
+"name": "Rosa Meitner",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Holly Water x2"
+],
+"cost": 30
+},
+{
+"id": "sarah-lyons",
+"name": "Sarah Lyons",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"T-45",
+"Lyan`s Insignia"
+],
+"cost": 139
+},
+{
+"id": "scavenger",
+"name": "Scavenger",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 39
+},
+{
+"id": "scavver",
+"name": "Scavver",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 54
+},
+{
+"id": "scavver-outlaw",
+"name": "Scavver Outlaw",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 50
+},
+{
+"id": "science-specialist",
+"name": "Science Specialist",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 40
+},
+{
+"id": "scientist",
+"name": "Scientist",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Cleanroom Suit"
+],
+"cost": 39
+},
+{
+"id": "scribe-rothchild",
+"name": "Scribe Rothchild",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "securitron-mk-i",
+"name": "Securitron MK I",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Securiton Gatling Laser",
+"Securiton SMG"
+],
+"cost": 115
+},
+{
+"id": "securitron-mk-ii",
+"name": "Securitron MK II",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Any 2 Securiton weapons"
+],
+"cost": 215
+},
+{
+"id": "sentry-bot",
+"name": "Sentry Bot",
+"factions": [
+"Enclave",
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Missile Launcher",
+"Minigun"
+],
+"cost": 272
+},
+{
+"id": "sergeant-baker",
+"name": "Sergeant Baker",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 71
+},
+{
+"id": "settler",
+"name": "Settler",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 40
+},
+{
+"id": "sinjin",
+"name": "Sinjin",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 85
+},
+{
+"id": "skirmisher",
+"name": "Skirmisher",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 40
+},
+{
+"id": "slag",
+"name": "Slag",
+"factions": [
+"Raiders",
+"Forged"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Shishkebab*",
+"Pyromaniac Perk"
+],
+"cost": 105
+},
+{
+"id": "softshell-mirelurk",
+"name": "Softshell Mirelurk",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Softsheel Mirelurk Claw"
+],
+"cost": 41
+},
+{
+"id": "sole-survivor",
+"name": "Sole Survivor",
+"factions": [
+"BoS",
+"Institute",
+"Survivors",
+"Railroad"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 89
+},
+{
+"id": "sole-survivor-day-one",
+"name": "Sole Survivor Day One",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 68
+},
+{
+"id": "sole-survivor-loner",
+"name": "Sole Survivor Loner",
+"factions": [
+"BoS",
+"Institute",
+"Survivors",
+"Railroad"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Lone Wanderer Perk"
+],
+"cost": 112
+},
+{
+"id": "sole-survivor-tech",
+"name": "Sole Survivor Tech",
+"factions": [
+"BoS",
+"Institute",
+"Survivors",
+"Railroad"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 89
+},
+{
+"id": "star-paladin-cross",
+"name": "Star paladin Cross",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"T-45",
+"Star Paladin Insignia"
+],
+"cost": 118
+},
+{
+"id": "stingwing",
+"name": "Stingwing",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Stingwing Sting"
+],
+"cost": 72
+},
+{
+"id": "strong",
+"name": "Strong",
+"factions": [
+"Super Mutants",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Entangle Perk"
+],
+"cost": 80
+},
+{
+"id": "sturges",
+"name": "Sturges",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 83
+},
+{
+"id": "suicider",
+"name": "Suicider",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Suicider Mini Nuke"
+],
+"cost": 52
+},
+{
+"id": "super-mutant",
+"name": "Super Mutant",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 40
+},
+{
+"id": "swan-i",
+"name": "Swan I",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Ship Anchor",
+"Behemoth Rock Throw",
+"Ship Anchor Slam"
+],
+"cost": 211
+},
+{
+"id": "swan-ii",
+"name": "Swan II",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Ship Anchor",
+"Behemoth Rock Throw",
+"Ship Anchor Sweep",
+"Swan Grab"
+],
+"cost": 201
+},
+{
+"id": "tabitha",
+"name": "Tabitha",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 117
+},
+{
+"id": "tesla-soldier",
+"name": "Tesla Soldier",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 93
+},
+{
+"id": "tessa",
+"name": "Tessa",
+"factions": [
+"Gunners"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Tessa`s Fist",
+"Tessa`s Armor"
+],
+"cost": 115
+},
+{
+"id": "the-burned-man",
+"name": "The Burned Man",
+"factions": [
+"Caesar's Legion",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"A Light Burning in the Darkness"
+],
+"cost": 92
+},
+{
+"id": "the-courier",
+"name": "The Courier",
+"factions": [
+"BoS",
+"Caesar's Legion",
+"NCR",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Companion Perk"
+],
+"cost": 80
+},
+{
+"id": "the-mechanist",
+"name": "The Mechanist",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Stealth Boy"
+],
+"cost": 75
+},
+{
+"id": "theo",
+"name": "Theo",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 24
+},
+{
+"id": "tinker-tom",
+"name": "Tinker Tom",
+"factions": [
+"Railroad"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 55
+},
+{
+"id": "tree-dog",
+"name": "Tree Dog",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Three Dog's Headwear"
+],
+"cost": 59
+},
+{
+"id": "trooper",
+"name": "Trooper",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 67
+},
+{
+"id": "trooper-scout",
+"name": "Trooper Scout",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 60
+},
+{
+"id": "utility-protectron",
+"name": "Utility Protectron",
+"factions": [
+"Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Hand Nail Gun"
+],
+"cost": 80
+},
+{
+"id": "vault-dweller",
+"name": "Vault Dweller",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 32
+},
+{
+"id": "vault-security-officer",
+"name": "Vault-Security Officer",
+"factions": [
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 42
+},
+{
+"id": "veronica",
+"name": "Veronica",
+"factions": [
+"BoS",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 52
+},
+{
+"id": "veteran-decanus",
+"name": "Veteran Decanus",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [],
+"cost": 47
+},
+{
+"id": "veteran-raider",
+"name": "Veteran Raider",
+"factions": [
+"Raiders"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 69
+},
+{
+"id": "vexillarius",
+"name": "Vexillarius",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 73
+},
+{
+"id": "vulpes-inculta",
+"name": "Vulpes Inculta",
+"factions": [
+"Caesar's Legion"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 72
+},
+{
+"id": "warrant-officer",
+"name": "Warrant Officer",
+"factions": [
+"Enclave"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 64
+},
+{
+"id": "weak-behemoth",
+"name": "Weak Behemoth",
+"factions": [
+"Super Mutants"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Fire Hydrant Bat",
+"Weak Behemoth Rock Throw"
+],
+"cost": 150
+},
+{
+"id": "weak-feral-ghoul",
+"name": "Weak Feral Ghoul",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Recent Feral Ghoul Swipe"
+],
+"cost": 31
+},
+{
+"id": "wiseman",
+"name": "Wiseman",
+"factions": [
+"Survivors",
+"The Slog"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Lead Belly Perk"
+],
+"cost": 64
+},
+{
+"id": "x6-88-courser",
+"name": "X6-88 Courser",
+"factions": [
+"Institute",
+"Survivors"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": true,
+"Heavy Weapon": true,
+"Grenade": true,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 144
+},
+{
+"id": "yao-guai",
+"name": "Yao Guai",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Yao Guai Swipe"
+],
+"cost": 159
+},
+{
+"id": "young-deathclaw",
+"name": "Young Deathclaw",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Young Deathclaw Swipe",
+"Young Deathclaw Crush"
+],
+"cost": 116
+},
+{
+"id": "young-fog-crawler",
+"name": "Young Fog Crawler",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Young Fog Crawler Claw",
+"Fog Crawler Ground Pound"
+],
+"cost": 168
+},
+{
+"id": "young-mirelurk-queen",
+"name": "Young Mirelurk Queen",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Mirelurk Queen Brood",
+"Young Mirelurk Queen Claw",
+"Young Mirelurk Queen Acid"
+],
+"cost": 185
+},
+{
+"id": "young-radscorpion",
+"name": "Young Radscorpion",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": true,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Young Radscorpion Pincers and Sting"
+],
+"cost": 57
+},
+{
+"id": "z2-47",
+"name": "Z2-47",
+"factions": [
+"Institute"
+],
+"prereq": {
+"Melee": true,
+"Pistol": true,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": true,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "",
+"equipped": [],
+"cost": 117
+},
+{
+"id": "bloodbug",
+"name": "Bloodbug",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"Proboscis",
+"Blood Spray"
+],
+"cost": 63
+},
+{
+"id": "bloatfly",
+"name": "Bloatfly",
+"factions": [
+"Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "",
+"equipped": [
+"BloatFly Larva"
+],
+"cost": 39
+},
+{
+"id": "operator-waster",
+"name": "Operator Waster",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 31
+},
+{
+"id": "operator-survivalist",
+"name": "Operator Survivalist",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 48
+},
+{
+"id": "operator-scavver",
+"name": "Operator Scavver",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 30
+},
+{
+"id": "operator-pillager",
+"name": "Operator Pillager",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 57
+},
+{
+"id": "operator-veteran",
+"name": "Operator Veteran",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 67
+},
+{
+"id": "operator-tormentor",
+"name": "Operator Tormentor",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 63
+},
+{
+"id": "operator-butcher",
+"name": "Operator Butcher",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 112
+},
+{
+"id": "operator-mags",
+"name": "Operator MAGS",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 109
+},
+{
+"id": "operator-william",
+"name": "Operator WILLIAM",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 62
+},
+{
+"id": "operator-lizzie",
+"name": "Operator LIZZIE",
+"factions": [
+"NW Operators"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 25
+},
+{
+"id": "disciples-waster",
+"name": "Disciples Waster",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 39
+},
+{
+"id": "disciples-survivalist",
+"name": "Disciples Survivalist",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 65
+},
+{
+"id": "disciples-scavver",
+"name": "Disciples Scavver",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 42
+},
+{
+"id": "disciples-pillager",
+"name": "Disciples Pillager",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 62
+},
+{
+"id": "disciples-veteran",
+"name": "Disciples Veteran",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 82
+},
+{
+"id": "disciples-tormentor",
+"name": "Disciples Tormentor",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 80
+},
+{
+"id": "disciples-butcher",
+"name": "Disciples Butcher",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 113
+},
+{
+"id": "disciples-dixie",
+"name": "Disciples Dixie",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 87
+},
+{
+"id": "disciples-nisha",
+"name": "Disciples Nisha",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 115
+},
+{
+"id": "disciples-savoy",
+"name": "Disciples Savoy",
+"factions": [
+"NW Disciples"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 77
+},
+{
+"id": "pack-waster",
+"name": "Pack Waster",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 35
+},
+{
+"id": "pack-survivalist",
+"name": "Pack Survivalist",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 47
+},
+{
+"id": "pack-scavver",
+"name": "Pack Scavver",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 35
+},
+{
+"id": "pack-pillager",
+"name": "Pack Pillager",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 48
+},
+{
+"id": "pack-veteran",
+"name": "Pack Veteran",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 73
+},
+{
+"id": "pack-tormentor",
+"name": "Pack Tormentor",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": false,
+"wave": "x",
+"equipped": [],
+"cost": 67
+},
+{
+"id": "pack-butcher",
+"name": "Pack Butcher",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 122
+},
+{
+"id": "pack-mason",
+"name": "Pack MASON",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 132
+},
+{
+"id": "pack-hound",
+"name": "Pack Hound",
+"factions": [
+"NW Pack"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Dog Bite"
+],
+"cost": 79
+},
+{
+"id": "space-sentry",
+"name": "Space Sentry",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Robot Swipe",
+"2 x Space Laser"
+],
+"cost": 270
+},
+{
+"id": "space-sentry-annihilator",
+"name": "Space Sentry Annihilator",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Robot Swipe",
+"Space Laser",
+"Missile Launcher",
+"Mortar Launcher"
+],
+"cost": 481
+},
+{
+"id": "nucatron",
+"name": "Nucatron",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Robot Swipe",
+"Nukatron Cola Dispenser"
+],
+"cost": 59
+},
+{
+"id": "guardian-nucatron",
+"name": "Guardian Nucatron",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Robot Swipe",
+"Nukatron Quantum Cola Dispenser"
+],
+"cost": 93
+},
+{
+"id": "mr-frothy-server",
+"name": "Mr Frothy Server",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Robot Swipe",
+"Top Up Nuka Cola Sprayer"
+],
+"cost": 78
+},
+{
+"id": "nira",
+"name": "NIRA",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "x",
+"equipped": [
+"Robot Swipe"
+],
+"cost": 42
+},
+{
+"id": "mr-frothy-dispenser",
+"name": "Mr Frothy Dispenser",
+"factions": [
+"Robots",
+"NW Robots"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nuka Cola Sprayer"
+],
+"cost": 67
+},
+{
+"id": "colter",
+"name": "Colter",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": true,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [
+"Overboss Power Armor"
+],
+"cost": 152
+},
+{
+"id": "gage",
+"name": "Gage",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [
+"Gage's Outfit"
+],
+"cost": 101
+},
+{
+"id": "shank",
+"name": "Shank",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 39
+},
+{
+"id": "cito",
+"name": "Cito",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [
+"Wildman Rags"
+],
+"cost": 83
+},
+{
+"id": "oswald",
+"name": "Oswald",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [
+"Magician’s Costume"
+],
+"cost": 108
+},
+{
+"id": "sierra-petrovita",
+"name": "Sierra Petrovita",
+"factions": [
+"Survivors",
+"WN Characters"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": true
+},
+"unique": true,
+"wave": "x",
+"equipped": [],
+"cost": 31
+},
+{
+"id": "nukalurk-queen",
+"name": "Nukalurk Queen",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nukalurk Queen Brood",
+"Nukalurk Queen Claw",
+"Nukalurk Queen Acid"
+],
+"cost": 250
+},
+{
+"id": "nukalurk-king",
+"name": "Nukalurk King",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nukalurk King Claws",
+"Nukalurk King Sonic Scream"
+],
+"cost": 215
+},
+{
+"id": "nukalurk-hunter",
+"name": "Nukalurk Hunter",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nukalurk Hunter Claw",
+"Nukalurk Hunter Acid"
+],
+"cost": 184
+},
+{
+"id": "nukalurk",
+"name": "Nukalurk",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nukalurk Claw"
+],
+"cost": 81
+},
+{
+"id": "nukalurk-hatchlings",
+"name": "Nukalurk Hatchlings",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Nukalurk Hatchlings Claw"
+],
+"cost": 27
+},
+{
+"id": "gator-claw",
+"name": "Gator Claw",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Gatorclaw Claws"
+],
+"cost": 270
+},
+{
+"id": "albino-gatorclaw",
+"name": "Albino GatorClaw",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Gatorclaw Claws and Gatorclaw Jaws"
+],
+"cost": 320
+},
+{
+"id": "mirelurk-king",
+"name": "Mirelurk King",
+"factions": [
+"Creatures",
+"NW Creatures"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": false,
+"wave": "x",
+"equipped": [
+"Mirelurk King Claw and Mirelurk King Sonic Scream"
+],
+"cost": 195
+},
+{
+"id": "liberty-prime",
+"name": "Liberty Prime",
+"factions": [
+"BoS"
+],
+"prereq": {
+"Melee": false,
+"Pistol": false,
+"Rifle": false,
+"Heavy Weapon": false,
+"Grenade": false,
+"Power Armor": false,
+"Upgrades": false
+},
+"unique": true,
+"wave": "",
+"equipped": [
+"Liberty Prime Punch",
+"Liberty\nPrime Stomp",
+"MK28 Nuclear\nBomb",
+"Liberty Laser"
+],
+"cost": 1000
+}
+]

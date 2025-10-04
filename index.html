@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FWW Builder</title>
+<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="print.css?v=1" media="print">
+</head>
+<body>
+<div id="printSheet" class="print-sheet" hidden></div>
+<header class="toolbar">
+  <div class="brand">FWW Builder</div>
+  <div class="controls">
+    <input id="listName" class="input" placeholder="Название листа">
+    <select id="factionSelect" class="input"></select>
+    <input id="pointsLimit" class="input number" type="number" min="0" placeholder="Лимит очков">
+    <input id="modelsLimit" class="input number" type="number" min="0" placeholder="Лимит моделей">
+    <button id="addUnitBtn" class="btn">Добавить персонажа</button>
+    <button id="saveBtn" class="btn">Сохранить лист</button>
+    <input id="loadInput" type="file" accept="application/json" style="display:none">
+    <button id="loadBtn" class="btn">Загрузить лист</button>
+    <button id="printBtn" class="btn">Печать / PDF</button>
+    <button id="clearBtn" class="btn danger">Очистить</button>
+  </div>
+  <div class="stats">
+    <span>Потрачено: <b id="spent">0</b></span>
+    <span>Выбрано: <b id="unitCount">0</b></span>
+  </div>
+</header>
+
+<main id="roster" class="roster"></main>
+
+<div id="modalRoot" class="modal hidden">
+  <div class="backdrop"></div>
+  <div class="panel">
+    <div class="panel-header">
+      <div id="modalTitle" class="title"></div>
+      <button id="modalClose" class="icon">✕</button>
+    </div>
+    <div id="filters" class="filters"></div>
+    <div id="pickerList" class="grid"></div>
+  </div>
+</div>
+
+<template id="unitCardTmpl">
+  <section class="unit">
+    <div class="unit-header">
+      <div class="unit-headline">
+        <img class="unit-img">
+        <div class="unit-title">
+          <div class="name"></div>
+          <div class="meta"></div>
+        </div>
+      </div>
+      <div class="unit-actions">
+        <button data-act="addItem" class="btn small">+ карта</button>
+        <button data-act="dup" class="btn small">x2</button>
+        <button data-act="remove" class="btn small danger">Удалить</button>
+      </div>
+    </div>
+    <div class="slots"></div>
+    <div class="subtotal">
+      <span>Очки персонажа: <b class="subtotalPoints">0</b></span>
+      <span>Карты: <b class="itemsCount">0</b></span>
+    </div>
+  </section>
+</template>
+
+<template id="itemChipTmpl">
+  <div class="chip item">
+    <img class="icon">
+    <div class="label"></div>
+    <div class="price"></div>
+    <button class="remove" title="Удалить">✕</button>
+  </div>
+</template>
+
+<script src="app.js?v=3"></script>
+</body>
+</html>
