@@ -366,7 +366,7 @@ function pickUnit(id){
   if(state.roster.modelsLimit>0 && state.roster.units.length+1>state.roster.modelsLimit) return alert('Превышен лимит моделей')
   const uid = `${u.id}-${Math.random().toString(36).slice(2,7)}`
   const faction = state.roster.faction || (u.factions?.length===1 ? u.factions[0] : null)
-  const unit = { uid, id:u.id, name:u.name, factions:u.factions, cost:u.cost, unique:u.unique, prereq:u.prereq, access:u.access, img:u.img, cards:[], faction }
+  const unit = { uid, id:u.id, name:u.name, factions:u.factions, cost:u.cost, unique:u.unique, prereq:u.prereq, access:u.access, img:u.img, cards:[], faction };
   (u.equipped||[]).forEach(eqId=>{
     const base = getItem(eqId) || getItem(getItemIdByName(eqId)||'')
     if(base) unit.cards.push(createCardEntry(base.id,true))
