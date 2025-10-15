@@ -813,7 +813,7 @@ function buildPrintSheet(){
 
     const grid = document.createElement('div');
     grid.className = 'mini-grid';
-    const cards = []
+    const cards = [];
     (u.cards||[]).forEach(card=>{
       const base=getItem(card.itemId)
       if(base) cards.push(base)
