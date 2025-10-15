@@ -22,6 +22,8 @@ body{
   font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,'DejaVu Sans',Arial;
 }
 
+.print-sheet{ display:none; }
+
 .hidden{ display:none !important; }
 
 /* ── Toolbar / controls ─────────────────────────────────────────────── */
