@@ -50,6 +50,83 @@ const ITEM_GROUPS = [
   { key:'Faction Items', label:'Фракционные' }
 ]
 
+function normalizeNameKey(name){ return typeof name==='string'? name.trim().toLowerCase():'' }
+
+function normalizeEquippedEntries(source){
+  const result=[]
+  const visit=value=>{
+    if(value===null || value===undefined) return
+    if(Array.isArray(value)){ value.forEach(visit); return }
+    if(typeof value==='number') return visit(String(value))
+    if(typeof value==='string'){
+      const trimmed=value.trim()
+      if(trimmed) result.push(trimmed)
+      return
+    }
+    if(typeof value==='object'){
+      const idKeys=['itemId','id','code','key','uid','cardId']
+      const nameKeys=['name','item','label','title','card','cardName']
+      let id=null
+      let name=null
+      idKeys.forEach(k=>{ if(!id && typeof value[k]==='string'){ const v=value[k].trim(); if(v) id=v } })
+      nameKeys.forEach(k=>{ if(!name && typeof value[k]==='string'){ const v=value[k].trim(); if(v) name=v } })
+      if(!name){
+        Object.values(value).forEach(val=>{
+          if(!name && typeof val==='string'){
+            const trimmed=val.trim()
+            if(trimmed) name=trimmed
+          }
+        })
+      }
+      if(id || name){
+        const entry={}
+        if(id) entry.id=id
+        if(name) entry.name=name
+        result.push(entry)
+      }
+      return
+    }
+  }
+  visit(source)
+  return result
+}
+
+function resolveItemReference(ref){
+  if(ref===null || ref===undefined) return null
+  if(typeof ref==='number') return resolveItemReference(String(ref))
+  if(typeof ref==='string'){
+    const trimmed=ref.trim()
+    if(!trimmed) return null
+    const direct=getItem(trimmed)
+    if(direct) return direct.id
+    const alias=getItemIdByName(trimmed)
+    return alias||null
+  }
+  if(typeof ref==='object'){
+    const idKeys=['itemId','id','code','key','uid','cardId']
+    for(const key of idKeys){
+      if(typeof ref[key]==='string'){
+        const resolved=resolveItemReference(ref[key])
+        if(resolved) return resolved
+      }
+    }
+    const nameKeys=['name','item','label','title','card','cardName']
+    for(const key of nameKeys){
+      if(typeof ref[key]==='string'){
+        const resolved=resolveItemReference(ref[key])
+        if(resolved) return resolved
+      }
+    }
+    for(const val of Object.values(ref)){
+      if(typeof val==='string'){
+        const resolved=resolveItemReference(val)
+        if(resolved) return resolved
+      }
+    }
+  }
+  return null
+}
+
 function itemHasWeapon(item, weapon){ return !!(item.weapon && item.weapon[weapon]) }
 
 function itemMatchesGroup(item, groupKey, weaponKey=null){
@@ -121,7 +198,7 @@ async function loadDB(){
   db.units = u.map(normalizeUnit)
   db.items = i.map(normalizeItem)
   db.itemMap = new Map(db.items.map(x=>[x.id,x]))
-  db.itemNameMap = new Map(db.items.map(x=>[x.name.toLowerCase(), x.id]))
+  db.itemNameMap = new Map(db.items.map(x=>[normalizeNameKey(x.name), x.id]).filter(([key])=>key))
   fillFactionSelect()
   restoreFromStorage()
   renderRoster()
@@ -136,12 +213,13 @@ function normalizeUnit(raw){
   const access = { ...(unit.access||{}) }
   ACCESS_KEYS.forEach(k=>{ access[k] = Boolean(access[k]) })
   unit.access = access
-  unit.equipped = Array.isArray(unit.equipped)? unit.equipped.filter(Boolean):[]
+  unit.equipped = normalizeEquippedEntries(unit.equipped)
   return unit
 }
 function normalizeItem(raw){
   const item = { ...raw }
   item.img = ITEMS_MAP[item.id] || `images/items/${item.id}.png`
+  item.name = (item.name||'').trim()
   const weapon = {}
   WEAPON_KEYS.forEach(k=>{ weapon[k] = Boolean(raw.weapon && raw.weapon[k]) })
   item.weapon = weapon
@@ -154,7 +232,11 @@ function normalizeItem(raw){
   return item
 }
 function getItem(id){ return db.itemMap.get(id) }
-function getItemIdByName(name){ return db.itemNameMap.get(name.toLowerCase()) }
+function getItemIdByName(name){
+  const key=normalizeNameKey(name)
+  if(!key) return undefined
+  return db.itemNameMap.get(key)
+}
 function createCardEntry(itemId, locked=false){ return { itemId, modId:null, locked:!!locked } }
 function getUnitByUid(uid){ return state.roster.units.find(x=>x.uid===uid) }
 function getUnitFaction(unit){ return unit.faction || state.roster.faction || unit.factions?.[0] || '' }
@@ -367,9 +449,12 @@ function pickUnit(id){
   const uid = `${u.id}-${Math.random().toString(36).slice(2,7)}`
   const faction = state.roster.faction || (u.factions?.length===1 ? u.factions[0] : null)
   const unit = { uid, id:u.id, name:u.name, factions:u.factions, cost:u.cost, unique:u.unique, prereq:u.prereq, access:u.access, img:u.img, cards:[], faction };
-  (u.equipped||[]).forEach(eqId=>{
-    const base = getItem(eqId) || getItem(getItemIdByName(eqId)||'')
-    if(base) unit.cards.push(createCardEntry(base.id,true))
+  const equippedEntries = Array.isArray(u.equipped) ? u.equipped : normalizeEquippedEntries(u.equipped)
+  equippedEntries.forEach(ref=>{
+    const itemId = resolveItemReference(ref)
+    if(itemId){
+      unit.cards.push(createCardEntry(itemId,true))
+    }
   })
   state.roster.units.push(unit)
   recomputeLeaderFlag()
