@@ -68,11 +68,23 @@
 </template>
 
 <template id="itemChipTmpl">
-  <div class="chip item">
-    <img class="icon">
-    <div class="label"></div>
-    <div class="price"></div>
-    <button class="remove" title="Удалить">✕</button>
+  <div class="item-chip">
+    <div class="item-main">
+      <img class="icon">
+      <div class="info">
+        <div class="label"></div>
+        <div class="price"></div>
+      </div>
+      <div class="actions">
+        <button class="btn tiny" data-act="addMod">+ мод</button>
+        <button class="remove" data-act="remove" title="Удалить">✕</button>
+      </div>
+    </div>
+    <div class="mod-info hidden">
+      <div class="mod-label"></div>
+      <div class="mod-price"></div>
+      <button class="btn tiny secondary" data-act="removeMod">Убрать мод</button>
+    </div>
   </div>
 </template>
 
