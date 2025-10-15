@@ -110,7 +110,16 @@ body{
 .grid.picker-units{ grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
 .grid.picker-items{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
 .grid.picker-mods{ grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
-.card{ display:flex; flex-direction:column; gap:.6rem; background:var(--chip); border:1px solid var(--border); border-radius:14px; padding:.75rem; min-height:100%; }
+.card{
+  display:flex;
+  flex-direction:column;
+  gap:.6rem;
+  background:var(--chip);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:.75rem;
+  min-height:auto;
+}
 .card .card-body{ display:flex; flex-direction:column; gap:.25rem; flex:1; }
 .card .title{ font-weight:700; font-size:16px; }
 .card .meta{ color:var(--muted); font-size:12px; }
