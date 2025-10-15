@@ -5,15 +5,14 @@
 
   /* размеры UI */
   --unit-img-w: 160px;      /* ширина превью юнита слева в карточке */
-  --thumb-size: 96px;       /* размер мини-превью предметов/перков в списке */
-  --grid-min: 360px;        /* минимальная ширина колонки сетки roster/grid */
+  --grid-min: 420px;        /* минимальная ширина карточки юнита в ростере */
 }
 
 @media (max-width: 1100px){
-  :root{ --unit-img-w: 140px; --thumb-size: 88px; --grid-min: 320px; }
+  :root{ --unit-img-w: 140px; --grid-min: 360px; }
 }
 @media (max-width: 760px){
-  :root{ --unit-img-w: 120px; --thumb-size: 80px; --grid-min: 300px; }
+  :root{ --unit-img-w: 120px; --grid-min: 320px; }
 }
 
 *{ box-sizing: border-box; }
@@ -22,6 +21,8 @@ body{
   margin:0; background:var(--bg); color:var(--text);
   font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,'DejaVu Sans',Arial;
 }
+
+.hidden{ display:none !important; }
 
 /* ── Toolbar / controls ─────────────────────────────────────────────── */
 .toolbar{
@@ -48,7 +49,7 @@ body{
 .stats{ margin-top:.5rem; display:flex; gap:1rem; color:var(--muted); }
 
 /* ── Roster / unit card ─────────────────────────────────────────────── */
-.roster{ display:grid; grid-template-columns:repeat(auto-fill,minmax(420px,1fr)); gap:1rem; padding:1rem; }
+.roster{ display:grid; grid-template-columns:repeat(auto-fill,minmax(var(--grid-min),1fr)); gap:1rem; padding:1rem; }
 .unit{ background:var(--panel); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
 .unit-header{ display:flex; justify-content:space-between; gap:.5rem; padding:.75rem; border-bottom:1px solid var(--border); }
 .unit-headline{ display:flex; gap:.75rem; }
@@ -67,17 +68,25 @@ body{
   padding:.5rem .75rem; border-top:1px solid var(--border); color:var(--muted);
 }
 
-/* ── Item chips ─────────────────────────────────────────────────────── */
-.chip.item{
-  display:grid; grid-template-columns:56px 1fr auto auto; gap:.5rem; align-items:center;
-  background:var(--chip); border:1px solid var(--border); border-radius:.6rem; padding:.35rem .5rem;
+.item-chip{
+  background:var(--chip); border:1px solid var(--border); border-radius:.75rem;
+  padding:.6rem .75rem; display:flex; flex-direction:column; gap:.5rem;
 }
-.chip .icon{
-  width:56px; height:40px; object-fit:cover; border-radius:.4rem; border:1px solid var(--border); background:#000;
+.item-chip .item-main{ display:flex; align-items:center; gap:.65rem; }
+.item-chip .icon{
+  width:64px; height:64px; object-fit:contain; border-radius:.65rem; border:1px solid var(--border); background:#000;
 }
-.chip .label{ font-weight:600; }
-.chip .price{ color:var(--muted); }
-.chip .remove{ border:0; background:transparent; color:#aab8c4; font-size:18px; cursor:pointer; }
+.item-chip .info{ flex:1; }
+.item-chip .label{ font-weight:600; margin-bottom:.2rem; }
+.item-chip .price{ color:var(--muted); font-size:12px; }
+.item-chip .actions{ display:flex; flex-direction:column; gap:.35rem; align-items:flex-end; }
+.item-chip .remove{ border:0; background:transparent; color:#aab8c4; font-size:18px; cursor:pointer; }
+.item-chip .remove:disabled{ opacity:.45; cursor:default; }
+.item-chip .btn.tiny{ padding:.2rem .45rem; font-size:12px; }
+.btn.tiny.secondary{ background:#1c2330; border-color:#2b3648; color:#9fb2c5; }
+.mod-info{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; background:#111823; border-radius:.6rem; padding:.35rem .5rem; border:1px dashed #304157; }
+.mod-label{ font-weight:600; font-size:13px; }
+.mod-price{ color:var(--muted); font-size:12px; }
 
 /* ── Modal / list grid ──────────────────────────────────────────────── */
 .modal{ position:fixed; inset:0; display:grid; place-items:center; }
@@ -91,23 +100,24 @@ body{
 .title{ font-weight:700; }
 .icon{ background:transparent; border:1px solid var(--border); color:var(--text); border-radius:.5rem; padding:.25rem .5rem; cursor:pointer; }
 
-.filters{ position:sticky; top:0; display:flex; flex-wrap:wrap; gap:.4rem; padding:.5rem; background:var(--panel); border-bottom:1px solid var(--border); }
-.filter{ padding:.3rem .55rem; border:1px solid var(--border); border-radius:999px; background:#0c0f13; cursor:pointer; color:var(--text); }
+.filters{ position:sticky; top:0; display:flex; flex-direction:column; gap:.35rem; padding:.5rem; background:var(--panel); border-bottom:1px solid var(--border); }
+.filter-row{ display:flex; flex-wrap:wrap; gap:.4rem; }
+.filter-row.sub{ border-top:1px solid var(--border); padding-top:.4rem; }
+.filter{ padding:.32rem .6rem; border:1px solid var(--border); border-radius:999px; background:#0c0f13; cursor:pointer; color:var(--text); font-size:13px; }
 .filter.active{ outline:2px solid #3a86ff55; }
 
-.grid{ padding:1rem; display:grid; grid-template-columns:repeat(auto-fill,minmax(var(--grid-min),1fr)); gap:.75rem; overflow:auto; }
-.card{ display:flex; gap:.75rem; background:var(--chip); border:1px solid var(--border); border-radius:12px; padding:.5rem; }
-
-/* Превью предметов: читаемо на экране и без искажения */
-.card .thumb{
-  width:var(--thumb-size); height:var(--thumb-size);
-  border-radius:.5rem; border:1px solid var(--border);
-  object-fit:contain; background:#000;
-}
-
-.card .title{ font-weight:700; }
+.grid{ padding:1rem; display:grid; gap:1rem; overflow:auto; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+.grid.picker-units{ grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+.grid.picker-items{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+.grid.picker-mods{ grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
+.card{ display:flex; flex-direction:column; gap:.6rem; background:var(--chip); border:1px solid var(--border); border-radius:14px; padding:.75rem; min-height:100%; }
+.card .card-body{ display:flex; flex-direction:column; gap:.25rem; flex:1; }
+.card .title{ font-weight:700; font-size:16px; }
 .card .meta{ color:var(--muted); font-size:12px; }
-.card .take{ margin-left:auto; }
+.card .take{ align-self:stretch; margin-top:auto; }
+.thumb-large{ width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:10px; border:1px solid var(--border); background:#000; }
+.thumb-item{ width:100%; height:220px; object-fit:contain; border-radius:10px; border:1px solid var(--border); background:#000; }
+.empty{ border:1px dashed var(--border); border-radius:12px; padding:1.5rem; text-align:center; color:var(--muted); }
 
 .badge{
   display:inline-block; line-height:1; border:1px solid var(--border); border-radius:6px;
