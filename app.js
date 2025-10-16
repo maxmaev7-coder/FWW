@@ -6,19 +6,41 @@ function safeImg(el, src, fallback){
 }
 
 
+function openImagePreview(src){
+  if(typeof window!=='undefined' && typeof window.__showImagePreview==='function'){
+    window.__showImagePreview(src)
+  }
+}
+
+
 const $ = s => document.querySelector(s)
 const $$ = s => Array.from(document.querySelectorAll(s))
 
 const db = { units: [], items: [], itemMap: new Map(), itemNameMap: new Map() }
+
+function createDefaultItemFilter(){
+  return { group:null, weapon:null, flags:{ stripes:false, mods:false, chem:false } }
+}
+
+function resolveStoredPdfSize(){
+  try{
+    const saved = localStorage.getItem('pdfCardSize')
+    if(saved==='small' || saved==='large') return saved
+  }catch(e){}
+  return 'large'
+}
+
 const state = {
   roster: { name:"", faction:"", pointsLimit:0, modelsLimit:0, units:[], leaderTaken:false },
   modal: null,
   pickerMode: null,
   pickerForUnitId: null,
   unitFilter: 'Все',
-  itemFilter: { group:null, weapon:null },
+  itemFilter: createDefaultItemFilter(),
   availableItems: [],
-  modTarget: null
+  modTarget: null,
+  pdfCardSize: resolveStoredPdfSize(),
+  dragging: null
 }
 
 const WEAPON_KEYS = ['Melee','Pistol','Rifle','Heavy Weapon','Grenade','Mines']
@@ -161,6 +183,12 @@ function itemMatchesGroup(item, groupKey, weaponKey=null){
   }
 }
 
+function itemHasSpecialBars(item){
+  if(!item) return false
+  const cats=item.cats||{}
+  return !!(cats['Power Armor'] || cats.Chem || cats.Alcohol)
+}
+
 function deriveItemGroups(item){
   const groups = new Set()
   ITEM_GROUPS.forEach(group=>{ if(itemMatchesGroup(item, group.key)) groups.add(group.key) })
@@ -295,7 +323,7 @@ function closeModal(){
     $('#pickerList').innerHTML=''
     $('#filters').innerHTML=''
     state.availableItems=[]
-    state.itemFilter={ group:null, weapon:null }
+    state.itemFilter=createDefaultItemFilter()
     state.unitFilter='Все'
     state.modTarget=null
   }
@@ -308,24 +336,8 @@ function renderRoster(){
   $('#modelsLimit').value = state.roster.modelsLimit||""
   $('#factionSelect').disabled = state.roster.units.length>0
   const host = $('#roster'); host.innerHTML = ''
-  state.roster.units.forEach(u=>{
-    const tpl = document.querySelector('#unitCardTmpl').content.cloneNode(true)
-    const el=tpl.querySelector('.unit'); el.dataset.uid = u.uid
-    const img=tpl.querySelector('.unit-img'); safeImg(img, u.img, 'images/missing-unit.png')
-    const name=tpl.querySelector('.name'); const meta=tpl.querySelector('.meta')
-    name.textContent = u.name
-    const uniq = u.unique ? `<span class="badge">UNIQUE</span>`:""
-    meta.innerHTML = `${u.cost} caps${uniq}`
-    const slots=tpl.querySelector('.slots')
-    u.cards.forEach((card,idx)=>{
-      const chip=renderItemChip(u,card,idx); if(chip) slots.appendChild(chip)
-    })
-    tpl.querySelector('.subtotalPoints').textContent = unitPoints(u)
-    tpl.querySelector('.itemsCount').textContent = unitItemCount(u)
-    tpl.querySelector('[data-act="addItem"]').addEventListener('click',()=>openItemPicker(u.uid))
-    tpl.querySelector('[data-act="dup"]').addEventListener('click',()=>duplicateUnit(u.uid))
-    tpl.querySelector('[data-act="remove"]').addEventListener('click',()=>removeUnit(u.uid))
-    host.appendChild(tpl)
+  state.roster.units.forEach(unit=>{
+    host.appendChild(buildRosterUnit(unit))
   })
   const spent = calcRosterPoints()
   $('#spent').textContent = spent
@@ -334,43 +346,299 @@ function renderRoster(){
   $('#unitCount').textContent = state.roster.units.length
   persistToStorage()
 }
-function renderItemChip(unit,card,index){
-  const base = getItem(card.itemId)
-  if(!base) return null
-  const tpl = document.querySelector('#itemChipTmpl').content.cloneNode(true)
-  const root = tpl.querySelector('.item-chip')
-  const icon = tpl.querySelector('.icon')
-  safeImg(icon, base.img, 'images/missing-item.png')
-  tpl.querySelector('.label').textContent = base.name
-  tpl.querySelector('.price').textContent = `${base.cost} caps`
-  const removeBtn = tpl.querySelector('[data-act="remove"]')
-  if(card.locked){
-    removeBtn.disabled = true
-    removeBtn.title = 'Встроенная карта'
-  }else{
-    removeBtn.onclick=()=>removeItem(unit.uid,index)
+
+function buildRosterUnit(unit){
+  const tpl=document.querySelector('#rosterUnitTemplate').content.cloneNode(true)
+  const root=tpl.querySelector('.roster-unit')
+  root.dataset.uid=unit.uid
+  const img=tpl.querySelector('.roster-unit__image')
+  safeImg(img, unit.img, 'images/missing-unit.png')
+  const nameEl=tpl.querySelector('.roster-unit__name')
+  const costEl=tpl.querySelector('.roster-unit__cost')
+  nameEl.textContent=unit.name
+  const uniq=unit.unique?` · <span class="badge">UNIQUE</span>`:''
+  costEl.innerHTML=`${unit.cost} caps${uniq}`
+  tpl.querySelector('[data-act="addItem"]').addEventListener('click',()=>openItemPicker(unit.uid))
+  tpl.querySelector('[data-act="dup"]').addEventListener('click',()=>duplicateUnit(unit.uid))
+  tpl.querySelector('[data-act="remove"]').addEventListener('click',()=>removeUnit(unit.uid))
+  const grid=tpl.querySelector('.roster-unit__grid')
+  const order=deriveRosterCardOrder(unit)
+  const unitCard=createRosterUnitCard(unit)
+  grid.appendChild(unitCard)
+  if(order.power){
+    const powerCard=createRosterItemCard(unit, order.power.card, order.power.index, order.power.item, true)
+    if(powerCard) grid.appendChild(powerCard)
   }
-  const modBtn = tpl.querySelector('[data-act="addMod"]')
-  const modWrap = tpl.querySelector('.mod-info')
-  if(canAddMod(unit, card, base)){
-    modBtn.onclick=()=>openModPicker(unit.uid,index)
-  }else{
-    modBtn.classList.add('hidden')
-  }
-  if(card.modId){
-    const modItem=getItem(card.modId)
-    if(modItem){
-      modWrap.classList.remove('hidden')
-      modWrap.querySelector('.mod-label').textContent = modItem.name
-      modWrap.querySelector('.mod-price').textContent = `${modItem.cost} caps`
-      const removeModBtn = modWrap.querySelector('[data-act="removeMod"]')
-      removeModBtn.onclick=()=>removeMod(unit.uid,index)
-      modBtn.textContent='Изменить мод'
-    }
-  }else{
-    modWrap.classList.add('hidden')
-  }
+  order.others.forEach(entry=>{
+    const cardEl=createRosterItemCard(unit, entry.card, entry.index, entry.item, false)
+    if(cardEl) grid.appendChild(cardEl)
+  })
+  grid.addEventListener('dragover', e=>handleGridDragOver(e, unit.uid))
+  grid.addEventListener('drop', e=>handleGridDrop(e, unit.uid))
+  tpl.querySelector('.subtotalPoints').textContent = unitPoints(unit)
+  tpl.querySelector('.itemsCount').textContent = unitItemCount(unit)
   return root
+}
+
+function deriveRosterCardOrder(unit){
+  const entries=[]
+  unit.cards.forEach((card,index)=>{
+    const item=getItem(card.itemId)
+    if(item) entries.push({ card,index,item })
+  })
+  let power=null
+  const others=[]
+  entries.forEach(entry=>{
+    if(entry.item.cats && entry.item.cats['Power Armor'] && !power){
+      power=entry
+    }else{
+      others.push(entry)
+    }
+  })
+  return { power, others }
+}
+
+function createRosterCardShell(type,{ includeMods=false }={}){
+  const card=document.createElement('article')
+  card.className='roster-card'
+  if(type) card.classList.add(`roster-card--${type}`)
+  const img=document.createElement('img')
+  img.className='roster-card__image thumb'
+  card.appendChild(img)
+  const body=document.createElement('div')
+  body.className='roster-card__body'
+  card.appendChild(body)
+  const title=document.createElement('div')
+  title.className='roster-card__title'
+  body.appendChild(title)
+  const meta=document.createElement('div')
+  meta.className='roster-card__meta'
+  body.appendChild(meta)
+  const badges=document.createElement('div')
+  badges.className='roster-card__badges'
+  body.appendChild(badges)
+  const actions=document.createElement('div')
+  actions.className='roster-card__actions'
+  card.appendChild(actions)
+  let mods=null
+  if(includeMods){
+    mods=document.createElement('div')
+    mods.className='roster-card__mods'
+    card.appendChild(mods)
+  }
+  return { card,img,title,meta,badges,actions,mods }
+}
+
+function createBadge(text){
+  const span=document.createElement('span')
+  span.className='roster-card__badge'
+  span.textContent=text
+  return span
+}
+
+function createRosterUnitCard(unit){
+  const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
+  safeImg(img, unit.img, 'images/missing-unit.png')
+  title.textContent = unit.name
+  meta.textContent = `${unit.cost} caps`
+  if(unit.unique) badges.appendChild(createBadge('UNIQUE'))
+  const preview=document.createElement('button')
+  preview.className='btn tiny secondary'
+  preview.textContent='Превью'
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(unit.img) })
+  actions.appendChild(preview)
+  return card
+}
+
+function createRosterItemCard(unit, cardData, index, item, isPower){
+  if(!item) return null
+  const { card,img,title,meta,badges,actions,mods } = createRosterCardShell(isPower?'power':null,{ includeMods:true })
+  card.dataset.unitUid = unit.uid
+  card.dataset.cardIndex = String(index)
+  safeImg(img, item.img, 'images/missing-item.png')
+  title.textContent = item.name
+  meta.textContent = infoLine(item)
+  if(item.unique) badges.appendChild(createBadge('UNIQUE'))
+  const duplicates = unit.cards.filter(c=>c.itemId===item.id).length
+  if(duplicates>1) badges.appendChild(createBadge(`x${duplicates}`))
+  if(cardData.locked) badges.appendChild(createBadge('LOCKED'))
+  if(itemHasSpecialBars(item)) badges.appendChild(createBadge('S.P.E.C.I.A.L.'))
+  const preview=document.createElement('button')
+  preview.className='btn tiny secondary'
+  preview.textContent='Превью'
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
+  actions.appendChild(preview)
+  if(canAddMod(unit, cardData, item)){
+    const modBtn=document.createElement('button')
+    modBtn.className='btn tiny'
+    modBtn.textContent = cardData.modId ? 'Изменить мод' : 'Добавить мод'
+    modBtn.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid,index) })
+    actions.appendChild(modBtn)
+  }
+  const removeBtn=document.createElement('button')
+  removeBtn.className='btn tiny danger'
+  removeBtn.textContent='Удалить'
+  if(cardData.locked){
+    removeBtn.disabled=true
+    removeBtn.title='Встроенная карта'
+  }else{
+    removeBtn.addEventListener('click', e=>{ e.stopPropagation(); removeItem(unit.uid,index) })
+  }
+  actions.appendChild(removeBtn)
+  if(!actions.children.length) actions.classList.add('hidden')
+  if(cardData.modId){
+    const modItem=getItem(cardData.modId)
+    if(modItem && mods){
+      mods.appendChild(buildModCard(unit, index, modItem))
+    }
+  }else if(mods && canAddMod(unit, cardData, item)){
+    const empty=document.createElement('div')
+    empty.className='roster-card__empty-mod'
+    empty.textContent='Модификации не выбраны'
+    mods.appendChild(empty)
+  }
+  if(mods && !mods.children.length){
+    mods.remove()
+  }
+  if(!isPower){
+    card.draggable=true
+    card.addEventListener('dragstart', handleCardDragStart)
+    card.addEventListener('dragenter', handleCardDragEnter)
+    card.addEventListener('dragleave', handleCardDragLeave)
+    card.addEventListener('dragover', handleCardDragOver)
+    card.addEventListener('drop', handleCardDrop)
+    card.addEventListener('dragend', handleCardDragEnd)
+    const handle=document.createElement('div')
+    handle.className='roster-card__drag-handle'
+    handle.textContent='⠿'
+    card.appendChild(handle)
+  }
+  return card
+}
+
+function buildModCard(unit, cardIndex, modItem){
+  const wrap=document.createElement('div')
+  wrap.className='roster-card__mod-card'
+  const img=document.createElement('img')
+  img.className='roster-card__mod-image thumb'
+  safeImg(img, modItem.img, 'images/missing-item.png')
+  wrap.appendChild(img)
+  const title=document.createElement('div')
+  title.className='roster-card__mod-title'
+  title.textContent=modItem.name
+  wrap.appendChild(title)
+  const meta=document.createElement('div')
+  meta.className='roster-card__mod-meta'
+  meta.textContent=infoLine(modItem)
+  wrap.appendChild(meta)
+  const actions=document.createElement('div')
+  actions.className='mod-actions'
+  const preview=document.createElement('button')
+  preview.className='btn tiny secondary'
+  preview.textContent='Превью'
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
+  actions.appendChild(preview)
+  const change=document.createElement('button')
+  change.className='btn tiny'
+  change.textContent='Изменить'
+  change.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid, cardIndex) })
+  actions.appendChild(change)
+  const remove=document.createElement('button')
+  remove.className='btn tiny danger'
+  remove.textContent='Удалить'
+  remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
+  actions.appendChild(remove)
+  wrap.appendChild(actions)
+  img.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
+  return wrap
+}
+
+function handleCardDragStart(e){
+  const card=e.currentTarget
+  if(e.target && e.target.closest('button')){ e.preventDefault(); return }
+  const unitUid=card.dataset.unitUid
+  const cardIndex=Number(card.dataset.cardIndex)
+  state.dragging={ unitUid, cardIndex }
+  if(e.dataTransfer){
+    e.dataTransfer.effectAllowed='move'
+    try{ e.dataTransfer.setData('text/plain','drag') }catch(err){}
+  }
+  card.classList.add('roster-card--drag')
+}
+
+function handleCardDragEnter(e){
+  const card=e.currentTarget
+  if(!state.dragging) return
+  if(card.dataset.unitUid!==state.dragging.unitUid) return
+  const targetIndex=Number(card.dataset.cardIndex)
+  if(targetIndex===state.dragging.cardIndex) return
+  card.classList.add('roster-card--drop')
+}
+
+function handleCardDragLeave(e){
+  e.currentTarget.classList.remove('roster-card--drop')
+}
+
+function handleCardDragOver(e){
+  const card=e.currentTarget
+  if(!state.dragging) return
+  if(card.dataset.unitUid!==state.dragging.unitUid) return
+  e.preventDefault()
+  if(e.dataTransfer) e.dataTransfer.dropEffect='move'
+}
+
+function handleCardDrop(e){
+  const card=e.currentTarget
+  if(!state.dragging) return
+  const unitUid=card.dataset.unitUid
+  const targetIndex=Number(card.dataset.cardIndex)
+  if(state.dragging.unitUid!==unitUid) return
+  if(targetIndex===state.dragging.cardIndex) return
+  e.preventDefault()
+  card.classList.remove('roster-card--drop')
+  reorderUnitCard(unitUid, state.dragging.cardIndex, targetIndex)
+}
+
+function handleCardDragEnd(e){
+  e.currentTarget.classList.remove('roster-card--drag')
+  clearDropHighlights()
+  state.dragging=null
+}
+
+function handleGridDragOver(e, unitUid){
+  if(!state.dragging || state.dragging.unitUid!==unitUid) return
+  if(e.target && e.target.closest('.roster-card')) return
+  e.preventDefault()
+  if(e.dataTransfer) e.dataTransfer.dropEffect='move'
+}
+
+function handleGridDrop(e, unitUid){
+  if(!state.dragging || state.dragging.unitUid!==unitUid) return
+  if(e.target && e.target.closest('.roster-card')) return
+  e.preventDefault()
+  reorderUnitCard(unitUid, state.dragging.cardIndex, null)
+}
+
+function clearDropHighlights(){
+  $$('.roster-card--drop').forEach(el=>el.classList.remove('roster-card--drop'))
+}
+
+function reorderUnitCard(unitUid, fromIndex, toIndex){
+  const unit=getUnitByUid(unitUid)
+  if(!unit) return
+  const cards=unit.cards
+  if(fromIndex<0 || fromIndex>=cards.length) return
+  const [entry]=cards.splice(fromIndex,1)
+  if(toIndex===null || toIndex>=cards.length){
+    cards.push(entry)
+  }else{
+    let insertIndex=toIndex
+    if(fromIndex<toIndex) insertIndex-=1
+    if(insertIndex<0) insertIndex=0
+    cards.splice(insertIndex,0,entry)
+  }
+  state.dragging=null
+  renderRoster()
 }
 
 function unitPoints(u){
@@ -435,9 +703,16 @@ function renderUnitPicker(){
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
     const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class="badge">UNIQUE</span>':''}`
-    const take=document.createElement('button'); take.className='btn take'; take.textContent='Выбрать'; take.onclick=()=>pickUnit(u.id)
+    const actions=document.createElement('div'); actions.className='actions'
+    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(u.img) })
+    actions.appendChild(preview)
     body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body); card.appendChild(take)
+    card.appendChild(img); card.appendChild(body); card.appendChild(actions)
+    const activate=()=>pickUnit(u.id)
+    card.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
+    card.tabIndex=0
+    card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
     list.appendChild(card)
   })
 }
@@ -466,7 +741,7 @@ function openItemPicker(uid){
   if(!unit) return
   state.pickerMode='item'
   state.pickerForUnitId=uid
-  state.itemFilter={ group:null, weapon:null }
+  state.itemFilter=createDefaultItemFilter()
   openModal(`Добавление карт: ${unit.name}`)
   state.availableItems = computeAvailableItems(unit)
   state.availableItems.sort((a,b)=>{
@@ -530,10 +805,30 @@ function determineDefaultGroup(){
   const group = ITEM_GROUPS.find(g=>state.availableItems.some(item=>itemMatchesGroup(item,g.key)))
   return group?group.key:null
 }
+
+function itemMatchesActiveFlags(item){
+  const flags=state.itemFilter.flags||{}
+  if(flags.mods && !item.is_mod) return false
+  if(flags.stripes && !itemHasSpecialBars(item)) return false
+  if(flags.chem && !(item.cats?.Chem || item.cats?.Alcohol)) return false
+  return true
+}
+
+function getCatalogItems(unit){
+  if(state.itemFilter.flags.mods){
+    const faction=getUnitFaction(unit)
+    return db.items.filter(item=>{
+      if(!item.is_mod) return false
+      return isItemAllowedForUnit(unit,item,faction)
+    })
+  }
+  return state.availableItems
+}
 function renderItemFilters(unit){
   const host=$('#filters'); host.innerHTML=''
   const filtersRow=document.createElement('div'); filtersRow.className='filter-row'
-  const availableGroups = ITEM_GROUPS.filter(group=>state.availableItems.some(item=>itemMatchesGroup(item, group.key)))
+  const source=getCatalogItems(unit)
+  const availableGroups = ITEM_GROUPS.filter(group=>source.some(item=>itemMatchesGroup(item, group.key)))
   const makeBtn=(label,value)=>{
     const btn=document.createElement('button'); btn.className='filter'; btn.textContent=label
     const active = state.itemFilter.group===value || (value===null && !state.itemFilter.group)
@@ -546,7 +841,7 @@ function renderItemFilters(unit){
   host.appendChild(filtersRow)
   if(state.itemFilter.group==='Weapons'){
     const sub=document.createElement('div'); sub.className='filter-row sub'
-    const availableWeapons = WEAPON_KEYS.filter(key=>state.availableItems.some(item=>itemMatchesGroup(item,'Weapons', key)))
+    const availableWeapons = WEAPON_KEYS.filter(key=>source.some(item=>itemMatchesGroup(item,'Weapons', key)))
     if(availableWeapons.length && !availableWeapons.includes(state.itemFilter.weapon)) state.itemFilter.weapon = availableWeapons[0]
     availableWeapons.forEach(key=>{
       const btn=document.createElement('button'); btn.className='filter'; btn.textContent=key
@@ -556,12 +851,34 @@ function renderItemFilters(unit){
     })
     host.appendChild(sub)
   }
+  const togglesRow=document.createElement('div'); togglesRow.className='filter-row sub'
+  const toggles=[
+    { key:'stripes', label:'С полосками' },
+    { key:'mods', label:'Мод-карты' },
+    { key:'chem', label:'Химия / алкоголь' }
+  ]
+  toggles.forEach(toggle=>{
+    const btn=document.createElement('button')
+    btn.className='filter-toggle'
+    btn.dataset.active = state.itemFilter.flags[toggle.key] ? 'true':'false'
+    btn.textContent=toggle.label
+    btn.onclick=()=>{
+      state.itemFilter.flags[toggle.key] = !state.itemFilter.flags[toggle.key]
+      renderItemFilters(unit)
+      renderItemPicker(unit)
+    }
+    togglesRow.appendChild(btn)
+  })
+  host.appendChild(togglesRow)
 }
 function renderItemPicker(unit){
   const list=$('#pickerList'); list.innerHTML=''; list.classList.add('picker-items'); list.classList.remove('picker-units','picker-mods')
   const group=state.itemFilter.group
   const weaponFilter = group==='Weapons'?state.itemFilter.weapon:null
-  const items = state.availableItems.filter(item=>{
+  const source = getCatalogItems(unit)
+  const usingModCatalog = !!state.itemFilter.flags.mods
+  const items = source.filter(item=>{
+    if(!itemMatchesActiveFlags(item)) return false
     if(!group) return true
     if(group==='Weapons'){
       if(weaponFilter) return itemMatchesGroup(item,'Weapons', weaponFilter)
@@ -574,6 +891,7 @@ function renderItemPicker(unit){
     list.appendChild(empty)
     return
   }
+  items.sort((a,b)=>{ if(a.cost!==b.cost) return a.cost-b.cost; return a.name.localeCompare(b.name,'ru') })
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
     if(item.unique) card.dataset.tag='unique'
@@ -581,9 +899,25 @@ function renderItemPicker(unit){
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=item.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
-    const take=document.createElement('button'); take.className='btn take'; take.textContent='Добавить'; take.onclick=()=>addItemToUnit(unit.uid,item.id)
     body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body); card.appendChild(take)
+    card.appendChild(img); card.appendChild(body)
+    const actions=document.createElement('div'); actions.className='actions'
+    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
+    actions.appendChild(preview)
+    card.appendChild(actions)
+    if(!usingModCatalog){
+      const activate=()=>addItemToUnit(unit.uid,item.id)
+      card.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
+      card.tabIndex=0
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
+    }else{
+      card.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
+      const hint=document.createElement('div')
+      hint.className='meta'
+      hint.textContent='Добавьте через «+ мод» у предмета'
+      body.appendChild(hint)
+    }
     list.appendChild(card)
   })
 }
@@ -637,9 +971,16 @@ function renderModPicker(mods){
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
-    const take=document.createElement('button'); take.className='btn take'; take.textContent='Добавить'; take.onclick=()=>applyModToUnit(mod.id)
     body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body); card.appendChild(take)
+    card.appendChild(img); card.appendChild(body)
+    const actions=document.createElement('div'); actions.className='actions'
+    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(mod.img) })
+    const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
+    add.addEventListener('click', e=>{ e.stopPropagation(); applyModToUnit(mod.id) })
+    actions.appendChild(preview); actions.appendChild(add)
+    card.appendChild(actions)
+    card.addEventListener('click', e=>{ if(e.target.closest('button')) return; applyModToUnit(mod.id) })
     list.appendChild(card)
   })
 }
@@ -787,6 +1128,15 @@ $('#loadInput').addEventListener('change', e=>{
 $('#listName').addEventListener('input', e=>{ state.roster.name=e.target.value; persistToStorage() })
 $('#pointsLimit').addEventListener('change', e=>{ state.roster.pointsLimit = Number(e.target.value||0); persistToStorage() })
 $('#modelsLimit').addEventListener('change', e=>{ state.roster.modelsLimit = Number(e.target.value||0); persistToStorage() })
+const pdfSelect=$('#pdfSizeSelect')
+if(pdfSelect){
+  pdfSelect.value=state.pdfCardSize
+  pdfSelect.addEventListener('change', e=>{
+    const val=e.target.value==='small'?'small':'large'
+    state.pdfCardSize=val
+    try{ localStorage.setItem('pdfCardSize', val) }catch(err){}
+  })
+}
 
 window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal() })
 
@@ -794,46 +1144,83 @@ loadDB()
 
 
 // === Build printable sheet with card images ===
-// === Build printable rows: unit at left, items/perks at right ===
 function buildPrintSheet(){
-  const host = document.getElementById('printSheet');
-  if (!host) return;
-  host.innerHTML = '';
-
-  (state.roster?.units || []).forEach(u => {
-    const row = document.createElement('section');
-    row.className = 'print-row';
-
-    const unitBox = document.createElement('div');
-    unitBox.className = 'print-unit';
-    const uImg = new Image();
-    uImg.decoding='sync'; uImg.loading='eager'; uImg.src=u.img;
-    unitBox.appendChild(uImg);
-    row.appendChild(unitBox);
-
-    const grid = document.createElement('div');
-    grid.className = 'mini-grid';
-    const cards = [];
-    (u.cards||[]).forEach(card=>{
-      const base=getItem(card.itemId)
-      if(base) cards.push(base)
-      if(card.modId){
-        const mod=getItem(card.modId)
-        if(mod) cards.push(mod)
+  const host = document.getElementById('printSheet')
+  if(!host) return
+  host.innerHTML=''
+  const variant = state.pdfCardSize==='small' ? 'small' : 'large'
+  const perPage = variant==='small' ? 20 : 10
+  let sheet=null
+  let grid=null
+  let count=0
+  const units=state.roster?.units||[]
+  units.forEach(unit=>{
+    const entries = buildPrintCardsForUnit(unit)
+    entries.forEach(entry=>{
+      if(!entry) return
+      if(count % perPage === 0){
+        sheet=document.createElement('section')
+        sheet.className=`sheet sheet--${variant}`
+        grid=document.createElement('div')
+        grid.className='pdf-grid'
+        sheet.appendChild(grid)
+        host.appendChild(sheet)
       }
+      const cell=document.createElement('article')
+      cell.className='pdf-card'
+      const img=new Image()
+      safeImg(img, entry.img, entry.fallback)
+      img.decoding='sync'
+      img.loading='eager'
+      cell.appendChild(img)
+      if(entry.mods && entry.mods.length){
+        const modsWrap=document.createElement('div')
+        modsWrap.className='pdf-card__mod'
+        entry.mods.forEach(modEntry=>{
+          const modImg=new Image()
+          safeImg(modImg, modEntry.img, modEntry.fallback)
+          modImg.decoding='sync'
+          modImg.loading='eager'
+          modsWrap.appendChild(modImg)
+        })
+        cell.appendChild(modsWrap)
+      }
+      grid.appendChild(cell)
+      count+=1
     })
-    cards.forEach(c=>{
-      const cell=document.createElement('div');
-      cell.className='print-mini';
-      const img=new Image();
-      img.decoding='sync'; img.loading='eager'; img.src=c.img;
-      cell.appendChild(img);
-      grid.appendChild(cell);
-    });
+  })
+}
 
-    row.appendChild(grid);
-    host.appendChild(row);
-  });
+function buildPrintCardsForUnit(unit){
+  const result=[]
+  if(!unit) return result
+  result.push({ img:unit.img, fallback:'images/missing-unit.png', mods:[] })
+  const cards=(unit.cards||[]).map((card,index)=>{
+    const item=getItem(card.itemId)
+    if(!item) return null
+    return { card,item,index }
+  }).filter(Boolean)
+  let power=null
+  const others=[]
+  cards.forEach(entry=>{
+    if(entry.item.cats && entry.item.cats['Power Armor'] && !power){
+      power=entry
+    }else{
+      others.push(entry)
+    }
+  })
+  if(power) result.push(createPrintEntryFromCard(power))
+  others.forEach(entry=>{ result.push(createPrintEntryFromCard(entry)) })
+  return result
+}
+
+function createPrintEntryFromCard(entry){
+  const mods=[]
+  if(entry.card.modId){
+    const modItem=getItem(entry.card.modId)
+    if(modItem) mods.push({ img:modItem.img, fallback:'images/missing-item.png' })
+  }
+  return { img:entry.item.img, fallback:'images/missing-item.png', mods }
 }
 
 
@@ -860,11 +1247,17 @@ window.addEventListener('afterprint', ()=>{
   pic.style.maxWidth='92vw'; pic.style.maxHeight='92vh'; pic.style.border='8px solid #000'; pic.style.boxShadow='0 10px 30px rgba(0,0,0,.6)';
   zoom.appendChild(pic);
   document.body.appendChild(zoom);
-  zoom.addEventListener('click', ()=> zoom.style.display='none');
+  const hide=()=>{ zoom.style.display='none' }
+  const show=src=>{
+    if(!src) return
+    pic.src=src
+    zoom.style.display='flex'
+  }
+  window.__showImagePreview = show
+  zoom.addEventListener('click', hide)
   document.addEventListener('click', (e)=>{
     if(e.target && e.target.classList && e.target.classList.contains('thumb')){
-      pic.src = e.target.src;
-      zoom.style.display='flex';
+      show(e.target.src)
     }
   }, true);
 })();
