@@ -212,7 +212,7 @@ a{ color:inherit; }
 }
 
 /* Modal / picker */
-.modal{ position:fixed; inset:0; display:grid; place-items:center; }
+.modal{ position:fixed; inset:0; display:grid; place-items:center; z-index:120; }
 .modal.hidden{ display:none; }
 .modal .backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.6); }
 .modal .panel{
