@@ -233,15 +233,16 @@ a{ color:inherit; }
   min-height:0;
   display:flex;
   flex-direction:column;
-  overflow:auto;
+  overflow:hidden;
 }
 .panel-content .grid{
   flex:1;
+  overflow:auto;
 }
 .panel-header{ display:flex; justify-content:space-between; align-items:center; padding:.85rem 1.15rem; border-bottom:1px solid var(--border); }
 .title{ font-weight:700; font-size:1.05rem; }
 .icon{ background:transparent; border:1px solid var(--border); color:var(--text); border-radius:.65rem; padding:.3rem .55rem; cursor:pointer; }
-.filters{ position:sticky; top:0; display:flex; flex-direction:column; gap:.4rem; padding:.65rem 1.1rem; background:var(--panel); border-bottom:1px solid var(--border); z-index:10; }
+.filters{ position:sticky; top:0; display:flex; flex-direction:column; gap:.4rem; padding:.65rem 1.1rem; background:var(--panel); border-bottom:1px solid var(--border); z-index:10; flex:0 0 auto; }
 .filter-row{ display:flex; flex-wrap:wrap; gap:.45rem; }
 .filter-row.sub{ border-top:1px solid var(--border); padding-top:.45rem; margin-top:.25rem; }
 .filter{ padding:.32rem .65rem; border:1px solid var(--border); border-radius:999px; background:#0c0f13; cursor:pointer; color:var(--text); font-size:13px; }
