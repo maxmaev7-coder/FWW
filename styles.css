@@ -113,6 +113,7 @@ a{ color:inherit; }
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:var(--card-gap);
   align-items:start;
+  justify-items:start;
 }
 .roster-grid--live{ margin-top:.2rem; }
 
@@ -132,7 +133,7 @@ a{ color:inherit; }
   grid-column:span 2;
   min-width:260px;
   max-width:480px;
-  justify-self:flex-start;
+  justify-self:start;
   display:grid;
   grid-template-columns:minmax(0,150px) minmax(0,1fr);
   grid-template-areas:
