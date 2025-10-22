@@ -121,14 +121,25 @@ a{ color:inherit; }
   background:var(--chip);
   border:1px solid var(--border);
   border-radius:var(--card-radius);
-  padding:.75rem .8rem 1rem;
+  padding:.65rem .75rem .85rem;
   display:flex;
   flex-direction:column;
-  gap:.65rem;
+  gap:.55rem;
   min-width:0;
   transition:border-color .2s, box-shadow .2s;
 }
-.roster-card--unit{ grid-column:span 2; min-width:260px; }
+.roster-card--unit{
+  grid-column:span 2;
+  min-width:260px;
+  max-width:480px;
+  justify-self:flex-start;
+  display:grid;
+  grid-template-columns:minmax(0,150px) minmax(0,1fr);
+  grid-template-areas:
+    "image body"
+    "image actions";
+  gap:.75rem;
+}
 .roster-card--power{ grid-column:auto; }
 .roster-card--drag{ box-shadow:0 0 0 2px #3a86ff55 inset; }
 .roster-card--drop{ box-shadow:0 0 0 2px #3a86ff99 inset; }
@@ -148,13 +159,13 @@ a{ color:inherit; }
 .roster-card--power .roster-card__drag-handle{ display:none; }
 .roster-card__image{
   width:100%;
-  aspect-ratio:3/4;
-  object-fit:contain;
+  height:auto;
+  display:block;
   background:#000;
   border-radius:12px;
   border:1px solid var(--border);
 }
-.roster-card__body{ display:flex; flex-direction:column; gap:.35rem; }
+.roster-card__body{ display:flex; flex-direction:column; gap:.25rem; }
 .roster-card__title{ font-weight:600; font-size:15px; }
 .roster-card__meta{ color:var(--muted); font-size:12px; display:flex; gap:.5rem; flex-wrap:wrap; }
 .roster-card__badges{ display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; }
@@ -171,11 +182,25 @@ a{ color:inherit; }
 }
 .roster-card__actions{
   display:flex;
-  gap:.45rem;
+  gap:.35rem;
   flex-wrap:wrap;
+  align-items:center;
 }
-.roster-card__actions .btn{ flex:1 1 auto; justify-content:center; }
+.roster-card__actions .btn{ flex:0 1 auto; justify-content:center; }
 .roster-card__actions .btn.tiny{ flex:0 0 auto; }
+.roster-card--unit .roster-card__image{ grid-area:image; }
+.roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
+.roster-card--unit .roster-card__actions{ grid-area:actions; justify-content:flex-start; }
+
+@media (max-width: 720px){
+  .roster-card--unit{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "image"
+      "body"
+      "actions";
+  }
+}
 .roster-card__mods{
   display:flex;
   flex-direction:column;
