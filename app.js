@@ -453,6 +453,7 @@ function createRosterUnitCard(unit){
 function createRosterItemCard(unit, cardData, index, item, isPower){
   if(!item) return null
   const { card,img,title,meta,badges,actions,mods } = createRosterCardShell(isPower?'power':null,{ includeMods:true })
+  card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
   safeImg(img, item.img, 'images/missing-item.png')

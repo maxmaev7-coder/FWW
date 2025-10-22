@@ -124,7 +124,7 @@ a{ color:inherit; }
   padding:.65rem .75rem .85rem;
   display:flex;
   flex-direction:column;
-  gap:.55rem;
+  gap:.5rem;
   min-width:0;
   transition:border-color .2s, box-shadow .2s;
 }
@@ -139,6 +139,19 @@ a{ color:inherit; }
     "image body"
     "image actions";
   gap:.75rem;
+}
+.roster-card--item,
+.roster-card--power{
+  display:grid;
+  grid-template-columns:minmax(240px,320px) minmax(0,1fr);
+  grid-template-areas:
+    "image body"
+    "image actions"
+    "image mods";
+  column-gap:.9rem;
+  row-gap:.35rem;
+  align-items:flex-start;
+  min-width:320px;
 }
 .roster-card--power{ grid-column:auto; }
 .roster-card--drag{ box-shadow:0 0 0 2px #3a86ff55 inset; }
@@ -165,7 +178,18 @@ a{ color:inherit; }
   border-radius:12px;
   border:1px solid var(--border);
 }
+.roster-card--item .roster-card__image,
+.roster-card--power .roster-card__image{
+  grid-area:image;
+  height:100%;
+  aspect-ratio:3/4;
+  object-fit:contain;
+  align-self:stretch;
+  min-height:240px;
+}
 .roster-card__body{ display:flex; flex-direction:column; gap:.25rem; }
+.roster-card--item .roster-card__body,
+.roster-card--power .roster-card__body{ grid-area:body; gap:.2rem; }
 .roster-card__title{ font-weight:600; font-size:15px; }
 .roster-card__meta{ color:var(--muted); font-size:12px; display:flex; gap:.5rem; flex-wrap:wrap; }
 .roster-card__badges{ display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; }
@@ -185,12 +209,17 @@ a{ color:inherit; }
   gap:.35rem;
   flex-wrap:wrap;
   align-items:center;
+  justify-content:flex-start;
 }
+.roster-card--item .roster-card__actions,
+.roster-card--power .roster-card__actions{ grid-area:actions; }
 .roster-card__actions .btn{ flex:0 1 auto; justify-content:center; }
 .roster-card__actions .btn.tiny{ flex:0 0 auto; }
 .roster-card--unit .roster-card__image{ grid-area:image; }
 .roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
 .roster-card--unit .roster-card__actions{ grid-area:actions; justify-content:flex-start; }
+.roster-card--item .roster-card__mods,
+.roster-card--power .roster-card__mods{ grid-area:mods; }
 
 @media (max-width: 720px){
   .roster-card--unit{
@@ -199,6 +228,21 @@ a{ color:inherit; }
       "image"
       "body"
       "actions";
+  }
+  .roster-card--item,
+  .roster-card--power{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "image"
+      "body"
+      "actions"
+      "mods";
+    min-width:0;
+  }
+  .roster-card--item .roster-card__image,
+  .roster-card--power .roster-card__image{
+    height:auto;
+    min-height:0;
   }
 }
 .roster-card__mods{
