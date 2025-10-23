@@ -181,12 +181,13 @@ a{ color:inherit; }
   background:var(--panel);
   border-radius:12px;
   border:1px solid var(--border);
+  object-fit:contain;
 }
 .roster-card--item .roster-card__image,
 .roster-card--power .roster-card__image{
   grid-area:image;
   aspect-ratio:3/4;
-  object-fit:cover;
+  object-fit:contain;
   align-self:start;
   min-height:260px;
 }
@@ -233,7 +234,7 @@ a{ color:inherit; }
 .roster-card--unit .roster-card__image{
   grid-area:image;
   aspect-ratio:3/4;
-  object-fit:cover;
+  object-fit:contain;
   align-self:start;
   min-height:260px;
 }
@@ -303,7 +304,7 @@ a{ color:inherit; }
 .roster-card__mod-image{
   width:100%;
   aspect-ratio:3/4;
-  object-fit:cover;
+  object-fit:contain;
   background:var(--panel);
   border-radius:10px;
   border:1px solid var(--border);
