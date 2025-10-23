@@ -131,15 +131,17 @@ a{ color:inherit; }
 }
 .roster-card--unit{
   grid-column:span 2;
-  min-width:260px;
-  max-width:480px;
+  min-width:320px;
+  max-width:520px;
   justify-self:start;
   display:grid;
-  grid-template-columns:minmax(0,130px) minmax(0,1fr);
+  grid-template-columns:minmax(280px,1.45fr) minmax(0,1fr);
   grid-template-areas:
     "image body"
     "image actions";
-  gap:.75rem;
+  column-gap:.9rem;
+  row-gap:.35rem;
+  align-items:flex-start;
 }
 .roster-card--item,
 .roster-card--power{
@@ -215,7 +217,13 @@ a{ color:inherit; }
 .roster-card--power .roster-card__actions{ grid-area:actions; }
 .roster-card__actions .btn{ flex:0 1 auto; justify-content:center; }
 .roster-card__actions .btn.tiny{ flex:0 0 auto; }
-.roster-card--unit .roster-card__image{ grid-area:image; }
+.roster-card--unit .roster-card__image{
+  grid-area:image;
+  aspect-ratio:3/4;
+  object-fit:contain;
+  align-self:stretch;
+  min-height:260px;
+}
 .roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
 .roster-card--unit .roster-card__actions{ grid-area:actions; justify-content:flex-start; }
 .roster-card--item .roster-card__mods,
