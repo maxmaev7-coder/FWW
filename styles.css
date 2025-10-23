@@ -187,7 +187,7 @@ a{ color:inherit; }
   grid-area:image;
   aspect-ratio:3/4;
   object-fit:cover;
-  align-self:stretch;
+  align-self:start;
   min-height:260px;
 }
 .roster-card__body{ display:flex; flex-direction:column; gap:.35rem; line-height:1.5; }
@@ -234,7 +234,7 @@ a{ color:inherit; }
   grid-area:image;
   aspect-ratio:3/4;
   object-fit:cover;
-  align-self:stretch;
+  align-self:start;
   min-height:260px;
 }
 .roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
