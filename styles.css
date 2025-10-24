@@ -147,17 +147,36 @@ a{ color:inherit; }
 .roster-card--power{
   display:grid;
   width:100%;
-  grid-template-columns:minmax(360px,1.25fr) minmax(220px,1fr);
+  grid-template-columns:minmax(340px,420px) minmax(220px,1fr);
   grid-template-areas:
     "image body"
     "image actions"
     "image mods";
-  column-gap:.65rem;
+  column-gap:.55rem;
   row-gap:.3rem;
   align-items:flex-start;
   min-width:320px;
 }
 .roster-card--power{ grid-column:auto; }
+.roster-card--wide{
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-areas:
+    "image"
+    "body"
+    "actions"
+    "mods";
+  row-gap:.45rem;
+  max-width:640px;
+}
+.roster-card--wide .roster-card__image{
+  grid-area:image;
+  aspect-ratio:4/3;
+  width:100%;
+  height:auto;
+  min-height:0;
+  align-self:start;
+}
 .roster-card--drag{ box-shadow:0 0 0 2px #3a86ff55 inset; }
 .roster-card--drop{ box-shadow:0 0 0 2px #3a86ff99 inset; }
 .roster-card__drag-handle{
@@ -194,16 +213,18 @@ img.img--portrait-rotate{
   max-height:100%;
   display:block;
 }
-.roster-card--item .roster-card__image,
+.roster-card--item:not(.roster-card--wide) .roster-card__image,
 .roster-card--power .roster-card__image{
   grid-area:image;
   aspect-ratio:3/4;
   object-fit:contain;
   align-self:start;
+  min-height:340px;
 }
-.roster-card__body{ display:flex; flex-direction:column; gap:.3rem; line-height:1.5; }
+.roster-card__body{ display:flex; flex-direction:column; gap:.30rem; line-height:1.5; }
 .roster-card--item .roster-card__body,
 .roster-card--power .roster-card__body{ grid-area:body; gap:.15rem; }
+.roster-card--wide .roster-card__body{ grid-area:body; gap:.25rem; }
 .roster-card__title{ font-weight:600; font-size:16px; }
 .roster-card__meta{
   color:var(--muted);
@@ -227,7 +248,7 @@ img.img--portrait-rotate{
 }
 .roster-card__actions{
   display:flex;
-  gap:.4rem;
+  gap:.35rem;
   flex-wrap:wrap;
   align-items:center;
   justify-content:flex-start;
@@ -235,8 +256,12 @@ img.img--portrait-rotate{
 }
 .roster-card--item .roster-card__actions,
 .roster-card--power .roster-card__actions{ grid-area:actions; }
+.roster-card--wide .roster-card__actions{
+  grid-area:actions;
+  margin-top:.15rem;
+}
 .roster-card__actions .btn{
-  flex:0 1 150px;
+  flex:0 1 130px;
   justify-content:center;
   text-align:center;
 }
