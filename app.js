@@ -456,8 +456,18 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
+  const handleImageOrientation=()=>{
+    if(img.naturalWidth>0 && img.naturalHeight>0){
+      if(img.naturalWidth>img.naturalHeight){
+        card.classList.add('roster-card--landscape')
+      }else{
+        card.classList.remove('roster-card--landscape')
+      }
+    }
+  }
+  img.addEventListener('load', handleImageOrientation)
   safeImg(img, item.img, 'images/missing-item.png')
-  if(itemHasSpecialBars(item)) card.classList.add('roster-card--landscape')
+  if(img.complete) handleImageOrientation()
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
