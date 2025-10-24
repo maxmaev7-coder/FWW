@@ -5,6 +5,35 @@ function safeImg(el, src, fallback){
   el.onerror=()=>{ if(el.dataset.fallback!=='1'){ el.dataset.fallback='1'; el.src=fallback; } };
 }
 
+function ensurePortraitImage(img){
+  if(!img) return;
+  const rotateIfNeeded=()=>{
+    const w=img.naturalWidth;
+    const h=img.naturalHeight;
+    if(!w || !h) return;
+    if(w>h && img.dataset.rotated!=='1'){
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=h;
+        canvas.height=w;
+        const ctx=canvas.getContext('2d');
+        if(!ctx) throw new Error('no-ctx');
+        ctx.translate(canvas.width/2, canvas.height/2);
+        ctx.rotate(-Math.PI/2);
+        ctx.drawImage(img, -w/2, -h/2);
+        img.dataset.rotated='1';
+        img.src=canvas.toDataURL('image/png');
+        return; // wait for the rotated image to load
+      }catch(err){
+        console.error('Failed to rotate image to portrait', err);
+      }
+    }
+    img.removeEventListener('load', rotateIfNeeded);
+  };
+  img.addEventListener('load', rotateIfNeeded);
+  if(img.complete) rotateIfNeeded();
+}
+
 
 function openImagePreview(src){
   if(typeof window!=='undefined' && typeof window.__showImagePreview==='function'){
@@ -352,6 +381,7 @@ function buildRosterUnit(unit){
   const root=tpl.querySelector('.roster-unit')
   root.dataset.uid=unit.uid
   const img=tpl.querySelector('.roster-unit__image')
+  ensurePortraitImage(img)
   safeImg(img, unit.img, 'images/missing-unit.png')
   const nameEl=tpl.querySelector('.roster-unit__name')
   const costEl=tpl.querySelector('.roster-unit__cost')
@@ -438,6 +468,7 @@ function createBadge(text){
 
 function createRosterUnitCard(unit){
   const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
+  ensurePortraitImage(img)
   safeImg(img, unit.img, 'images/missing-unit.png')
   title.textContent = unit.name
   meta.textContent = `${unit.cost} caps`
@@ -456,18 +487,8 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
-  const handleImageOrientation=()=>{
-    if(img.naturalWidth>0 && img.naturalHeight>0){
-      if(img.naturalWidth>img.naturalHeight){
-        card.classList.add('roster-card--landscape')
-      }else{
-        card.classList.remove('roster-card--landscape')
-      }
-    }
-  }
-  img.addEventListener('load', handleImageOrientation)
+  ensurePortraitImage(img)
   safeImg(img, item.img, 'images/missing-item.png')
-  if(img.complete) handleImageOrientation()
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
@@ -533,6 +554,7 @@ function buildModCard(unit, cardIndex, modItem){
   wrap.className='roster-card__mod-card'
   const img=document.createElement('img')
   img.className='roster-card__mod-image thumb'
+  ensurePortraitImage(img)
   safeImg(img, modItem.img, 'images/missing-item.png')
   wrap.appendChild(img)
   const title=document.createElement('div')
@@ -711,7 +733,7 @@ function renderUnitPicker(){
   units.forEach(u=>{
     const card=document.createElement('div'); card.className='card card-unit'; card.dataset.id=u.id
     if(u.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-large'; safeImg(img, u.img, 'images/missing-unit.png')
+    const img=document.createElement('img'); img.className='thumb thumb-large'; ensurePortraitImage(img); safeImg(img, u.img, 'images/missing-unit.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
     const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class="badge">UNIQUE</span>':''}`
@@ -907,7 +929,7 @@ function renderItemPicker(unit){
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
     if(item.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; safeImg(img, item.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, item.img, 'images/missing-item.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=item.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
@@ -979,7 +1001,7 @@ function renderModPicker(mods){
   mods.forEach(mod=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=mod.id
     if(mod.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; safeImg(img, mod.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, mod.img, 'images/missing-item.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
@@ -1181,6 +1203,7 @@ function buildPrintSheet(){
       const cell=document.createElement('article')
       cell.className='pdf-card'
       const img=new Image()
+      ensurePortraitImage(img)
       safeImg(img, entry.img, entry.fallback)
       img.decoding='sync'
       img.loading='eager'
@@ -1190,6 +1213,7 @@ function buildPrintSheet(){
         modsWrap.className='pdf-card__mod'
         entry.mods.forEach(modEntry=>{
           const modImg=new Image()
+          ensurePortraitImage(modImg)
           safeImg(modImg, modEntry.img, modEntry.fallback)
           modImg.decoding='sync'
           modImg.loading='eager'
