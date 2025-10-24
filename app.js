@@ -7,39 +7,28 @@ function safeImg(el, src, fallback){
 
 function ensurePortraitImage(img){
   if(!img) return;
-  const rotateIfNeeded=()=>{
+  const applyOrientation=()=>{
     const w=img.naturalWidth;
     const h=img.naturalHeight;
     if(!w || !h) return;
-    if(w>h && img.dataset.rotated!=='1'){
-      try{
-        const canvas=document.createElement('canvas');
-        canvas.width=h;
-        canvas.height=w;
-        const ctx=canvas.getContext('2d');
-        if(!ctx) throw new Error('no-ctx');
-        ctx.translate(canvas.width/2, canvas.height/2);
-        ctx.rotate(-Math.PI/2);
-        ctx.drawImage(img, -w/2, -h/2);
-        img.src=canvas.toDataURL('image/png');
-        img.dataset.rotated='1';
-        return; // wait for the rotated image to load
-      }catch(err){
-        console.error('Failed to rotate image to portrait', err);
-        img.classList.add('img--portrait-rotate');
-        img.dataset.rotated='1';
-      }
-    }
-    img.removeEventListener('load', rotateIfNeeded);
+    const isLandscape=w>=h;
+    img.classList.toggle('img--landscape', isLandscape);
+    img.classList.toggle('img--portrait', !isLandscape);
   };
-  img.addEventListener('load', rotateIfNeeded);
-  if(img.complete) rotateIfNeeded();
+  const handleLoad=()=>{
+    applyOrientation();
+    img.removeEventListener('load', handleLoad);
+  };
+  img.addEventListener('load', handleLoad);
+  if(img.complete) handleLoad();
 }
 
 
-function openImagePreview(src){
+function openImagePreview(data){
+  const payload=typeof data==='string' ? { src:data } : (data||{});
+  if(!payload.src) return;
   if(typeof window!=='undefined' && typeof window.__showImagePreview==='function'){
-    window.__showImagePreview(src)
+    window.__showImagePreview(payload)
   }
 }
 
@@ -478,7 +467,9 @@ function createRosterUnitCard(unit){
   const preview=document.createElement('button')
   preview.className='btn tiny secondary'
   preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(unit.img) })
+  const unitTags=normalizeDescriptorText(describeUnitTags(unit))
+  const previewPayload={ src:unit.img, title:unit.name, caps:formatCaps(unit.cost), tags:unitTags }
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
   actions.appendChild(preview)
   return card
 }
@@ -501,14 +492,24 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   const preview=document.createElement('button')
   preview.className='btn tiny secondary'
   preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
+  const itemTags=normalizeDescriptorText(describeItemTags(item))
+  const previewPayload={
+    src:item.img,
+    title:item.name,
+    caps:formatCaps(item.cost),
+    tags:itemTags,
+    actions:[]
+  }
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
   actions.appendChild(preview)
   if(canAddMod(unit, cardData, item)){
     const modBtn=document.createElement('button')
     modBtn.className='btn tiny'
     modBtn.textContent = cardData.modId ? 'Изменить мод' : 'Добавить мод'
-    modBtn.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid,index) })
+    const openMods=()=>openModPicker(unit.uid,index)
+    modBtn.addEventListener('click', e=>{ e.stopPropagation(); openMods() })
     actions.appendChild(modBtn)
+    previewPayload.actions.push({ label:modBtn.textContent, kind:'secondary', onClick:()=>openMods() })
   }
   const removeBtn=document.createElement('button')
   removeBtn.className='btn tiny danger'
@@ -517,7 +518,9 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
     removeBtn.disabled=true
     removeBtn.title='Встроенная карта'
   }else{
-    removeBtn.addEventListener('click', e=>{ e.stopPropagation(); removeItem(unit.uid,index) })
+    const remove=()=>removeItem(unit.uid,index)
+    removeBtn.addEventListener('click', e=>{ e.stopPropagation(); remove() })
+    previewPayload.actions.push({ label:'Удалить', kind:'danger', onClick:()=>remove() })
   }
   actions.appendChild(removeBtn)
   if(!actions.children.length) actions.classList.add('hidden')
@@ -572,18 +575,30 @@ function buildModCard(unit, cardIndex, modItem){
   const preview=document.createElement('button')
   preview.className='btn tiny secondary'
   preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
+  const modTags=normalizeDescriptorText(describeItemTags(modItem))
+  const previewPayload={
+    src:modItem.img,
+    title:modItem.name,
+    caps:formatCaps(modItem.cost),
+    tags:modTags,
+    actions:[]
+  }
+  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
   actions.appendChild(preview)
   const change=document.createElement('button')
   change.className='btn tiny'
   change.textContent='Изменить'
-  change.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid, cardIndex) })
+  const changeMod=()=>openModPicker(unit.uid, cardIndex)
+  change.addEventListener('click', e=>{ e.stopPropagation(); changeMod() })
   actions.appendChild(change)
+  previewPayload.actions.push({ label:'Изменить', kind:'secondary', onClick:()=>changeMod() })
   const remove=document.createElement('button')
   remove.className='btn tiny danger'
   remove.textContent='Удалить'
-  remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
+  const removeModAction=()=>removeMod(unit.uid, cardIndex)
+  remove.addEventListener('click', e=>{ e.stopPropagation(); removeModAction() })
   actions.appendChild(remove)
+  previewPayload.actions.push({ label:'Удалить', kind:'danger', onClick:()=>removeModAction() })
   wrap.appendChild(actions)
   img.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
   return wrap
@@ -741,7 +756,9 @@ function renderUnitPicker(){
     const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class="badge">UNIQUE</span>':''}`
     const actions=document.createElement('div'); actions.className='actions'
     const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(u.img) })
+    const unitTags=normalizeDescriptorText(describeUnitTags(u))
+    const previewPayload={ src:u.img, title:u.name, caps:formatCaps(u.cost), tags:unitTags }
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
     actions.appendChild(preview)
     body.appendChild(title); body.appendChild(meta)
     card.appendChild(img); card.appendChild(body); card.appendChild(actions)
@@ -929,32 +946,72 @@ function renderItemPicker(unit){
   }
   items.sort((a,b)=>{ if(a.cost!==b.cost) return a.cost-b.cost; return a.name.localeCompare(b.name,'ru') })
   items.forEach(item=>{
-    const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
-    if(item.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, item.img, 'images/missing-item.png')
-    const body=document.createElement('div'); body.className='card-body'
-    const title=document.createElement('div'); title.className='title'; title.textContent=item.name
-    const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
-    body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body)
-    const actions=document.createElement('div'); actions.className='actions'
-    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
-    actions.appendChild(preview)
-    card.appendChild(actions)
-    if(!usingModCatalog){
-      const activate=()=>addItemToUnit(unit.uid,item.id)
-      card.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
-      card.tabIndex=0
-      card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
-    }else{
-      card.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
-      const hint=document.createElement('div')
-      hint.className='meta'
-      hint.textContent='Добавьте через «+ мод» у предмета'
-      body.appendChild(hint)
+    const row=document.createElement('div')
+    row.className='list-item list-item--compact'
+    row.dataset.id=item.id
+    if(item.unique) row.dataset.tag='unique'
+    const thumb=document.createElement('div')
+    thumb.className='list-item__thumb'
+    const img=document.createElement('img')
+    img.alt=item.name
+    ensurePortraitImage(img)
+    safeImg(img, item.img, 'images/missing-item.png')
+    thumb.appendChild(img)
+    row.appendChild(thumb)
+
+    const meta=document.createElement('div')
+    meta.className='list-item__meta'
+    const title=document.createElement('span')
+    title.className='list-item__title'
+    title.textContent=item.name
+    meta.appendChild(title)
+
+    const caps=document.createElement('span')
+    caps.className='list-item__caps'
+    caps.textContent=formatCaps(item.cost)
+    meta.appendChild(caps)
+
+    const tagsText=describeItemTags(item)
+    if(tagsText && tagsText!=='—'){
+      const tags=document.createElement('span')
+      tags.className='list-item__tags'
+      tags.textContent=tagsText
+      meta.appendChild(tags)
     }
-    list.appendChild(card)
+
+    const actions=document.createElement('div')
+    actions.className='list-item__actions'
+    const preview=document.createElement('button')
+    preview.className='btn small secondary preview'
+    preview.textContent='Превью'
+    const previewTags=normalizeDescriptorText(describeItemTags(item))
+    const previewPayload={ src:item.img, title:item.name, caps:formatCaps(item.cost), tags:previewTags }
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
+    actions.appendChild(preview)
+
+    row.tabIndex=0
+    row.setAttribute('role','button')
+    if(!usingModCatalog){
+      const add=document.createElement('button')
+      add.className='btn small'
+      add.textContent='Добавить'
+      const activate=()=>addItemToUnit(unit.uid,item.id)
+      add.addEventListener('click', e=>{ e.stopPropagation(); activate() })
+      actions.appendChild(add)
+      row.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
+      row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
+    }else{
+      row.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
+      row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openImagePreview(previewPayload) } })
+      const hint=document.createElement('span')
+      hint.className='list-item__hint'
+      hint.textContent='Добавьте через «+ мод» у предмета'
+      meta.appendChild(hint)
+    }
+
+    meta.appendChild(actions)
+    row.appendChild(meta)
+    list.appendChild(row)
   })
 }
 function canAddMod(unit, card, base){
@@ -1001,23 +1058,63 @@ function renderModPicker(mods){
     return a.name.localeCompare(b.name,'ru')
   })
   mods.forEach(mod=>{
-    const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=mod.id
-    if(mod.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, mod.img, 'images/missing-item.png')
-    const body=document.createElement('div'); body.className='card-body'
-    const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
-    const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
-    body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body)
-    const actions=document.createElement('div'); actions.className='actions'
-    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(mod.img) })
-    const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
-    add.addEventListener('click', e=>{ e.stopPropagation(); applyModToUnit(mod.id) })
-    actions.appendChild(preview); actions.appendChild(add)
-    card.appendChild(actions)
-    card.addEventListener('click', e=>{ if(e.target.closest('button')) return; applyModToUnit(mod.id) })
-    list.appendChild(card)
+    const row=document.createElement('div')
+    row.className='list-item list-item--compact'
+    row.dataset.id=mod.id
+    if(mod.unique) row.dataset.tag='unique'
+    const thumb=document.createElement('div')
+    thumb.className='list-item__thumb'
+    const img=document.createElement('img')
+    img.alt=mod.name
+    ensurePortraitImage(img)
+    safeImg(img, mod.img, 'images/missing-item.png')
+    thumb.appendChild(img)
+    row.appendChild(thumb)
+
+    const meta=document.createElement('div')
+    meta.className='list-item__meta'
+    const title=document.createElement('span')
+    title.className='list-item__title'
+    title.textContent=mod.name
+    meta.appendChild(title)
+
+    const caps=document.createElement('span')
+    caps.className='list-item__caps'
+    caps.textContent=formatCaps(mod.cost)
+    meta.appendChild(caps)
+
+    const tagsText=describeItemTags(mod)
+    if(tagsText && tagsText!=='—'){
+      const tags=document.createElement('span')
+      tags.className='list-item__tags'
+      tags.textContent=tagsText
+      meta.appendChild(tags)
+    }
+
+    const actions=document.createElement('div')
+    actions.className='list-item__actions'
+    const preview=document.createElement('button')
+    preview.className='btn small secondary preview'
+    preview.textContent='Превью'
+    const previewTags=normalizeDescriptorText(describeItemTags(mod))
+    const previewPayload={ src:mod.img, title:mod.name, caps:formatCaps(mod.cost), tags:previewTags }
+    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(previewPayload) })
+    actions.appendChild(preview)
+
+    const add=document.createElement('button')
+    add.className='btn small'
+    add.textContent='Добавить'
+    const apply=()=>applyModToUnit(mod.id)
+    add.addEventListener('click', e=>{ e.stopPropagation(); apply() })
+    actions.appendChild(add)
+
+    meta.appendChild(actions)
+    row.appendChild(meta)
+    row.addEventListener('click', e=>{ if(e.target.closest('button')) return; apply() })
+    row.tabIndex=0
+    row.setAttribute('role','button')
+    row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); apply() } })
+    list.appendChild(row)
   })
 }
 function applyModToUnit(modId){
@@ -1042,20 +1139,60 @@ function removeMod(uid,index){
   renderRoster()
 }
 
-function infoLine(x){
+function collectItemTags(x){
   const tags=[]
-  WEAPON_KEYS.forEach(k=>{ if(x.weapon[k]) tags.push(k) })
-  if(x.cats.Armor) tags.push('Armor')
-  if(x.cats['Power Armor']) tags.push('Power Armor')
-  if(x.cats.Clothes) tags.push('Clothes')
-  if(x.cats.Gear) tags.push('Gear')
-  if(x.cats.Chem) tags.push('Chem')
-  if(x.cats.Alcohol) tags.push('Alcohol')
-  if(x.cats.Food) tags.push('Food')
-  ACCESS_KEYS.forEach(k=>{ if(x.cats[k] && !tags.includes(k)) tags.push(k) })
-  if(x.cats.Perks && !tags.includes('Perk')) tags.push('Perk')
-  if(x.cats.Leader && !tags.includes('Leader')) tags.push('Leader')
+  const weapons=x.weapon||{}
+  const cats=x.cats||{}
+  WEAPON_KEYS.forEach(k=>{ if(weapons[k]) tags.push(k) })
+  if(cats.Armor) tags.push('Armor')
+  if(cats['Power Armor']) tags.push('Power Armor')
+  if(cats.Clothes) tags.push('Clothes')
+  if(cats.Gear) tags.push('Gear')
+  if(cats.Chem) tags.push('Chem')
+  if(cats.Alcohol) tags.push('Alcohol')
+  if(cats.Food) tags.push('Food')
+  ACCESS_KEYS.forEach(k=>{ if(cats[k] && !tags.includes(k)) tags.push(k) })
+  if(cats.Perks && !tags.includes('Perk')) tags.push('Perk')
+  if(cats.Leader && !tags.includes('Leader')) tags.push('Leader')
   if(x.is_mod) tags.push('Mod')
+  return tags
+}
+
+function describeItemTags(x){
+  const tags=collectItemTags(x)
+  let descriptor = tags.length ? tags.join(' · ') : '—'
+  if(x.unique){
+    descriptor = descriptor==='—' ? 'UNIQUE' : `${descriptor} · UNIQUE`
+  }
+  return descriptor
+}
+
+function formatCaps(value){
+  if(typeof value==='number' && Number.isFinite(value)){
+    return `${value} caps`
+  }
+  const parsed=Number(value)
+  if(Number.isFinite(parsed)) return `${parsed} caps`
+  if(typeof value==='string' && value.trim()) return `${value.trim()} caps`
+  return '— caps'
+}
+
+function describeUnitTags(unit){
+  const tags=[]
+  if(Array.isArray(unit.factions) && unit.factions.length){
+    tags.push(unit.factions.join(' / '))
+  }
+  if(unit.unique) tags.push('UNIQUE')
+  return tags.length ? tags.join(' · ') : '—'
+}
+
+function normalizeDescriptorText(value){
+  if(!value || value==='—') return ''
+  return value
+}
+
+function infoLine(x){
+  const tags=collectItemTags(x)
   const uniq=x.unique? ' · UNIQUE':''
   const descriptor = tags.length ? tags.join(' / ') : '—'
   return `${x.cost} caps · ${descriptor}${uniq}`
@@ -1278,24 +1415,120 @@ window.addEventListener('afterprint', ()=>{
 
 // === Quick zoom for item/perk thumbs ===
 (function(){
-  const zoom = document.createElement('div');
-  zoom.id='zoomPreview';
-  zoom.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9999';
-  const pic = new Image();
-  pic.style.maxWidth='92vw'; pic.style.maxHeight='92vh'; pic.style.border='8px solid #000'; pic.style.boxShadow='0 10px 30px rgba(0,0,0,.6)';
-  zoom.appendChild(pic);
-  document.body.appendChild(zoom);
-  const hide=()=>{ zoom.style.display='none' }
-  const show=src=>{
-    if(!src) return
-    pic.src=src
-    zoom.style.display='flex'
+  const overlay=document.createElement('div')
+  overlay.id='zoomPreview'
+  overlay.className='preview-overlay'
+  overlay.setAttribute('aria-hidden','true')
+
+  const card=document.createElement('div')
+  card.className='preview-card card--landscape'
+  overlay.appendChild(card)
+
+  const frame=document.createElement('figure')
+  frame.className='preview-card__frame'
+  const pic=new Image()
+  pic.decoding='async'
+  frame.appendChild(pic)
+  card.appendChild(frame)
+
+  const meta=document.createElement('div')
+  meta.className='preview-card__meta'
+  const title=document.createElement('h4')
+  title.className='preview-card__title'
+  meta.appendChild(title)
+  const caps=document.createElement('span')
+  caps.className='preview-card__caps'
+  meta.appendChild(caps)
+  const tags=document.createElement('span')
+  tags.className='preview-card__tags'
+  meta.appendChild(tags)
+  const actions=document.createElement('div')
+  actions.className='preview-card__actions'
+  meta.appendChild(actions)
+  card.appendChild(meta)
+
+  document.body.appendChild(overlay)
+  overlay.dataset.visible='false'
+
+  const resetMeta=()=>{
+    title.textContent=''
+    title.hidden=true
+    caps.textContent=''
+    caps.hidden=true
+    tags.textContent=''
+    tags.hidden=true
+    actions.innerHTML=''
+    actions.hidden=true
   }
-  window.__showImagePreview = show
-  zoom.addEventListener('click', hide)
-  document.addEventListener('click', (e)=>{
-    if(e.target && e.target.classList && e.target.classList.contains('thumb')){
-      show(e.target.src)
+
+  resetMeta()
+
+  const updateOrientation=()=>{
+    card.classList.remove('card--landscape','card--portrait')
+    const w=pic.naturalWidth
+    const h=pic.naturalHeight
+    if(w && h){
+      card.classList.add(w>=h ? 'card--landscape':'card--portrait')
     }
-  }, true);
-})();
+  }
+
+  const hide=()=>{
+    overlay.dataset.visible='false'
+    overlay.setAttribute('aria-hidden','true')
+    resetMeta()
+  }
+
+  const show=payload=>{
+    if(!payload || !payload.src) return
+    resetMeta()
+    overlay.dataset.visible='true'
+    overlay.setAttribute('aria-hidden','false')
+    if(payload.title){
+      title.textContent=payload.title
+      title.hidden=false
+    }
+    if(payload.caps){
+      caps.textContent=payload.caps
+      caps.hidden=false
+    }
+    if(payload.tags){
+      tags.textContent=payload.tags
+      tags.hidden=false
+    }
+    const actionsList=Array.isArray(payload.actions)?payload.actions.filter(Boolean):[]
+    actions.innerHTML=''
+    if(actionsList.length){
+      actions.hidden=false
+      actionsList.forEach(action=>{
+        const btn=document.createElement('button')
+        btn.className='btn small'
+        if(action.kind==='danger') btn.classList.add('danger')
+        if(action.kind==='secondary') btn.classList.add('secondary')
+        btn.textContent=action.label||'Действие'
+        btn.addEventListener('click', e=>{
+          e.preventDefault()
+          e.stopPropagation()
+          hide()
+          if(typeof action.onClick==='function') action.onClick()
+        })
+        actions.appendChild(btn)
+      })
+    }else{
+      actions.hidden=true
+    }
+    pic.alt=payload.alt || payload.title || ''
+    pic.src=payload.src
+  }
+
+  pic.addEventListener('load', updateOrientation)
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) hide() })
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.dataset.visible==='true') hide() })
+  document.addEventListener('click', e=>{
+    if(e.target && e.target.classList && e.target.classList.contains('thumb')){
+      const target=e.target
+      show({ src:target.src, title:target.alt||'' })
+    }
+  }, true)
+
+  window.__showImagePreview = show
+})()
