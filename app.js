@@ -457,7 +457,6 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
   safeImg(img, item.img, 'images/missing-item.png')
-  if(itemHasSpecialBars(item)) card.classList.add('roster-card--landscape')
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
