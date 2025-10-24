@@ -1,0 +1,70 @@
+:root {
+  /* Color palette inspired by Fallout aesthetics */
+  --color-background: #14110f;
+  --color-surface: #1f1a17;
+  --color-surface-elevated: #26201c;
+  --color-border: rgba(245, 215, 110, 0.25);
+  --color-text-primary: #f5d76e;
+  --color-text-secondary: rgba(245, 215, 110, 0.8);
+  --color-text-muted: rgba(245, 215, 110, 0.6);
+  --color-accent: #98c379;
+  --color-accent-strong: #ffb347;
+  --color-danger: #d9534f;
+  --color-focus: rgba(255, 198, 109, 0.75);
+  --color-shadow: rgba(0, 0, 0, 0.35);
+
+  /* Typography */
+  --font-family-base: 'Roboto Mono', 'Share Tech Mono', 'Fira Sans', sans-serif;
+  --font-size-title: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --font-size-body: clamp(0.875rem, 0.82rem + 0.25vw, 0.95rem);
+  --font-size-meta: clamp(0.75rem, 0.7rem + 0.2vw, 0.85rem);
+
+  /* Spacing scale based on 8pt grid */
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-6: 12px;
+  --space-8: 16px;
+
+  /* Card layout tokens */
+  --card-width: 320px;
+  --card-height: 160px;
+  --card-radius: 8px;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition-duration: 0.2s;
+  --transition-ease: ease;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-background: #f7f2e4;
+    --color-surface: #fffaf0;
+    --color-surface-elevated: #f2e4c9;
+    --color-border: rgba(44, 34, 22, 0.16);
+    --color-text-primary: #3a2f20;
+    --color-text-secondary: rgba(58, 47, 32, 0.8);
+    --color-text-muted: rgba(58, 47, 32, 0.6);
+    --color-accent: #3c7257;
+    --color-accent-strong: #be7f36;
+    --color-danger: #8c3129;
+    --color-shadow: rgba(0, 0, 0, 0.15);
+  }
+}
+
+body {
+  font-family: var(--font-family-base);
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
