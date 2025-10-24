@@ -21,11 +21,13 @@ function ensurePortraitImage(img){
         ctx.translate(canvas.width/2, canvas.height/2);
         ctx.rotate(-Math.PI/2);
         ctx.drawImage(img, -w/2, -h/2);
-        img.dataset.rotated='1';
         img.src=canvas.toDataURL('image/png');
+        img.dataset.rotated='1';
         return; // wait for the rotated image to load
       }catch(err){
         console.error('Failed to rotate image to portrait', err);
+        img.classList.add('img--portrait-rotate');
+        img.dataset.rotated='1';
       }
     }
     img.removeEventListener('load', rotateIfNeeded);

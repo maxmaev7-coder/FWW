@@ -86,7 +86,7 @@ a{ color:inherit; }
 }
 .roster-unit__summary{ display:flex; gap:.85rem; align-items:center; }
 .roster-unit__image{
-  width:150px;
+  width:120px;
   aspect-ratio:3/4;
   object-fit:cover;
   border-radius:1rem;
@@ -94,7 +94,7 @@ a{ color:inherit; }
   background:var(--panel);
 }
 @media (max-width: 1100px){
-  .roster-unit__image{ width:125px; }
+  .roster-unit__image{ width:100px; }
 }
 .roster-unit__meta{ display:flex; flex-direction:column; gap:.35rem; }
 .roster-unit__name{ font-weight:700; font-size:1.15rem; }
@@ -147,7 +147,7 @@ a{ color:inherit; }
 .roster-card--power{
   display:grid;
   width:100%;
-  grid-template-columns:minmax(300px,380px) minmax(240px,1fr);
+  grid-template-columns:minmax(360px,1.25fr) minmax(220px,1fr);
   grid-template-areas:
     "image body"
     "image actions"
@@ -182,6 +182,17 @@ a{ color:inherit; }
   border-radius:12px;
   border:none;
   object-fit:contain;
+  min-height:320px;
+}
+
+/* Фолбэк-класс: поворот на 90° */
+img.img--portrait-rotate{
+  transform:rotate(90deg);
+  width:auto !important;
+  height:100% !important;
+  max-width:100%;
+  max-height:100%;
+  display:block;
 }
 .roster-card--item .roster-card__image,
 .roster-card--power .roster-card__image{
@@ -189,7 +200,6 @@ a{ color:inherit; }
   aspect-ratio:3/4;
   object-fit:contain;
   align-self:start;
-  min-height:300px;
 }
 .roster-card__body{ display:flex; flex-direction:column; gap:.3rem; line-height:1.5; }
 .roster-card--item .roster-card__body,
@@ -360,7 +370,7 @@ a{ color:inherit; }
 .card .preview{ flex:0 0 auto; }
 .thumb{ cursor:pointer; }
 .thumb-large{ width:100%; aspect-ratio:3/4; object-fit:contain; border-radius:12px; border:none; background:#fff; }
-.thumb-item{ width:100%; height:230px; object-fit:contain; border-radius:12px; border:none; background:#fff; }
+.thumb-item{ width:100%; height:260px; object-fit:contain; border-radius:12px; border:none; background:#fff; }
 .empty{ border:1px dashed var(--border); border-radius:12px; padding:1.5rem; text-align:center; color:var(--muted); }
 
 .badge{
