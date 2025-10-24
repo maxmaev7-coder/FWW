@@ -53,6 +53,14 @@ function createDefaultItemFilter(){
   return { group:null, weapon:null, flags:{ stripes:false, mods:false, chem:false } }
 }
 
+function isWeaponLike(item){
+  const hay=[
+    item.type, item.category, item.group, item.tags,
+    item.subtype, item.slot, item.name
+  ].filter(Boolean).join(' ').toLowerCase();
+  return /(weapon|melee|ranged|gun|pistol|rifle|shotgun|sniper|blade|sword|knife|minigun|grenade|missile|laser)/i.test(hay);
+}
+
 function resolveStoredPdfSize(){
   try{
     const saved = localStorage.getItem('pdfCardSize')
@@ -489,6 +497,19 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
+  const allowLandscape=isWeaponLike(item)
+  if(allowLandscape) img.dataset.allowLandscape='1'
+  const applyLayoutByOrientation=()=>{
+    const w=img.naturalWidth, h=img.naturalHeight
+    if(!w || !h) return
+    card.classList.remove('roster-card--wide')
+    if(allowLandscape && w>h){
+      card.classList.add('roster-card--wide')
+    }
+    img.removeEventListener('load', applyLayoutByOrientation)
+  }
+  img.addEventListener('load', applyLayoutByOrientation)
+  if(img.complete) applyLayoutByOrientation()
   ensurePortraitImage(img)
   safeImg(img, item.img, 'images/missing-item.png')
   title.textContent = item.name
@@ -1298,4 +1319,37 @@ window.addEventListener('afterprint', ()=>{
       show(e.target.src)
     }
   }, true);
+})();
+
+(function(){
+  if(typeof window==='undefined') return;
+
+  const prevEnsure=window.ensurePortraitImage;
+  window.ensurePortraitImage=function(img){
+    if(!img) return;
+
+    const allowLandscape=img.dataset.allowLandscape==='1';
+
+    if(allowLandscape) return;
+
+    const rotateCss=()=>{
+      img.style.transform='rotate(90deg)';
+      img.style.transformOrigin='center center';
+      img.style.width='auto';
+      img.style.height='100%';
+      img.dataset.rotated=img.dataset.rotated||'1';
+    };
+
+    try{ prevEnsure && prevEnsure(img); }catch(_){ }
+
+    const check=()=>{
+      if(img.naturalWidth>0 && img.naturalHeight>0 &&
+         img.naturalWidth>img.naturalHeight && img.dataset.rotated!=='1'){
+        rotateCss();
+      }
+      img.removeEventListener('load', check);
+    };
+    img.addEventListener('load', check);
+    if(img.complete) check();
+  };
 })();
