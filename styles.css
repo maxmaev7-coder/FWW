@@ -178,9 +178,9 @@ a{ color:inherit; }
   width:100%;
   height:auto;
   display:block;
-  background:var(--panel);
+  background:#fff;
   border-radius:12px;
-  border:1px solid var(--border);
+  border:none;
   object-fit:contain;
 }
 .roster-card--item .roster-card__image,
@@ -267,22 +267,6 @@ a{ color:inherit; }
     min-height:0;
   }
 }
-.roster-card--item.roster-card--landscape,
-.roster-card--power.roster-card--landscape{
-  grid-template-columns:minmax(360px,440px) minmax(220px,1fr);
-}
-.roster-card--landscape .roster-card__image{
-  aspect-ratio:4/3;
-  min-height:0;
-  height:auto;
-  align-self:center;
-}
-@media (max-width: 720px){
-  .roster-card--item.roster-card--landscape,
-  .roster-card--power.roster-card--landscape{
-    grid-template-columns:1fr;
-  }
-}
 .roster-card__mods{
   display:flex;
   flex-direction:column;
@@ -305,9 +289,9 @@ a{ color:inherit; }
   width:100%;
   aspect-ratio:3/4;
   object-fit:contain;
-  background:var(--panel);
+  background:#fff;
   border-radius:10px;
-  border:1px solid var(--border);
+  border:none;
   cursor:pointer;
   display:block;
 }
@@ -375,8 +359,8 @@ a{ color:inherit; }
 .card .take{ align-self:stretch; margin-top:auto; }
 .card .preview{ flex:0 0 auto; }
 .thumb{ cursor:pointer; }
-.thumb-large{ width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:12px; border:1px solid var(--border); background:var(--panel); }
-.thumb-item{ width:100%; height:230px; object-fit:cover; border-radius:12px; border:1px solid var(--border); background:var(--panel); }
+.thumb-large{ width:100%; aspect-ratio:3/4; object-fit:contain; border-radius:12px; border:none; background:#fff; }
+.thumb-item{ width:100%; height:230px; object-fit:contain; border-radius:12px; border:none; background:#fff; }
 .empty{ border:1px dashed var(--border); border-radius:12px; padding:1.5rem; text-align:center; color:var(--muted); }
 
 .badge{
