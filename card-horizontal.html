@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FWW Builder — Горизонтальные карточки</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="design-tokens.css" />
+    <link rel="stylesheet" href="grid-system.css" />
+    <link rel="stylesheet" href="card-styles.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: var(--space-8);
+        gap: var(--space-8);
+      }
+
+      header {
+        max-width: 720px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: clamp(1.25rem, 1.1rem + 1vw, 1.75rem);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: var(--space-3);
+      }
+
+      header p {
+        margin: 0;
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-body);
+      }
+
+      .card-meta {
+        display: flex;
+        gap: var(--space-4);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Карточная система FWW Builder</h1>
+      <p>
+        Горизонтальный интерфейс карточек с Fallout-стилистикой. Используйте
+        классы <code>.card</code>, <code>.horizontal</code> и сетку
+        <code>.card-collection</code> для компоновки.
+      </p>
+    </header>
+
+    <section class="card-collection" aria-label="Коллекция карт">
+      <article class="card horizontal" role="group" aria-labelledby="card-1">
+        <figure class="card-image">
+          <img src="images/items/gatling-laser.png" alt="Лазерная винтовка" />
+        </figure>
+        <div class="card-content">
+          <h3 class="card-title" id="card-1">Лазерная винтовка</h3>
+          <div class="card-stats" aria-label="Характеристики">
+            <span class="stat" aria-label="Сила">STR: 6</span>
+            <span class="stat" aria-label="Защита">DEF: 3</span>
+            <span class="stat" aria-label="Точность">ACC: 8</span>
+          </div>
+          <div class="card-meta">
+            <span>Энергетическое оружие</span>
+            <span>Редкость: Эпическое</span>
+          </div>
+          <div class="card-price" aria-label="Стоимость">120 крышек</div>
+          <div class="card-actions">
+            <button class="btn-primary" type="button">Превью</button>
+            <button class="btn-secondary" type="button">Изменить мод</button>
+            <button class="btn-danger" type="button">Удалить</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card horizontal" role="group" aria-labelledby="card-2">
+        <figure class="card-image">
+          <img src="images/items/combat-armor.png" alt="Броня Братства Стали" />
+        </figure>
+        <div class="card-content">
+          <h3 class="card-title" id="card-2">Броня Братства Стали</h3>
+          <div class="card-stats" aria-label="Характеристики">
+            <span class="stat" aria-label="Сила">STR: 4</span>
+            <span class="stat" aria-label="Защита">DEF: 9</span>
+            <span class="stat" aria-label="Выносливость">END: 7</span>
+          </div>
+          <div class="card-meta">
+            <span>Энергозащитная броня</span>
+            <span>Редкость: Легендарная</span>
+          </div>
+          <div class="card-price" aria-label="Стоимость">260 крышек</div>
+          <div class="card-actions">
+            <button class="btn-primary" type="button">Превью</button>
+            <button class="btn-secondary" type="button">Изменить мод</button>
+            <button class="btn-danger" type="button">Удалить</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card horizontal" role="group" aria-labelledby="card-3">
+        <figure class="card-image">
+          <img src="images/items/med-x.jpg" alt="Набор медикаментов" />
+        </figure>
+        <div class="card-content">
+          <h3 class="card-title" id="card-3">Набор медикаментов</h3>
+          <div class="card-stats" aria-label="Характеристики">
+            <span class="stat" aria-label="Восстановление">HEAL: 12</span>
+            <span class="stat" aria-label="Редкость">RAR: 3</span>
+          </div>
+          <div class="card-meta">
+            <span>Предмет поддержки</span>
+            <span>Редкость: Редкая</span>
+          </div>
+          <div class="card-price" aria-label="Стоимость">80 крышек</div>
+          <div class="card-actions">
+            <button class="btn-primary" type="button">Превью</button>
+            <button class="btn-secondary" type="button">Изменить мод</button>
+            <button class="btn-danger" type="button">Удалить</button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </body>
+</html>
