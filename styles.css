@@ -477,3 +477,40 @@ body.modal-open{ overflow:hidden; }
   transform: rotate(-90deg);
   transform-origin: center;
 }
+
+/* === Orientation-aware layout === */
+.roster-card.is-landscape-card{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.roster-card.is-landscape-card .roster-card__image.thumb{
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: var(--thumb-h);
+}
+.roster-card.is-landscape-card .roster-card__body{
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* Плитки предметов/модов в пикерах */
+.card.card-item.is-landscape-card{
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 10px;
+}
+.card.card-item.is-landscape-card .thumb{
+  width: 100%;
+  height: auto;
+  max-height: var(--thumb-h);
+}
+.card.card-item:not(.is-landscape-card) .thumb{
+  height: var(--thumb-h);
+  width: auto;
+}
+
+/* На всякий случай (для универсальности) */
+img.img--landscape{ height: auto; width: 100%; }

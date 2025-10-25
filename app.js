@@ -6,13 +6,14 @@ function safeImg(el, src, fallback){
 }
 
 function ensurePortraitImage(img, opts = {}){
-  const { forceRotate = false } = opts;
+  const { forceRotate = false, preferPortrait = false } = opts;
   if(!img) return;
   const rotateIfNeeded=()=>{
     const w=img.naturalWidth;
     const h=img.naturalHeight;
     if(!w || !h) return;
-    if((forceRotate || w>h) && img.dataset.rotated!=='1'){
+    const shouldRotate = forceRotate || (preferPortrait && w>h);
+    if(shouldRotate && img.dataset.rotated!=='1'){
       try{
         const canvas=document.createElement('canvas');
         canvas.width=h;
@@ -31,10 +32,31 @@ function ensurePortraitImage(img, opts = {}){
         img.dataset.rotated='1';
       }
     }
-    img.removeEventListener('load', rotateIfNeeded);
+    if(!shouldRotate || img.dataset.rotated==='1'){
+      const wasRotated = img.dataset.rotated==='1';
+      const landscape=!wasRotated && w>h;
+      img.classList.toggle('img--landscape', landscape);
+      img.classList.toggle('img--portrait', !landscape);
+      img.removeEventListener('load', rotateIfNeeded);
+    }
   };
   img.addEventListener('load', rotateIfNeeded);
   if(img.complete) rotateIfNeeded();
+}
+
+// Помечаем карточку классом, если картинка горизонтальная (и мы её не вращали)
+function markCardOrientationOnLoad(img, cardEl){
+  const apply=()=>{
+    const isLandscape = img.dataset.rotated!=='1' && img.naturalWidth > img.naturalHeight;
+    img.classList.toggle('img--landscape', isLandscape);
+    img.classList.toggle('img--portrait', !isLandscape);
+    if(cardEl){
+      cardEl.classList.toggle('is-landscape-card', isLandscape);
+      cardEl.classList.toggle('is-portrait-card', !isLandscape);
+    }
+  };
+  img.addEventListener('load', apply);
+  if(img.complete) apply();
 }
 
 
@@ -384,7 +406,7 @@ function buildRosterUnit(unit){
   const root=tpl.querySelector('.roster-unit')
   root.dataset.uid=unit.uid
   const img=tpl.querySelector('.roster-unit__image')
-  ensurePortraitImage(img)
+  ensurePortraitImage(img, { preferPortrait:true })
   safeImg(img, unit.img, 'images/missing-unit.png')
   const nameEl=tpl.querySelector('.roster-unit__name')
   const costEl=tpl.querySelector('.roster-unit__cost')
@@ -471,7 +493,7 @@ function createBadge(text){
 
 function createRosterUnitCard(unit){
   const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
-  ensurePortraitImage(img)
+  ensurePortraitImage(img, { preferPortrait:true })
   safeImg(img, unit.img, 'images/missing-unit.png')
   title.textContent = unit.name
   meta.textContent = `${unit.cost} caps`
@@ -490,8 +512,9 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
-  ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(item) })
+  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
   safeImg(img, item.img, 'images/missing-item.png')
+  markCardOrientationOnLoad(img, card)
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
@@ -557,8 +580,9 @@ function buildModCard(unit, cardIndex, modItem){
   wrap.className='roster-card__mod-card'
   const img=document.createElement('img')
   img.className='roster-card__mod-image thumb'
-  ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(modItem) })
+  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
   safeImg(img, modItem.img, 'images/missing-item.png')
+  markCardOrientationOnLoad(img, null)
   wrap.appendChild(img)
   const title=document.createElement('div')
   title.className='roster-card__mod-title'
@@ -736,7 +760,7 @@ function renderUnitPicker(){
   units.forEach(u=>{
     const card=document.createElement('div'); card.className='card card-unit'; card.dataset.id=u.id
     if(u.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-large'; ensurePortraitImage(img); safeImg(img, u.img, 'images/missing-unit.png')
+    const img=document.createElement('img'); img.className='thumb thumb-large'; ensurePortraitImage(img, { preferPortrait:true }); safeImg(img, u.img, 'images/missing-unit.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
     const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class="badge">UNIQUE</span>':''}`
@@ -932,7 +956,7 @@ function renderItemPicker(unit){
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
     if(item.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png'); markCardOrientationOnLoad(img, card)
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=item.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
@@ -1004,7 +1028,7 @@ function renderModPicker(mods){
   mods.forEach(mod=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=mod.id
     if(mod.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png'); markCardOrientationOnLoad(img, card)
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
