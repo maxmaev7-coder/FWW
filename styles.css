@@ -386,3 +386,94 @@ img.img--portrait-rotate{
 }
 
 body.modal-open{ overflow:hidden; }
+/* === FFF overrides: компактнее и плотнее === */
+:root{
+  --thumb-h: 256px;       /* базовая высота миниатюр карт вещей/модов */
+  --unit-thumb-h: 200px;  /* юнит чуть меньше (синий прямоугольник) */
+  --gap: 10px;
+}
+
+/* Базовая карточка в ростере: в ряд, с зазором */
+.roster-card{
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 8px 10px;
+}
+
+/* Картинка карточки */
+.roster-card__image.thumb{
+  height: var(--thumb-h);
+  width: auto;
+  aspect-ratio: 63/88;     /* соотношение сторон карточки */
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Юнит (синий) — делаем поменьше */
+.roster-card--unit .roster-card__image.thumb{
+  height: var(--unit-thumb-h);
+}
+
+/* Текстовая часть карточки */
+.roster-card__body{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Кнопки ближе к карточке и компактнее */
+.roster-card__actions{
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+/* Вещи внутри юнита: картинка занимает БОЛЬШУЮ часть ширины */
+.roster-card--item .roster-card__image.thumb{
+  flex: 0 0 56%;
+  max-width: 56%;
+}
+.roster-card--item .roster-card__body{
+  flex: 1 1 44%;
+}
+
+/* Карточка мода внутри карты вещи — плотнее и с большей картой */
+.roster-card__mod-card{
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: 8px;
+  align-items: center;
+}
+.roster-card__mod-image.thumb{
+  width: 92px;             /* увеличили саму карту мода */
+  height: auto;
+  aspect-ratio: 63/88;
+}
+.roster-card__mod-title{ font-weight: 600; margin: 0; }
+.roster-card__mod-meta{ opacity: .85; margin: 0; }
+.roster-card__mod-card .mod-actions{ display: flex; gap: 6px; }
+
+/* Карточки в модальных пикерах (предметы/моды) — больше акцента на изображение */
+.card.card-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card.card-item .thumb{
+  flex: 0 0 58%;
+  max-width: 58%;
+  height: var(--thumb-h);
+  width: auto;
+  aspect-ratio: 63/88;
+  object-fit: cover;
+}
+.card.card-item .card-body{ flex: 1 1 42%; }
+.card.card-item .actions{ display: flex; gap: 6px; align-self: center; }
+
+/* Фолбэк: если canvas-поворот заблокирован (CORS), крутим через CSS */
+.img--portrait-rotate{
+  transform: rotate(-90deg);
+  transform-origin: center;
+}

@@ -5,13 +5,14 @@ function safeImg(el, src, fallback){
   el.onerror=()=>{ if(el.dataset.fallback!=='1'){ el.dataset.fallback='1'; el.src=fallback; } };
 }
 
-function ensurePortraitImage(img){
+function ensurePortraitImage(img, opts = {}){
+  const { forceRotate = false } = opts;
   if(!img) return;
   const rotateIfNeeded=()=>{
     const w=img.naturalWidth;
     const h=img.naturalHeight;
     if(!w || !h) return;
-    if(w>h && img.dataset.rotated!=='1'){
+    if((forceRotate || w>h) && img.dataset.rotated!=='1'){
       try{
         const canvas=document.createElement('canvas');
         canvas.width=h;
@@ -489,7 +490,7 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
-  ensurePortraitImage(img)
+  ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(item) })
   safeImg(img, item.img, 'images/missing-item.png')
   title.textContent = item.name
   meta.textContent = infoLine(item)
@@ -556,7 +557,7 @@ function buildModCard(unit, cardIndex, modItem){
   wrap.className='roster-card__mod-card'
   const img=document.createElement('img')
   img.className='roster-card__mod-image thumb'
-  ensurePortraitImage(img)
+  ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(modItem) })
   safeImg(img, modItem.img, 'images/missing-item.png')
   wrap.appendChild(img)
   const title=document.createElement('div')
@@ -931,7 +932,7 @@ function renderItemPicker(unit){
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
     if(item.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, item.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=item.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
@@ -1003,7 +1004,7 @@ function renderModPicker(mods){
   mods.forEach(mod=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=mod.id
     if(mod.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img); safeImg(img, mod.img, 'images/missing-item.png')
+    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { forceRotate: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png')
     const body=document.createElement('div'); body.className='card-body'
     const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
