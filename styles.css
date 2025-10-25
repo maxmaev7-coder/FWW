@@ -182,7 +182,6 @@ a{ color:inherit; }
   border-radius:12px;
   border:none;
   object-fit:contain;
-  min-height:320px;
 }
 
 /* Фолбэк-класс: поворот на 90° */
@@ -197,9 +196,10 @@ img.img--portrait-rotate{
 .roster-card--item .roster-card__image,
 .roster-card--power .roster-card__image{
   grid-area:image;
-  aspect-ratio:3/4;
+  aspect-ratio:4/3;
   object-fit:contain;
   align-self:start;
+  min-height:0;
 }
 .roster-card__body{ display:flex; flex-direction:column; gap:.3rem; line-height:1.5; }
 .roster-card--item .roster-card__body,
@@ -246,7 +246,7 @@ img.img--portrait-rotate{
   aspect-ratio:3/4;
   object-fit:contain;
   align-self:start;
-  min-height:240px;
+  min-height:300px;
 }
 .roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
 .roster-card--unit .roster-card__actions{ grid-area:actions; justify-content:flex-start; }
