@@ -1301,6 +1301,138 @@ window.addEventListener('afterprint', ()=>{
 });
 
 
+// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ПРЕВЬЮ КАРТ ===
+const CARD_VIEWPORT_SELECTOR = [
+  'img.thumb',
+  'canvas.thumb',
+  'img.roster-card__image',
+  'canvas.roster-card__image',
+  'img.roster-card__mod-image',
+  'canvas.roster-card__mod-image',
+  'img.roster-unit__image',
+  'canvas.roster-unit__image',
+  '.item-slot img',
+  '.item-slot canvas',
+  '.card-viewport img',
+  '.card-viewport canvas'
+].join(', ');
+
+const trackedCardViewportElements = new WeakSet();
+
+function tagOrientationForElement(el) {
+  if (!el) return;
+  const wrap = el.classList && el.classList.contains('card-viewport') ? el : el.closest && el.closest('.card-viewport');
+  if (!wrap) return;
+  let w = 0;
+  let h = 0;
+  if (el.tagName === 'IMG') {
+    w = el.naturalWidth;
+    h = el.naturalHeight;
+  } else if (el.tagName === 'CANVAS') {
+    w = el.width;
+    h = el.height;
+  }
+  if (!w || !h) return;
+  const rotated = el.dataset && el.dataset.rotated === '1';
+  const isLandscape = !rotated && w > h;
+  wrap.classList.toggle('landscape', isLandscape);
+  wrap.classList.toggle('portrait', !isLandscape);
+}
+
+function prepareCardViewport(node) {
+  if (!node) return;
+  const scope = node.nodeType === 1 || node.nodeType === 9 || node.nodeType === 11 ? node : document;
+  const targets = new Set();
+  if (scope.nodeType === 1 && scope.matches && scope.matches(CARD_VIEWPORT_SELECTOR)) {
+    targets.add(scope);
+  }
+  if (scope.querySelectorAll) {
+    scope.querySelectorAll(CARD_VIEWPORT_SELECTOR).forEach(el => targets.add(el));
+  }
+  targets.forEach(el => {
+    if (!el.classList) return;
+    if (!el.classList.contains('card-viewport')) {
+      el.classList.add('card-viewport');
+    }
+    const wrap = el.classList.contains('card-viewport') ? el : el.closest('.card-viewport');
+    if (wrap && !wrap.classList.contains('card-viewport')) {
+      wrap.classList.add('card-viewport');
+    }
+    if (!trackedCardViewportElements.has(el)) {
+      trackedCardViewportElements.add(el);
+      if (el.tagName === 'IMG') {
+        el.addEventListener('load', () => tagOrientationForElement(el));
+        if (el.complete) tagOrientationForElement(el);
+      } else if (el.tagName === 'CANVAS') {
+        tagOrientationForElement(el);
+      }
+    } else {
+      tagOrientationForElement(el);
+    }
+  });
+}
+
+function markPreviewLargeTargets(root = document) {
+  const scope = root && root.nodeType ? root : document;
+  const ensureLarge = el => {
+    if (!el || !el.classList) return;
+    if (el.matches && el.matches('button, .btn')) return;
+    el.classList.add('preview-large');
+  };
+  const selectors = [
+    '.left-panel .card-viewport',
+    '.sidebar .card-viewport',
+    '.preview-area .card-viewport',
+    '.selected-card .card-viewport',
+    '.selected-card.card-viewport'
+  ];
+  selectors.forEach(sel => {
+    if (scope.nodeType === 1 && scope.matches && scope.matches(sel)) ensureLarge(scope);
+    if (scope.querySelectorAll) scope.querySelectorAll(sel).forEach(ensureLarge);
+  });
+  if (scope.nodeType === 1 && scope.matches && scope.matches('.preview')) {
+    if (!(scope.matches && scope.matches('button, .btn'))) {
+      const target = scope.classList.contains('card-viewport') ? scope : scope.querySelector('.card-viewport');
+      if (target) ensureLarge(target);
+    }
+  }
+  if (scope.querySelectorAll) {
+    scope.querySelectorAll('.preview').forEach(el => {
+      if (el.matches && el.matches('button, .btn')) return;
+      const target = el.classList.contains('card-viewport') ? el : el.querySelector('.card-viewport');
+      if (target) ensureLarge(target);
+    });
+  }
+}
+
+function normalizeAllPreviews(root = document) {
+  prepareCardViewport(root);
+  markPreviewLargeTargets(root);
+}
+
+const initCardViewportSystem = () => {
+  normalizeAllPreviews(document);
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCardViewportSystem);
+} else {
+  initCardViewportSystem();
+}
+
+// Если UI динамический — следим за появлениями новых карт
+const cardViewportObserver = new MutationObserver(mutations => {
+  mutations.forEach(m => {
+    m.addedNodes.forEach(node => {
+      if (node.nodeType === 1 || node.nodeType === 11) {
+        normalizeAllPreviews(node);
+      }
+    });
+  });
+});
+cardViewportObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+
 // === Quick zoom for item/perk thumbs ===
 (function(){
   const zoom = document.createElement('div');
