@@ -572,3 +572,77 @@ canvas.card-viewport.landscape {
   max-width: none;
   max-height: none;
 }
+/* === Горизонтальная лента плиток === */
+.deck-row {
+  display: grid;                    /* удобнее, чем flex, для выравнивания высот */
+  grid-auto-flow: column;           /* колонки слева направо */
+  grid-auto-columns: minmax(300px, 1fr);
+  gap: 20px;
+  align-items: start;
+  overflow-x: auto;                 /* горизонтальная прокрутка при нехватке места */
+  padding-bottom: 8px;
+}
+
+/* === Плитка (горизонтальный блок) === */
+.tile {
+  aspect-ratio: 3 / 2;              /* горизонтальные пропорции плитки */
+  display: grid;
+  grid-template-rows: 1fr auto;     /* сверху — карта, снизу — мод */
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  background: #111;
+  overflow: hidden;
+}
+
+/* Верхняя зона с портретной картой */
+.tile .card-viewport {
+  /* портретные пропорции самой карты внутри горизонтальной плитки */
+  aspect-ratio: 63 / 88;            /* стандарт мини-карты */
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.tile .card-viewport > img,
+.tile .card-viewport > canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;              /* вписать без обрезки */
+  display: block;
+}
+
+/* Автоповорот, если пришла горизонтальная картинка с полосами */
+.tile .card-viewport.landscape > img,
+.tile .card-viewport.landscape > canvas {
+  transform: rotate(90deg);         /* повернуть к портрету */
+  transform-origin: center center;
+}
+
+/* Нижняя зона — «Мод» */
+.tile .mod-slot {
+  border-top: 2px solid #2a2a2a;
+  min-height: 54px;
+  display: grid;
+  align-items: center;
+  padding: 8px 10px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* Главная (левая) плитка — уменьшенный портрет */
+.tile--main {
+  width: clamp(260px, 28vw, 420px); /* не слишком большая на десктопе */
+}
+
+/* Слоты вещей — убедись, что карта nutzt максимум места */
+.item-slot .card-viewport {
+  width: 100%;
+  height: 100%;
+}
+
+/* Адаптив: на узких экранах плитки чуть уже */
+@media (max-width: 900px) {
+  .deck-row { grid-auto-columns: minmax(240px, 1fr); }
+  .tile--main { width: clamp(220px, 45vw, 360px); }
+}
