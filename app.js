@@ -1456,3 +1456,115 @@ cardViewportObserver.observe(document.documentElement, { childList: true, subtre
     }
   }, true);
 })();
+// === Горизонтальная лента по эскизу ===
+
+// 1) Создать/найти контейнер .deck-row; поместить слева "главную" плитку
+function ensureDeckRow() {
+  let row = document.querySelector('.deck-row');
+  if (!row) {
+    row = document.createElement('div');
+    row.className = 'deck-row';
+    // Вставь рядом с основным контентом (подбери шаг, если есть точный контейнер)
+    const root = document.querySelector('#app') || document.body;
+    root.prepend(row);
+  }
+  return row;
+}
+
+// 2) Обернуть существующий большой превью-блок в плитку .tile.tile--main
+function wrapMainPreview() {
+  const row = ensureDeckRow();
+  // Найти текущую «большую» карточку (подбери наиболее стабильный селектор проекта)
+  const big = document.querySelector('.selected-card, .preview, .left-panel .card, .card-big') ||
+              document.querySelector('.main-card, .card--big');
+
+  if (big && !big.closest('.tile')) {
+    const tile = document.createElement('div');
+    tile.className = 'tile tile--main';
+
+    const cardViewport = document.createElement('div');
+    cardViewport.className = 'card-viewport';
+
+    // переместить IMG/CANVAS внутрь viewport
+    const imgOrCanvas = big.querySelector('img, canvas') || big;
+    cardViewport.appendChild(imgOrCanvas);
+
+    const mod = document.createElement('div');
+    mod.className = 'mod-slot';
+    mod.textContent = 'Мод';
+
+    tile.appendChild(cardViewport);
+    tile.appendChild(mod);
+    row.prepend(tile);
+  }
+}
+
+// 3) Сформировать плитки из карточек колоды (справа от главной)
+function buildDeckTiles() {
+  const row = ensureDeckRow();
+  // Контейнер списка карт (подбери селектор под проект: грид мелких карточек)
+  const list = document.querySelector('.cards-list, .grid, .cards, .right-panel') || null;
+  if (!list) return;
+
+  // Вытащить мини-превью карт (img/canvas внутри карточек)
+  const cards = [...list.querySelectorAll('.card img, .card canvas, img.card, canvas.card')];
+  cards.forEach(node => {
+    if (node.closest('.tile')) return; // уже обёрнут
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+
+    const viewport = document.createElement('div');
+    viewport.className = 'card-viewport';
+    node.parentNode && viewport.appendChild(node);
+
+    const mod = document.createElement('div');
+    mod.className = 'mod-slot';
+    mod.textContent = 'Мод';
+
+    tile.appendChild(viewport);
+    tile.appendChild(mod);
+    row.appendChild(tile);
+  });
+}
+
+// 4) Авто-определение ориентации (нужно для «полосатых» горизонтальных изображений)
+function setOrientation(el) {
+  const wrap = el.closest('.card-viewport');
+  if (!wrap) return;
+  const w = el.tagName === 'IMG' ? el.naturalWidth : el.width;
+  const h = el.tagName === 'IMG' ? el.naturalHeight : el.height;
+  wrap.classList.toggle('landscape', w > h);
+}
+
+function tagAllOrientations(root = document) {
+  root.querySelectorAll('.card-viewport img, .card-viewport canvas').forEach(el => {
+    if (el.tagName === 'IMG' && !el.complete) {
+      el.addEventListener('load', () => setOrientation(el), { once: true });
+    } else {
+      setOrientation(el);
+    }
+  });
+}
+
+// 5) Инициализация + наблюдение за динамикой
+document.addEventListener('DOMContentLoaded', () => {
+  wrapMainPreview();
+  buildDeckTiles();
+  tagAllOrientations();
+
+  const mo = new MutationObserver(muts => {
+    let need = false;
+    muts.forEach(m => {
+      m.addedNodes.forEach(n => {
+        if (n.nodeType === 1 && (n.matches('.card, img, canvas') || n.querySelector?.('.card, img, canvas'))) {
+          need = true;
+        }
+      });
+    });
+    if (need) {
+      buildDeckTiles();
+      tagAllOrientations();
+    }
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+});
