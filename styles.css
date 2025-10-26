@@ -389,7 +389,7 @@ body.modal-open{ overflow:hidden; }
 /* === FFF overrides: компактнее и плотнее === */
 :root{
   --thumb-h: 256px;       /* базовая высота миниатюр карт вещей/модов */
-  --unit-thumb-h: 200px;  /* юнит чуть меньше (синий прямоугольник) */
+  --unit-thumb-h: 172px;  /* юнит заметно компактнее (синий прямоугольник) */
   --gap: 10px;
 }
 
@@ -406,13 +406,14 @@ body.modal-open{ overflow:hidden; }
   height: var(--thumb-h);
   width: auto;
   aspect-ratio: 63/88;     /* соотношение сторон карточки */
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 6px;
 }
 
 /* Юнит (синий) — делаем поменьше */
 .roster-card--unit .roster-card__image.thumb{
   height: var(--unit-thumb-h);
+  flex: 0 0 auto;
 }
 
 /* Текстовая часть карточки */
@@ -432,11 +433,11 @@ body.modal-open{ overflow:hidden; }
 
 /* Вещи внутри юнита: картинка занимает БОЛЬШУЮ часть ширины */
 .roster-card--item .roster-card__image.thumb{
-  flex: 0 0 56%;
-  max-width: 56%;
+  flex: 0 0 68%;
+  max-width: 68%;
 }
 .roster-card--item .roster-card__body{
-  flex: 1 1 44%;
+  flex: 1 1 32%;
 }
 
 /* Карточка мода внутри карты вещи — плотнее и с большей картой */
@@ -462,20 +463,25 @@ body.modal-open{ overflow:hidden; }
   gap: 10px;
 }
 .card.card-item .thumb{
-  flex: 0 0 58%;
-  max-width: 58%;
+  flex: 0 0 68%;
+  max-width: 68%;
   height: var(--thumb-h);
   width: auto;
   aspect-ratio: 63/88;
-  object-fit: cover;
+  object-fit: contain;
 }
-.card.card-item .card-body{ flex: 1 1 42%; }
+.card.card-item .card-body{ flex: 1 1 32%; }
 .card.card-item .actions{ display: flex; gap: 6px; align-self: center; }
 
 /* Фолбэк: если canvas-поворот заблокирован (CORS), крутим через CSS */
 .img--portrait-rotate{
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
   transform-origin: center;
+  width: auto !important;
+  height: 100% !important;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
 }
 
 /* === Orientation-aware layout === */
