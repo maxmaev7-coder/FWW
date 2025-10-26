@@ -520,3 +520,55 @@ body.modal-open{ overflow:hidden; }
 
 /* На всякий случай (для универсальности) */
 img.img--landscape{ height: auto; width: 100%; }
+
+/* === Card viewport: единый контейнер для превью карт === */
+.card-viewport {
+  /* стандартные пропорции карты (портрет) */
+  aspect-ratio: 63 / 88;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.card-viewport > img,
+.card-viewport > canvas,
+.card-viewport > picture {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* вписать без обрезки */
+  display: block;
+}
+img.card-viewport,
+canvas.card-viewport {
+  object-fit: contain;
+  display: block;
+}
+/* Автоповорот «горизонтальных» изображений внутри контейнера */
+.card-viewport.landscape > img,
+.card-viewport.landscape > canvas,
+img.card-viewport.landscape,
+canvas.card-viewport.landscape {
+  transform: rotate(90deg);
+  transform-origin: center center;
+}
+
+/* Большая карточка слева: сделать меньше и адаптивной */
+.preview-large {
+  width: clamp(260px, 28vw, 420px);
+  /* высота следует из aspect-ratio */
+}
+@media (max-width: 900px) {
+  .preview-large { width: clamp(240px, 45vw, 360px); }
+}
+
+/* Карты вещей внутри формы/слота должны заполнять область */
+.item-slot .card-viewport {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+.item-slot img,
+.item-slot canvas {
+  max-width: none;
+  max-height: none;
+}
