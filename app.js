@@ -1297,8 +1297,41 @@ async function buildPrintSheet(){
     })
   })
   await Promise.all(loadPromises)
+
+  async function rotateToOrientation(img, desired /* 'portrait' | 'landscape' */){
+    if(img.decode){ try{ await img.decode() }catch(e){} }
+    const w = img.naturalWidth || img.width
+    const h = img.naturalHeight || img.height
+    const isPortrait = h >= w
+    const needPortrait = desired === 'portrait'
+
+    if((needPortrait && isPortrait) || (!needPortrait && !isPortrait)){
+      img.removeAttribute('data-rotated')
+      img.style.transform = ''
+      return
+    }
+
+    const canvas = document.createElement('canvas')
+    canvas.width = h
+    canvas.height = w
+    const ctx = canvas.getContext('2d')
+    if(!ctx) return
+    ctx.translate(h/2, w/2)
+    ctx.rotate(Math.PI/2)
+    ctx.drawImage(img, -w/2, -h/2, w, h)
+    img.src = canvas.toDataURL('image/png')
+    img.setAttribute('data-rotated', '1')
+    if(img.decode){ try{ await img.decode() }catch(e){} }
+  }
+
+  const imgs = host.querySelectorAll('.pdf-card__image, .pdf-card__mod-image')
+  for(const img of imgs){
+    const card = img.closest('.pdf-card')
+    const desired = card && card.classList.contains('is-portrait-card') ? 'portrait' : 'landscape'
+    await rotateToOrientation(img, desired)
+  }
+
   try{
-    // Дожидаемся окончательного состояния картинок (включая повторную загрузку после поворота)
     const imgs = host.querySelectorAll('.pdf-card__image, .pdf-card__mod-image')
     await Promise.all(Array.from(imgs).map(img=>
       (img.decode ? img.decode().catch(()=>{}) : Promise.resolve())
@@ -1351,7 +1384,7 @@ function clearPrintSheet(){
 
 document.getElementById('printBtn').addEventListener('click', async ()=>{
   await buildPrintSheet();
-  await new Promise(resolve=>setTimeout(resolve, 150));
+  await new Promise(resolve=>setTimeout(resolve, 120));
   window.print();
 });
 window.addEventListener('afterprint', ()=>{
