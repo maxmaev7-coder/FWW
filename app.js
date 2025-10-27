@@ -1266,7 +1266,11 @@ async function buildPrintSheet(){
       const orientation = entry.orientation || 'portrait'
       const preferPortrait = orientation!=='landscape'
       ensurePortraitImage(img, { preferPortrait })
-      markCardOrientationOnLoad(img, cell)
+      if(orientation==='landscape'){
+        cell.classList.add('is-landscape-card')
+      }else{
+        cell.classList.add('is-portrait-card')
+      }
       safeImg(img, entry.img, entry.fallback)
       img.decoding='sync'
       img.loading='eager'
