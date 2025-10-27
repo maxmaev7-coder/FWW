@@ -73,12 +73,4 @@
 
   *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-  /* Fallback: если портретная карта все еще грузится горизонтально, повернем ее в режиме печати */
-  .pdf-card.is-portrait-card .pdf-card__image[src*="images/items/"]:not([data-rotated="1"]),
-  .pdf-card.is-portrait-card .pdf-card__mod-image[src*="images/items/"]:not([data-rotated="1"]){
-    transform:rotate(90deg);
-    transform-origin:center center;
-    width:auto;
-    height:100%;
-  }
 }
