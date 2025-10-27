@@ -1262,7 +1262,9 @@ async function buildPrintSheet(){
       img.className='pdf-card__image'
       const imgLoaded=waitForImageLoad(img)
       loadPromises.push(imgLoaded)
-      ensurePortraitImage(img, { preferPortrait:true })
+      const orientation = entry.orientation || 'portrait'
+      const preferPortrait = orientation!=='landscape'
+      ensurePortraitImage(img, { preferPortrait })
       markCardOrientationOnLoad(img, cell)
       safeImg(img, entry.img, entry.fallback)
       img.decoding='sync'
@@ -1276,7 +1278,8 @@ async function buildPrintSheet(){
           modImg.className='pdf-card__mod-image'
           const modLoaded=waitForImageLoad(modImg)
           loadPromises.push(modLoaded)
-          ensurePortraitImage(modImg, { preferPortrait:true })
+          const modOrientation = modEntry.orientation || 'portrait'
+          ensurePortraitImage(modImg, { preferPortrait: modOrientation!=='landscape' })
           safeImg(modImg, modEntry.img, modEntry.fallback)
           modImg.decoding='sync'
           modImg.loading='eager'
@@ -1294,7 +1297,7 @@ async function buildPrintSheet(){
 function buildPrintCardsForUnit(unit){
   const result=[]
   if(!unit) return result
-  result.push({ img:unit.img, fallback:'images/missing-unit.png', mods:[] })
+  result.push({ img:unit.img, fallback:'images/missing-unit.png', mods:[], orientation:'portrait' })
   const cards=(unit.cards||[]).map((card,index)=>{
     const item=getItem(card.itemId)
     if(!item) return null
@@ -1318,9 +1321,14 @@ function createPrintEntryFromCard(entry){
   const mods=[]
   if(entry.card.modId){
     const modItem=getItem(entry.card.modId)
-    if(modItem) mods.push({ img:modItem.img, fallback:'images/missing-item.png' })
+    if(modItem){
+      const modOrientation = itemHasSpecialBars(modItem)?'landscape':'portrait'
+      mods.push({ img:modItem.img, fallback:'images/missing-item.png', orientation:modOrientation })
+    }
   }
-  return { img:entry.item.img, fallback:'images/missing-item.png', mods }
+  const isSpecialCard = itemHasSpecialBars(entry.item)
+  const orientation = isSpecialCard ? 'landscape' : 'portrait'
+  return { img:entry.item.img, fallback:'images/missing-item.png', mods, orientation }
 }
 
 
