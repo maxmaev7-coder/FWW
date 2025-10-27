@@ -1230,7 +1230,9 @@ function buildPrintSheet(){
       const cell=document.createElement('article')
       cell.className='pdf-card'
       const img=new Image()
+      img.className='pdf-card__image'
       ensurePortraitImage(img)
+      markCardOrientationOnLoad(img, cell)
       safeImg(img, entry.img, entry.fallback)
       img.decoding='sync'
       img.loading='eager'
@@ -1240,6 +1242,7 @@ function buildPrintSheet(){
         modsWrap.className='pdf-card__mod'
         entry.mods.forEach(modEntry=>{
           const modImg=new Image()
+          modImg.className='pdf-card__mod-image'
           ensurePortraitImage(modImg)
           safeImg(modImg, modEntry.img, modEntry.fallback)
           modImg.decoding='sync'
