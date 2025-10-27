@@ -5,6 +5,34 @@ function safeImg(el, src, fallback){
   el.onerror=()=>{ if(el.dataset.fallback!=='1'){ el.dataset.fallback='1'; el.src=fallback; } };
 }
 
+function waitForImageLoad(img, timeoutMs=1500){
+  if(!img) return Promise.resolve();
+  if(img.complete && img.naturalWidth>0) return Promise.resolve();
+  return new Promise(resolve=>{
+    let settled=false;
+    const cleanup=()=>{
+      img.removeEventListener('load', onLoad);
+      img.removeEventListener('error', onError);
+    };
+    const resolveOnce=()=>{
+      if(settled) return;
+      settled=true;
+      cleanup();
+      resolve();
+    };
+    const onLoad=()=>resolveOnce();
+    const onError=()=>{
+      if(img.dataset && img.dataset.fallback==='1') return;
+      resolveOnce();
+    };
+    img.addEventListener('load', onLoad);
+    img.addEventListener('error', onError);
+    if(timeoutMs>0){
+      setTimeout(resolveOnce, timeoutMs);
+    }
+  });
+}
+
 function ensurePortraitImage(img, opts = {}){
   const { forceRotate = false, preferPortrait = false } = opts;
   if(!img) return;
@@ -1205,7 +1233,7 @@ loadDB()
 
 
 // === Build printable sheet with card images ===
-function buildPrintSheet(){
+async function buildPrintSheet(){
   const host = document.getElementById('printSheet')
   if(!host) return
   host.innerHTML=''
@@ -1215,6 +1243,7 @@ function buildPrintSheet(){
   let grid=null
   let count=0
   const units=state.roster?.units||[]
+  const loadPromises=[]
   units.forEach(unit=>{
     const entries = buildPrintCardsForUnit(unit)
     entries.forEach(entry=>{
@@ -1231,6 +1260,8 @@ function buildPrintSheet(){
       cell.className='pdf-card'
       const img=new Image()
       img.className='pdf-card__image'
+      const imgLoaded=waitForImageLoad(img)
+      loadPromises.push(imgLoaded)
       ensurePortraitImage(img)
       markCardOrientationOnLoad(img, cell)
       safeImg(img, entry.img, entry.fallback)
@@ -1243,6 +1274,8 @@ function buildPrintSheet(){
         entry.mods.forEach(modEntry=>{
           const modImg=new Image()
           modImg.className='pdf-card__mod-image'
+          const modLoaded=waitForImageLoad(modImg)
+          loadPromises.push(modLoaded)
           ensurePortraitImage(modImg)
           safeImg(modImg, modEntry.img, modEntry.fallback)
           modImg.decoding='sync'
@@ -1255,6 +1288,7 @@ function buildPrintSheet(){
       count+=1
     })
   })
+  await Promise.all(loadPromises)
 }
 
 function buildPrintCardsForUnit(unit){
@@ -1295,9 +1329,10 @@ function clearPrintSheet(){
   if (host) host.innerHTML = '';
 }
 
-document.getElementById('printBtn').addEventListener('click', ()=>{
-  buildPrintSheet();
-  setTimeout(()=>window.print(), 50);
+document.getElementById('printBtn').addEventListener('click', async ()=>{
+  await buildPrintSheet();
+  await new Promise(resolve=>setTimeout(resolve, 50));
+  window.print();
 });
 window.addEventListener('afterprint', ()=>{
   const host=document.getElementById('printSheet'); if (host) host.innerHTML='';
