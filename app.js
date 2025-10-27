@@ -1262,7 +1262,7 @@ async function buildPrintSheet(){
       img.className='pdf-card__image'
       const imgLoaded=waitForImageLoad(img)
       loadPromises.push(imgLoaded)
-      ensurePortraitImage(img)
+      ensurePortraitImage(img, { preferPortrait:true })
       markCardOrientationOnLoad(img, cell)
       safeImg(img, entry.img, entry.fallback)
       img.decoding='sync'
@@ -1276,7 +1276,7 @@ async function buildPrintSheet(){
           modImg.className='pdf-card__mod-image'
           const modLoaded=waitForImageLoad(modImg)
           loadPromises.push(modLoaded)
-          ensurePortraitImage(modImg)
+          ensurePortraitImage(modImg, { preferPortrait:true })
           safeImg(modImg, modEntry.img, modEntry.fallback)
           modImg.decoding='sync'
           modImg.loading='eager'
