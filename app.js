@@ -445,20 +445,21 @@ function buildRosterUnit(unit){
   tpl.querySelector('[data-act="addItem"]').addEventListener('click',()=>openItemPicker(unit.uid))
   tpl.querySelector('[data-act="dup"]').addEventListener('click',()=>duplicateUnit(unit.uid))
   tpl.querySelector('[data-act="remove"]').addEventListener('click',()=>removeUnit(unit.uid))
-  const grid=tpl.querySelector('.roster-unit__grid')
-  const order=deriveRosterCardOrder(unit)
-  const unitCard=createRosterUnitCard(unit)
+  const grid = tpl.querySelector('.roster-unit__grid')
+  const unitCard = createRosterUnitCard(unit)
   grid.appendChild(unitCard)
-  if(order.power){
-    const powerCard=createRosterItemCard(unit, order.power.card, order.power.index, order.power.item, true)
-    if(powerCard) grid.appendChild(powerCard)
-  }
-  order.others.forEach(entry=>{
-    const cardEl=createRosterItemCard(unit, entry.card, entry.index, entry.item, false)
-    if(cardEl) grid.appendChild(cardEl)
+
+  // Отрисовываем карты ровно в том порядке, в котором они лежат в unit.cards
+  unit.cards.forEach((cardData, index) => {
+    const item = getItem(cardData.itemId)
+    // Определяем, является ли карта силовой броней — чтобы передать флаг isPower
+    const isPower = !!(item && item.cats && item.cats['Power Armor'])
+    const cardEl = createRosterItemCard(unit, cardData, index, item, isPower)
+    if (cardEl) grid.appendChild(cardEl)
   })
-  grid.addEventListener('dragover', e=>handleGridDragOver(e, unit.uid))
-  grid.addEventListener('drop', e=>handleGridDrop(e, unit.uid))
+
+  grid.addEventListener('dragover', e => handleGridDragOver(e, unit.uid))
+  grid.addEventListener('drop', e => handleGridDrop(e, unit.uid))
   tpl.querySelector('.subtotalPoints').textContent = unitPoints(unit)
   tpl.querySelector('.itemsCount').textContent = unitItemCount(unit)
   return root
