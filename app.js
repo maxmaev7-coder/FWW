@@ -72,15 +72,16 @@ function ensurePortraitImage(img, opts = {}){
   if(img.complete) rotateIfNeeded();
 }
 
-// Помечаем карточку классом, если картинка горизонтальная (и мы её не вращали)
+// Помечаем карточку классом, инвертируя ориентацию изображения относительно оригинальной
 function markCardOrientationOnLoad(img, cardEl){
   const apply=()=>{
-    const isLandscape = img.dataset.rotated!=='1' && img.naturalWidth > img.naturalHeight;
-    img.classList.toggle('img--landscape', isLandscape);
-    img.classList.toggle('img--portrait', !isLandscape);
+    const isLandscapeImage = img.dataset.rotated!=='1' && img.naturalWidth > img.naturalHeight;
+    const shouldDisplayLandscape = !isLandscapeImage;
+    img.classList.toggle('img--landscape', shouldDisplayLandscape);
+    img.classList.toggle('img--portrait', !shouldDisplayLandscape);
     if(cardEl){
-      cardEl.classList.toggle('is-landscape-card', isLandscape);
-      cardEl.classList.toggle('is-portrait-card', !isLandscape);
+      cardEl.classList.toggle('is-landscape-card', shouldDisplayLandscape);
+      cardEl.classList.toggle('is-portrait-card', !shouldDisplayLandscape);
     }
   };
   img.addEventListener('load', apply);
