@@ -1,6 +1,6 @@
 :root{
-  --pdf-gap:8mm;
-  --pdf-gap-small:6mm;
+  --pdf-gap:12mm;
+  --pdf-gap-small:8mm;
 }
 
 @page{ size:A4 landscape; margin:10mm; }
@@ -41,6 +41,7 @@
     justify-content:flex-start;
     break-inside:avoid;
     page-break-inside:avoid;
+    padding:2mm;
   }
   .pdf-card.is-landscape-card{
     align-items:stretch;
@@ -71,4 +72,13 @@
   .sheet--small .pdf-card__mod{ gap:3mm; }
 
   *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Fallback: если портретная карта все еще грузится горизонтально, повернем ее в режиме печати */
+  .pdf-card.is-portrait-card .pdf-card__image[src*="images/items/"]:not([data-rotated="1"]),
+  .pdf-card.is-portrait-card .pdf-card__mod-image[src*="images/items/"]:not([data-rotated="1"]){
+    transform:rotate(90deg);
+    transform-origin:center center;
+    width:auto;
+    height:100%;
+  }
 }
