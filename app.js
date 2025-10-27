@@ -1297,6 +1297,13 @@ async function buildPrintSheet(){
     })
   })
   await Promise.all(loadPromises)
+  try{
+    // Дожидаемся окончательного состояния картинок (включая повторную загрузку после поворота)
+    const imgs = host.querySelectorAll('.pdf-card__image, .pdf-card__mod-image')
+    await Promise.all(Array.from(imgs).map(img=>
+      (img.decode ? img.decode().catch(()=>{}) : Promise.resolve())
+    ))
+  }catch(err){}
 }
 
 function buildPrintCardsForUnit(unit){
@@ -1344,7 +1351,7 @@ function clearPrintSheet(){
 
 document.getElementById('printBtn').addEventListener('click', async ()=>{
   await buildPrintSheet();
-  await new Promise(resolve=>setTimeout(resolve, 50));
+  await new Promise(resolve=>setTimeout(resolve, 150));
   window.print();
 });
 window.addEventListener('afterprint', ()=>{
