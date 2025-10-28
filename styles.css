@@ -112,6 +112,7 @@ a{ color:inherit; }
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:var(--card-gap);
+  column-gap:calc(var(--card-gap) + .6rem);
   align-items:start;
   justify-items:start;
 }
