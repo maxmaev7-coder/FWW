@@ -129,6 +129,7 @@ a{ color:inherit; }
   gap:.45rem;
   min-width:0;
   transition:border-color .2s, box-shadow .2s;
+  margin:0 16px 16px 0;
 }
 .roster-card--unit{
   grid-column:span 2;
