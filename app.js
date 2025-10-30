@@ -446,6 +446,7 @@ function buildRosterUnit(unit){
   tpl.querySelector('[data-act="dup"]').addEventListener('click',()=>duplicateUnit(unit.uid))
   tpl.querySelector('[data-act="remove"]').addEventListener('click',()=>removeUnit(unit.uid))
   const grid = tpl.querySelector('.roster-unit__grid')
+  grid.classList.add('roster-grid', 'roster-grid--live')
   const unitCard = createRosterUnitCard(unit)
   grid.appendChild(unitCard)
 
