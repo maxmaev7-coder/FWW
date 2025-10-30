@@ -1111,9 +1111,9 @@ function infoLine(x){
   if(x.cats.Perks && !tags.includes('Perk')) tags.push('Perk')
   if(x.cats.Leader && !tags.includes('Leader')) tags.push('Leader')
   if(x.is_mod) tags.push('Mod')
-  const uniq=x.unique? ' · UNIQUE':''
+  const uniq = x.unique ? '\u00a0·\u00a0UNIQUE' : ''
   const descriptor = tags.length ? tags.join(' / ') : '—'
-  return `${x.cost} caps · ${descriptor}${uniq}`
+  return `${x.cost}\u00a0caps\u00a0\u2013\u00a0${descriptor}${uniq}`
 }
 
 function duplicateUnit(uid){

@@ -172,6 +172,7 @@ a{ color:inherit; }
   font-size:16px;
   cursor:grab;
   user-select:none;
+  z-index:2;
 }
 .roster-card--unit .roster-card__drag-handle,
 .roster-card--power .roster-card__drag-handle{ display:none; }
@@ -212,7 +213,8 @@ img.img--portrait-rotate{
   display:block;
   line-height:1.55;
   white-space:normal;
-  word-break:break-word;
+  word-break:normal;
+  overflow-wrap:anywhere;
 }
 .roster-card__badges{ display:flex; gap:.4rem; align-items:center; flex-wrap:wrap; }
 .roster-card__badge{
@@ -295,7 +297,12 @@ img.img--portrait-rotate{
 }
 .roster-card__mod-card .mod-actions{ display:flex; gap:.45rem; flex-wrap:wrap; }
 .roster-card__mod-title{ font-weight:600; font-size:15px; }
-.roster-card__mod-meta{ color:var(--muted); font-size:13px; line-height:1.5; }
+.roster-card__mod-meta{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  white-space:nowrap;
+}
 .roster-card__mod-image{
   width:100%;
   aspect-ratio:3/4;
@@ -454,7 +461,7 @@ body.modal-open{ overflow:hidden; }
   aspect-ratio: 63/88;
 }
 .roster-card__mod-title{ font-weight: 600; margin: 0; }
-.roster-card__mod-meta{ opacity: .85; margin: 0; }
+.roster-card__mod-meta{ opacity: .85; margin: 0; white-space:nowrap; }
 .roster-card__mod-card .mod-actions{ display: flex; gap: 6px; }
 
 /* Карточки в модальных пикерах (предметы/моды) — больше акцента на изображение */
