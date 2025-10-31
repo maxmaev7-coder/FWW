@@ -12,6 +12,7 @@
   --roster-mod-gap:12px;
   --roster-card-min:320px;
   --card-radius:16px;
+  --mod-actions-gap:8px;
 }
 
 @media (max-width: 1280px){
@@ -306,7 +307,26 @@ img.img--portrait-rotate{
   flex-direction:column;
   gap:.55rem;
 }
-.roster-card__mod-card .mod-actions{ display:flex; gap:.45rem; flex-wrap:wrap; }
+.roster-card__mod-card .mod-actions{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:var(--mod-actions-gap);
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.roster-card__mod-card .mod-actions::-webkit-scrollbar{ display:none; }
+.roster-card__mod-card .mod-actions .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  flex:0 0 auto;
+  white-space:nowrap;
+  margin:0;
+}
 .roster-card__mod-title{ font-weight:600; font-size:15px; }
 .roster-card__mod-meta{
   color:var(--muted);
@@ -473,7 +493,6 @@ body.modal-open{ overflow:hidden; }
 }
 .roster-card__mod-title{ font-weight: 600; margin: 0; }
 .roster-card__mod-meta{ opacity: .85; margin: 0; white-space:nowrap; }
-.roster-card__mod-card .mod-actions{ display: flex; gap: 6px; }
 
 /* Карточки в модальных пикерах (предметы/моды) — больше акцента на изображение */
 .card.card-item{
