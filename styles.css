@@ -539,3 +539,245 @@ body.modal-open{ overflow:hidden; }
 
 /* На всякий случай (для универсальности) */
 img.img--landscape{ height: auto; width: 100%; }
+/* === Fallout Builder: переработка UI карточек выбора и ростера === */
+
+/* Плавный ховер и лёгкий "подъём" для всех карточек */
+.card,
+.roster-card{
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.card:hover,
+.roster-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+  border-color: var(--accent);
+}
+
+/* Готовим базу под верхнюю цветную полоску */
+.card,
+.roster-card{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Верхняя цветная полоска как на бумажных картах */
+.card::before,
+.roster-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:6px;
+  border-radius:16px 16px 0 0;
+  opacity:.85;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    var(--accent),
+    rgba(58,134,255,.6) 45%,
+    rgba(58,134,255,0) 100%
+  );
+}
+
+/* Разные оттенки полоски для типов карточек */
+.roster-card--unit::before,
+.card.card-unit::before{
+  background:linear-gradient(90deg,#2f7de0,rgba(47,125,224,0) 70%);
+}
+
+.roster-card--item::before,
+.card.card-item::before{
+  background:linear-gradient(90deg,#e0b62f,rgba(224,182,47,0) 70%);
+}
+
+.roster-card--power::before{
+  background:linear-gradient(90deg,#2fe086,rgba(47,224,134,0) 70%);
+}
+
+/* === Карточки в пикерах (выбор юнитов/предметов/модов) ====================== */
+
+/* Структура: картинка сверху, текст посередине, панель действий снизу */
+.card.card-unit,
+.card.card-item{
+  display:grid;
+  grid-template-rows:minmax(120px,auto) 1fr auto;
+  align-content:start;
+  gap:.6rem;
+}
+
+/* Картинка карточки в пикере */
+.card.card-unit .thumb,
+.card.card-item .thumb{
+  width:100%;
+  height:auto;
+  max-height:var(--thumb-h);
+  object-fit:contain;
+  background:#0d131a;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+/* Ландшафтные изображения в пикере */
+.card.card-item.is-landscape-card .thumb{
+  width:100%;
+  height:auto;
+}
+
+/* Текст внутри карточки выбора */
+.card.card-unit .card-body,
+.card.card-item .card-body{
+  width:100%;
+}
+
+/* Панель действий внизу карточки (Change / Remove / Preview) */
+.card .actions{
+  margin:0;
+  padding:.55rem .6rem;
+  border-top:1px dashed var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.08));
+  border-radius:0 0 12px 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+}
+
+.card .actions .btn{
+  flex:0 1 130px;
+  justify-content:center;
+  text-align:center;
+}
+
+/* Поменьше кнопки внутри action-bar */
+.card .actions .btn.tiny,
+.card .actions .btn.small{
+  padding:.28rem .5rem;
+  font-size:12px;
+  line-height:1.2;
+  border-radius:.5rem;
+}
+
+/* === Карточки в ростере (добавленные карты) ================================= */
+
+/* Нижняя панель действий у ростер-карточек */
+.roster-card__actions{
+  width:100%;
+  margin-top:.3rem;
+  padding-top:.6rem;
+  border-top:1px dashed var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.05));
+  border-radius:0 0 var(--card-radius) var(--card-radius);
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.roster-card__actions .btn{
+  flex:0 1 140px;
+  justify-content:center;
+}
+
+.roster-card__actions .btn.tiny,
+.roster-card__actions .btn.small{
+  padding:.28rem .5rem;
+  font-size:12px;
+  line-height:1.2;
+  border-radius:.5rem;
+}
+
+/* === Моды под предметами ===================================================== */
+
+/* Вложенные "малые карточки" модов */
+.roster-card__mod-card{
+  background:linear-gradient(180deg,#0e1621,#0c121a);
+  border-radius:12px;
+  border:1px solid #202838;
+  border-left-width:3px;
+  border-left-color:#3a86ff;
+  padding:.65rem .65rem .5rem;
+}
+
+/* Картинка мода уже настроена в существующем CSS — не трогаем */
+
+/* Заголовок и мета-информация мода */
+.roster-card__mod-title{
+  font-weight:600;
+  letter-spacing:.2px;
+  margin-top:.35rem;
+}
+
+.roster-card__mod-meta{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:.25rem;
+}
+
+/* Панель действий внутри карточки мода */
+.roster-card__mod-card .mod-actions{
+  margin-top:.45rem;
+  padding-top:.45rem;
+  border-top:1px dashed var(--border);
+  display:flex;
+  flex-wrap:wrap;
+  gap:.35rem;
+}
+
+.roster-card__mod-card .mod-actions .btn{
+  flex:0 1 120px;
+  justify-content:center;
+}
+
+/* === Бейджи, UNIQUE и перетаскивание ======================================== */
+
+/* Бейджи (UNIQUE, LOCKED и т.п.) — более "тэговый" вид */
+.roster-card__badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.25rem;
+  padding:.2rem .45rem;
+  border-radius:999px;
+  border:1px solid #58462b;
+  background:#2d2418;
+  color:#ffd977;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+
+/* Дополнительно подсвечиваем UNIQUE в заголовке */
+.card[data-tag="unique"] .title::after{
+  content:" • UNIQUE";
+  color:#ffd977;
+  font-weight:600;
+  margin-left:.25rem;
+}
+
+/* При желании можно также использовать data-атрибут на title у ростер-карточек */
+.roster-card__title[data-unique="1"]::after{
+  content:" • UNIQUE";
+  color:#ffd977;
+  font-weight:600;
+  margin-left:.25rem;
+}
+
+/* Ручка перетаскивания карточек и состояние drag/drop */
+.roster-card__drag-handle{
+  background:rgba(8,12,18,.75);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
+.roster-card--drag{
+  box-shadow:0 0 0 2px rgba(58,134,255,.8) inset;
+}
+
+.roster-card--drop{
+  outline:2px dashed var(--accent);
+  outline-offset:3px;
+}
+
+/* === Конец блока переработки UI карточек === */
