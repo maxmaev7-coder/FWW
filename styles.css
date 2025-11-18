@@ -781,3 +781,178 @@ img.img--landscape{ height: auto; width: 100%; }
 }
 
 /* === Конец блока переработки UI карточек === */
+
+/* === Cards: базовая корректность и внешний вид как у бумажных карт === */
+
+/* Корневые карточки — не обрезать содержимое (чтобы моды не резало снизу) */
+.card,
+.roster-card{
+position: relative;
+overflow: visible;
+}
+
+/* Структура карточки выбора: картинка / тело / панель действий */
+.card.card--picker{
+display: grid;
+grid-template-rows: auto 1fr auto;
+align-content: start;
+gap: .6rem;
+}
+
+/* Картинки карточек */
+.card__thumb{
+width: 100%;
+display: block;
+border-radius: 12px;
+border: 1px solid var(--border);
+background: #0d131a;
+overflow: hidden;
+}
+
+.card__img{
+width: 100%;
+height: 100%;
+display: block;
+object-fit: cover;
+}
+
+/* Базовые пропорции по типам карт (fallback) */
+.card--unit   .card__thumb,
+.card--power  .card__thumb{
+aspect-ratio: 63 / 88; /* близко к формату миниатюрной карты */
+}
+
+.card--item   .card__thumb,
+.card--mod    .card__thumb{
+aspect-ratio: 16 / 9;  /* предметы/моды чаще ландшафтные */
+}
+
+.card--perk   .card__thumb{
+aspect-ratio: 3 / 2;
+}
+
+/* Если JS определил ориентацию, она имеет приоритет */
+.card.is-landscape .card__thumb{ aspect-ratio: 16 / 9; }
+.card.is-portrait  .card__thumb{ aspect-ratio: 63 / 88; }
+
+/* Панель действий карточки (add/change/remove/preview) */
+.card__actions{
+margin: 0;
+padding: .55rem .6rem;
+border-top: 1px dashed var(--border);
+background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08));
+border-radius: 0 0 12px 12px;
+display: flex;
+flex-wrap: wrap;
+gap: .45rem;
+align-items: center;
+justify-content: flex-start;
+}
+
+/* Кнопки в action-bar компактные, но читаемые */
+.card__actions .btn,
+.card__actions button{
+padding: .28rem .5rem;
+font-size: 12px;
+line-height: 1.2;
+border-radius: .5rem;
+}
+
+/* Панель действий в ростер-карточках выглядит так же */
+.roster-card__actions{
+margin-top: .3rem;
+padding-top: .6rem;
+border-top: 1px dashed var(--border);
+background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.05));
+border-radius: 0 0 var(--card-radius, 16px) var(--card-radius, 16px);
+display: flex;
+flex-wrap: wrap;
+gap: .45rem;
+}
+
+/* === Мод-плитки внутри ростера === */
+.mod-card{
+background: linear-gradient(180deg, #0e1621, #0c121a);
+border-radius: 12px;
+border: 1px solid #202838;
+border-left-width: 3px;
+border-left-color: #3a86ff;
+padding: .65rem .65rem .5rem;
+}
+
+.mod-card .mod-actions{
+margin-top: .45rem;
+padding-top: .45rem;
+border-top: 1px dashed var(--border);
+display: flex;
+flex-wrap: wrap;
+gap: .35rem;
+}
+
+/* === Визуал «как на скрине»: верхняя цветная полоска и hover === */
+
+/* Верхняя цветная полоска на карточках */
+.card::before,
+.roster-card::before{
+content: "";
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+height: 6px;
+border-radius: 16px 16px 0 0;
+opacity: .85;
+pointer-events: none;
+background: linear-gradient(90deg, #2f7de0, rgba(47,125,224,0) 70%);
+}
+
+/* Разные оттенки для типов карт (по желанию можно сменить) */
+.card--item::before,
+.roster-card.card--item::before{
+background: linear-gradient(90deg, #e0b62f, rgba(224,182,47,0) 70%);
+}
+
+.card--power::before,
+.roster-card.card--power::before{
+background: linear-gradient(90deg, #2fe086, rgba(47,224,134,0) 70%);
+}
+
+/* Лёгкий hover-эффект, не ломающий тёмную тему */
+.card,
+.roster-card{
+transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.card:hover,
+.roster-card:hover{
+transform: translateY(-2px);
+box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+
+/* Немного усиливаем заголовки и мета-инфу */
+.card .title,
+.roster-card__title{
+font-weight: 700;
+font-size: 15.5px;
+}
+
+.card .meta,
+.roster-card__meta{
+color: var(--muted);
+font-size: 13px;
+line-height: 1.45;
+}
+
+/* Бейдж UNIQUE */
+.card[data-tag="unique"] .title::after,
+.roster-card__title[data-unique="1"]::after{
+content: " • UNIQUE";
+color: #ffd977;
+font-weight: 600;
+margin-left: .25rem;
+}
+
+/* Состояние перетаскивания ростер-карточек */
+.roster-card--drag{
+box-shadow: 0 0 0 2px rgba(58,134,255,.8) inset;
+}

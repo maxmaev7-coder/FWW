@@ -88,6 +88,16 @@ function markCardOrientationOnLoad(img, cardEl){
   if(img.complete) apply();
 }
 
+function flagCardOrientation(img, cardEl) {
+  if (!img || !cardEl) return;
+  const w = img.naturalWidth;
+  const h = img.naturalHeight;
+  if (!w || !h) return;
+  const isLandscape = w >= h;
+  cardEl.classList.toggle('is-landscape', isLandscape);
+  cardEl.classList.toggle('is-portrait', !isLandscape);
+}
+
 
 function openImagePreview(src){
   if(typeof window!=='undefined' && typeof window.__showImagePreview==='function'){
@@ -487,11 +497,37 @@ function createRosterCardShell(type,{ includeMods=false }={}){
   const card=document.createElement('article')
   card.className='roster-card'
   if(type) card.classList.add(`roster-card--${type}`)
+  switch(type){
+    case 'unit':
+      card.classList.add('card--unit');
+      card.dataset.cardType='unit'
+      break
+    case 'power':
+      card.classList.add('card--power');
+      card.dataset.cardType='power'
+      break
+    case 'perk':
+      card.classList.add('card--perk');
+      card.dataset.cardType='perk'
+      break
+    case 'mod':
+      card.classList.add('card--mod');
+      card.dataset.cardType='mod'
+      break
+    default:
+      card.classList.add('card--item');
+      card.dataset.cardType='item'
+      break
+  }
+  const thumb=document.createElement('div')
+  thumb.classList.add('roster-card__image-thumb','card__thumb')
   const img=document.createElement('img')
-  img.className='roster-card__image thumb'
-  card.appendChild(img)
+  img.className='roster-card__image thumb card__img'
+  thumb.appendChild(img)
+  card.appendChild(thumb)
   const body=document.createElement('div')
   body.className='roster-card__body'
+  body.classList.add('card__body')
   card.appendChild(body)
   const title=document.createElement('div')
   title.className='roster-card__title'
@@ -504,6 +540,7 @@ function createRosterCardShell(type,{ includeMods=false }={}){
   body.appendChild(badges)
   const actions=document.createElement('div')
   actions.className='roster-card__actions'
+  actions.classList.add('card__actions')
   card.appendChild(actions)
   let mods=null
   if(includeMods){
@@ -525,6 +562,11 @@ function createRosterUnitCard(unit){
   const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
   ensurePortraitImage(img, { preferPortrait:true })
   safeImg(img, unit.img, 'images/missing-unit.png')
+  if (img.complete) {
+    flagCardOrientation(img, card)
+  } else {
+    img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
+  }
   title.textContent = unit.name
   meta.textContent = `${unit.cost} caps`
   if(unit.unique) badges.appendChild(createBadge('UNIQUE'))
@@ -538,13 +580,18 @@ function createRosterUnitCard(unit){
 
 function createRosterItemCard(unit, cardData, index, item, isPower){
   if(!item) return null
-  const { card,img,title,meta,badges,actions,mods } = createRosterCardShell(isPower?'power':null,{ includeMods:true })
+  const cardType=isPower?'power':(item.cats?.Perks ? 'perk' : 'item')
+  const { card,img,title,meta,badges,actions,mods } = createRosterCardShell(cardType,{ includeMods:true })
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
   ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
   safeImg(img, item.img, 'images/missing-item.png')
-  markCardOrientationOnLoad(img, card)
+  if (img.complete) {
+    flagCardOrientation(img, card)
+  } else {
+    img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
+  }
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
@@ -608,22 +655,35 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
 function buildModCard(unit, cardIndex, modItem){
   const wrap=document.createElement('div')
   wrap.className='roster-card__mod-card'
+  wrap.classList.add('mod-card','card--mod')
+  wrap.dataset.cardType='mod'
+  const thumb=document.createElement('div')
+  thumb.classList.add('card__thumb')
   const img=document.createElement('img')
-  img.className='roster-card__mod-image thumb'
+  img.className='roster-card__mod-image thumb card__img'
   ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
   safeImg(img, modItem.img, 'images/missing-item.png')
-  markCardOrientationOnLoad(img, null)
-  wrap.appendChild(img)
+  if (img.complete) {
+    flagCardOrientation(img, wrap)
+  } else {
+    img.addEventListener('load', () => flagCardOrientation(img, wrap), { once: true })
+  }
+  thumb.appendChild(img)
+  wrap.appendChild(thumb)
+  const body=document.createElement('div')
+  body.classList.add('card__body')
   const title=document.createElement('div')
   title.className='roster-card__mod-title'
   title.textContent=modItem.name
-  wrap.appendChild(title)
+  body.appendChild(title)
   const meta=document.createElement('div')
   meta.className='roster-card__mod-meta'
   meta.textContent=infoLine(modItem)
-  wrap.appendChild(meta)
+  body.appendChild(meta)
+  wrap.appendChild(body)
   const actions=document.createElement('div')
   actions.className='mod-actions'
+  actions.classList.add('card__actions')
   const preview=document.createElement('button')
   preview.className='btn tiny secondary'
   preview.textContent='Превью'
@@ -789,18 +849,32 @@ function renderUnitPicker(){
   })
   units.forEach(u=>{
     const card=document.createElement('div'); card.className='card card-unit'; card.dataset.id=u.id
+    card.classList.add('card--picker','card--unit')
+    card.dataset.cardType='unit'
     if(u.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-large'; ensurePortraitImage(img, { preferPortrait:true }); safeImg(img, u.img, 'images/missing-unit.png')
-    const body=document.createElement('div'); body.className='card-body'
+    const thumb=document.createElement('div')
+    thumb.classList.add('card__thumb')
+    const img=document.createElement('img'); img.className='thumb thumb-large card__img'; ensurePortraitImage(img, { preferPortrait:true }); safeImg(img, u.img, 'images/missing-unit.png')
+    if (img.complete) {
+      flagCardOrientation(img, card)
+    } else {
+      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
+    }
+    thumb.appendChild(img)
+    card.appendChild(thumb)
+    const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
-    const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class="badge">UNIQUE</span>':''}`
-    const actions=document.createElement('div'); actions.className='actions'
+    const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class\"badge\">UNIQUE</span>:''}`
+    const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
     const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
     preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(u.img) })
     actions.appendChild(preview)
-    body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body); card.appendChild(actions)
     const activate=()=>pickUnit(u.id)
+    const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
+    add.addEventListener('click', e=>{ e.stopPropagation(); activate() })
+    actions.appendChild(add)
+    body.appendChild(title); body.appendChild(meta)
+    card.appendChild(body); card.appendChild(actions)
     card.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
     card.tabIndex=0
     card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
@@ -985,20 +1059,36 @@ function renderItemPicker(unit){
   items.sort((a,b)=>{ if(a.cost!==b.cost) return a.cost-b.cost; return a.name.localeCompare(b.name,'ru') })
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=item.id
+    card.classList.add('card--picker')
+    const type = item.is_mod ? 'mod' : (item.cats?.Perks ? 'perk' : (item.cats?.['Power Armor'] ? 'power' : 'item'))
+    card.classList.add(`card--${type}`)
+    card.dataset.cardType=type
     if(item.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png'); markCardOrientationOnLoad(img, card)
-    const body=document.createElement('div'); body.className='card-body'
+    const thumb=document.createElement('div')
+    thumb.classList.add('card__thumb')
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png')
+    if (img.complete) {
+      flagCardOrientation(img, card)
+    } else {
+      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
+    }
+    thumb.appendChild(img)
+    card.appendChild(thumb)
+    const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=item.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
     body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body)
-    const actions=document.createElement('div'); actions.className='actions'
+    const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
     const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
     preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
     actions.appendChild(preview)
+    card.appendChild(body)
     card.appendChild(actions)
     if(!usingModCatalog){
       const activate=()=>addItemToUnit(unit.uid,item.id)
+      const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
+      add.addEventListener('click', e=>{ e.stopPropagation(); activate() })
+      actions.appendChild(add)
       card.addEventListener('click', e=>{ if(e.target.closest('button')) return; activate() })
       card.tabIndex=0
       card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
@@ -1012,6 +1102,7 @@ function renderItemPicker(unit){
     list.appendChild(card)
   })
 }
+
 function canAddMod(unit, card, base){
   if(!base || !base.modType) return false
   return db.items.some(mod=>mod.is_mod && (!mod.mod_targets.length || mod.mod_targets.includes(base.modType)))
@@ -1057,24 +1148,36 @@ function renderModPicker(mods){
   })
   mods.forEach(mod=>{
     const card=document.createElement('div'); card.className='card card-item'; card.dataset.id=mod.id
+    card.classList.add('card--picker','card--mod')
+    card.dataset.cardType='mod'
     if(mod.unique) card.dataset.tag='unique'
-    const img=document.createElement('img'); img.className='thumb thumb-item'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png'); markCardOrientationOnLoad(img, card)
-    const body=document.createElement('div'); body.className='card-body'
+    const thumb=document.createElement('div')
+    thumb.classList.add('card__thumb')
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png')
+    if (img.complete) {
+      flagCardOrientation(img, card)
+    } else {
+      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
+    }
+    thumb.appendChild(img)
+    card.appendChild(thumb)
+    const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=mod.name
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
     body.appendChild(title); body.appendChild(meta)
-    card.appendChild(img); card.appendChild(body)
-    const actions=document.createElement('div'); actions.className='actions'
+    const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
     const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
     preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(mod.img) })
     const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
     add.addEventListener('click', e=>{ e.stopPropagation(); applyModToUnit(mod.id) })
     actions.appendChild(preview); actions.appendChild(add)
+    card.appendChild(body)
     card.appendChild(actions)
     card.addEventListener('click', e=>{ if(e.target.closest('button')) return; applyModToUnit(mod.id) })
     list.appendChild(card)
   })
 }
+
 function applyModToUnit(modId){
   const target=state.modTarget
   if(!target) return
