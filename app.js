@@ -96,9 +96,6 @@ function flagCardOrientation(img, cardEl) {
   const isLandscape = w >= h;
   cardEl.classList.toggle('is-landscape', isLandscape);
   cardEl.classList.toggle('is-portrait', !isLandscape);
-  // Ростерные карточки используют отдельные классы для переключения layout
-  cardEl.classList.toggle('is-landscape-card', isLandscape);
-  cardEl.classList.toggle('is-portrait-card', !isLandscape);
 }
 
 
