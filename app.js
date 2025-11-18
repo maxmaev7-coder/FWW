@@ -864,7 +864,7 @@ function renderUnitPicker(){
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
-    const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique?' · <span class\"badge\">UNIQUE</span>:''}`
+    const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique ? ' · <span class="badge">UNIQUE</span>' : ''}`
     const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
     const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
     preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(u.img) })
