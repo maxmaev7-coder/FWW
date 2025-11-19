@@ -656,43 +656,120 @@ img.img--landscape{ height: auto; width: 100%; }
 /* === Моды под предметами ===================================================== */
 
 /* Вложенные "малые карточки" модов */
-.roster-card__mod-card{
-  background:linear-gradient(180deg,#0e1621,#0c121a);
-  border-radius:12px;
-  border:1px solid #202838;
-  border-left-width:3px;
-  border-left-color:#3a86ff;
-  padding:.65rem .65rem .5rem;
+.roster-card__mod-card,
+.mod-card{
+  position:relative;
+  background:#f6f8fc;
+  border:1px solid #d8e0ec;
+  border-radius:14px;
+  box-shadow:0 10px 22px rgba(15,23,42,.08);
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
 
-/* Картинка мода уже настроена в существующем CSS — не трогаем */
+.roster-card__mod-card::before,
+.mod-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:8px;
+  background:linear-gradient(90deg,#4a7edb,#7fb6ff);
+  border-radius:14px 14px 0 0;
+  pointer-events:none;
+}
 
-/* Заголовок и мета-информация мода */
+.mod-card__content{
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  padding:.75rem .75rem 0;
+  align-items:stretch;
+}
+
+.mod-card__media{ display:flex; justify-content:center; }
+
+.roster-card__mod-image{
+  width:100%;
+  max-width:220px;
+  aspect-ratio:63/88;
+  object-fit:contain;
+  background:#fff;
+  border:1px solid #d8e0ec;
+  border-radius:12px;
+  padding:.35rem;
+  box-shadow:0 6px 14px rgba(0,0,0,.06);
+  margin:0 auto;
+  display:block;
+  cursor:pointer;
+}
+
+.mod-card__body{
+  display:flex;
+  flex-direction:column;
+  gap:.3rem;
+  text-align:center;
+  padding:0 .45rem .25rem;
+}
+
 .roster-card__mod-title{
-  font-weight:600;
-  letter-spacing:.2px;
-  margin-top:.35rem;
+  font-weight:700;
+  letter-spacing:.15px;
+  margin:0;
+  color:#1d2433;
 }
 
 .roster-card__mod-meta{
   font-size:12px;
-  color:var(--muted);
-  margin-top:.25rem;
+  color:#5d6475;
+  margin:0;
+  line-height:1.35;
+  white-space:normal;
 }
 
 /* Панель действий внутри карточки мода */
-.roster-card__mod-card .mod-actions{
-  margin-top:.45rem;
-  padding-top:.45rem;
-  border-top:1px dashed var(--border);
-  display:flex;
-  flex-wrap:wrap;
-  gap:.35rem;
+.roster-card__mod-card .mod-actions,
+.mod-card__actions{
+  margin-top:.35rem;
+  padding:.6rem .75rem .75rem;
+  border-top:1px solid #d8e0ec;
+  background:#e9edf5;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:.5rem;
 }
 
-.roster-card__mod-card .mod-actions .btn{
-  flex:0 1 120px;
+.roster-card__mod-card .mod-actions .btn,
+.mod-card__actions .btn{
+  width:100%;
   justify-content:center;
+  padding:.55rem .75rem;
+  font-size:14px;
+  font-weight:700;
+  border-radius:.65rem;
+  background:#2f7de0;
+  border-color:#2f7de0;
+  color:#f8fbff;
+}
+
+.roster-card__mod-card .mod-actions .btn.danger,
+.mod-card__actions .btn.danger{
+  background:#c7393d;
+  border-color:#c7393d;
+}
+
+.roster-card__mod-card .mod-actions .btn:hover,
+.mod-card__actions .btn:hover{
+  box-shadow:0 0 0 2px rgba(47,125,224,.18);
+  transform:translateY(-1px);
+}
+
+.roster-card__mod-card .mod-actions .btn.danger:hover,
+.mod-card__actions .btn.danger:hover{
+  box-shadow:0 0 0 2px rgba(199,57,61,.2);
 }
 
 /* === Бейджи, UNIQUE и перетаскивание ======================================== */
@@ -825,25 +902,6 @@ border-radius: 0 0 var(--card-radius, 16px) var(--card-radius, 16px);
 display: flex;
 flex-wrap: wrap;
 gap: .45rem;
-}
-
-/* === Мод-плитки внутри ростера === */
-.mod-card{
-background: linear-gradient(180deg, #0e1621, #0c121a);
-border-radius: 12px;
-border: 1px solid #202838;
-border-left-width: 3px;
-border-left-color: #3a86ff;
-padding: .65rem .65rem .5rem;
-}
-
-.mod-card .mod-actions{
-margin-top: .45rem;
-padding-top: .45rem;
-border-top: 1px dashed var(--border);
-display: flex;
-flex-wrap: wrap;
-gap: .35rem;
 }
 
 /* === Визуал «как на скрине»: верхняя цветная полоска и hover === */
