@@ -33,6 +33,18 @@ function waitForImageLoad(img, timeoutMs=1500){
   });
 }
 
+async function waitForImages(selector = '.card__img', timeout = 15000) {
+  const imgs = Array.from(document.querySelectorAll(selector));
+  const waitOne = (img) => new Promise(resolve => {
+    if (img.complete) return resolve();
+    const done = () => { img.onload = img.onerror = null; resolve(); };
+    img.onload = done;
+    img.onerror = done;
+    setTimeout(done, timeout);
+  });
+  await Promise.all(imgs.map(waitOne));
+}
+
 function ensurePortraitImage(img, opts = {}) {
   if (!img) return;
 
@@ -1389,11 +1401,13 @@ function clearPrintSheet(){
   if (host) host.innerHTML = '';
 }
 
-document.getElementById('printBtn').addEventListener('click', async ()=>{
+async function printCards() {
   await buildPrintSheet();
-  await new Promise(resolve=>setTimeout(resolve, 120));
+  await waitForImages('.pdf-card__image, .pdf-card__mod-image, .card__img', 15000);
   window.print();
-});
+}
+
+document.getElementById('printBtn').addEventListener('click', printCards);
 window.addEventListener('afterprint', ()=>{
   const host=document.getElementById('printSheet'); if (host) host.innerHTML='';
 });
