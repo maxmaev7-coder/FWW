@@ -55,7 +55,7 @@
       img.className = 'card__img'
       img.loading = 'lazy'
       img.decoding = 'async'
-      img.alt = meta.title || ''
+      img.alt = meta.title || meta.id || ''
       img.src = meta.img || this._fallbackImg(meta.kind)
       img.onerror = ()=>{ img.src = this._fallbackImg(meta.kind) }
       card.appendChild(img)
