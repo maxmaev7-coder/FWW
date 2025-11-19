@@ -669,17 +669,21 @@ function buildModCard(unit, cardIndex, modItem){
   wrap.className='roster-card__mod-card'
   wrap.classList.add('mod-card','card--mod')
   wrap.dataset.cardType='mod'
-  const thumb=document.createElement('div')
-  thumb.classList.add('card__thumb')
+  const content=document.createElement('div')
+  content.className='mod-card__content'
+
+  const media=document.createElement('div')
+  media.classList.add('mod-card__media')
   const img=document.createElement('img')
-  img.className='roster-card__mod-image thumb card__img'
+  img.className='roster-card__mod-image card__img'
   safeImg(img, modItem.img, 'images/missing-item.png')
   ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
   flagCardOrientation(img, wrap)
-  thumb.appendChild(img)
-  wrap.appendChild(thumb)
+  media.appendChild(img)
+  content.appendChild(media)
+
   const body=document.createElement('div')
-  body.classList.add('card__body')
+  body.classList.add('card__body','mod-card__body')
   const title=document.createElement('div')
   title.className='roster-card__mod-title'
   title.textContent=modItem.name
@@ -688,18 +692,20 @@ function buildModCard(unit, cardIndex, modItem){
   meta.className='roster-card__mod-meta'
   meta.textContent=infoLine(modItem)
   body.appendChild(meta)
-  wrap.appendChild(body)
+  content.appendChild(body)
+  wrap.appendChild(content)
+
   const actions=document.createElement('div')
-  actions.className='mod-actions'
+  actions.className='mod-actions mod-card__actions'
   actions.classList.add('card__actions')
   const change=document.createElement('button')
-  change.className='btn tiny'
-  change.textContent='Изменить'
+  change.className='btn'
+  change.textContent='Change mod'
   change.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid, cardIndex) })
   actions.appendChild(change)
   const remove=document.createElement('button')
-  remove.className='btn tiny danger'
-  remove.textContent='Удалить'
+  remove.className='btn danger'
+  remove.textContent='Remove'
   remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
   actions.appendChild(remove)
   wrap.appendChild(actions)
