@@ -475,9 +475,9 @@ function buildRosterUnit(unit){
   costEl.textContent=`${unit.cost} caps`
   if(unit.unique){
     const sep=document.createTextNode(' · ')
-    const badge=document.createElement('span')
-    badge.className='badge'
-    badge.textContent='UNIQUE'
+  const badge=document.createElement('span')
+  badge.className='badge'
+  badge.textContent='УНИКАЛЬНО'
     costEl.appendChild(sep)
     costEl.appendChild(badge)
   }
@@ -700,12 +700,12 @@ function buildModCard(unit, cardIndex, modItem){
   actions.classList.add('card__actions')
   const change=document.createElement('button')
   change.className='btn'
-  change.textContent='Change mod'
+  change.textContent='Заменить мод'
   change.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid, cardIndex) })
   actions.appendChild(change)
   const remove=document.createElement('button')
   remove.className='btn danger'
-  remove.textContent='Remove'
+  remove.textContent='Удалить'
   remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
   actions.appendChild(remove)
   wrap.appendChild(actions)
