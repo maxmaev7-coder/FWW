@@ -33,69 +33,45 @@ function waitForImageLoad(img, timeoutMs=1500){
   });
 }
 
-function ensurePortraitImage(img, opts = {}){
-  const { forceRotate = false, preferPortrait = false } = opts;
-  if(!img) return;
-  const rotateIfNeeded=()=>{
-    const w=img.naturalWidth;
-    const h=img.naturalHeight;
-    if(!w || !h) return;
-    const shouldRotate = forceRotate || (preferPortrait && w>h);
-    if(shouldRotate && img.dataset.rotated!=='1'){
-      try{
-        const canvas=document.createElement('canvas');
-        canvas.width=h;
-        canvas.height=w;
-        const ctx=canvas.getContext('2d');
-        if(!ctx) throw new Error('no-ctx');
-        ctx.translate(canvas.width/2, canvas.height/2);
-        ctx.rotate(-Math.PI/2);
-        ctx.drawImage(img, -w/2, -h/2);
-        img.src=canvas.toDataURL('image/png');
-        img.dataset.rotated='1';
-        return; // wait for the rotated image to load
-      }catch(err){
-        console.error('Failed to rotate image to portrait', err);
-        img.classList.add('img--portrait-rotate');
-        img.dataset.rotated='1';
-      }
-    }
-    if(!shouldRotate || img.dataset.rotated==='1'){
-      const wasRotated = img.dataset.rotated==='1';
-      const landscape=!wasRotated && w>h;
-      img.classList.toggle('img--landscape', landscape);
-      img.classList.toggle('img--portrait', !landscape);
-      img.removeEventListener('load', rotateIfNeeded);
-    }
-  };
-  img.addEventListener('load', rotateIfNeeded);
-  if(img.complete) rotateIfNeeded();
-}
+function ensurePortraitImage(img, opts = {}) {
+  if (!img) return;
 
-// Помечаем карточку классом, инвертируя ориентацию изображения относительно оригинальной
-function markCardOrientationOnLoad(img, cardEl){
-  const apply=()=>{
-    const isLandscapeImage = img.dataset.rotated!=='1' && img.naturalWidth > img.naturalHeight;
-    const shouldDisplayLandscape = !isLandscapeImage;
-    img.classList.toggle('img--landscape', shouldDisplayLandscape);
-    img.classList.toggle('img--portrait', !shouldDisplayLandscape);
-    if(cardEl){
-      cardEl.classList.toggle('is-landscape-card', shouldDisplayLandscape);
-      cardEl.classList.toggle('is-portrait-card', !shouldDisplayLandscape);
-    }
+  const apply = () => {
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (!w || !h) return;
+
+    const isLandscape = w >= h;
+    img.classList.toggle('img--landscape', isLandscape);
+    img.classList.toggle('img--portrait', !isLandscape);
+
+    img.removeEventListener('load', apply);
   };
+
   img.addEventListener('load', apply);
-  if(img.complete) apply();
+  if (img.complete) apply();
 }
 
 function flagCardOrientation(img, cardEl) {
   if (!img || !cardEl) return;
-  const w = img.naturalWidth;
-  const h = img.naturalHeight;
-  if (!w || !h) return;
-  const isLandscape = w >= h;
-  cardEl.classList.toggle('is-landscape', isLandscape);
-  cardEl.classList.toggle('is-portrait', !isLandscape);
+
+  const apply = () => {
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (!w || !h) return;
+
+    const isLandscape = w >= h;
+
+    cardEl.classList.toggle('is-landscape', isLandscape);
+    cardEl.classList.toggle('is-portrait', !isLandscape);
+    cardEl.classList.toggle('is-landscape-card', isLandscape);
+    cardEl.classList.toggle('is-portrait-card', !isLandscape);
+
+    img.removeEventListener('load', apply);
+  };
+
+  img.addEventListener('load', apply);
+  if (img.complete) apply();
 }
 
 
@@ -445,8 +421,8 @@ function buildRosterUnit(unit){
   const root=tpl.querySelector('.roster-unit')
   root.dataset.uid=unit.uid
   const img=tpl.querySelector('.roster-unit__image')
-  ensurePortraitImage(img, { preferPortrait:true })
   safeImg(img, unit.img, 'images/missing-unit.png')
+  ensurePortraitImage(img, { preferPortrait:true })
   const nameEl=tpl.querySelector('.roster-unit__name')
   const costEl=tpl.querySelector('.roster-unit__cost')
   nameEl.textContent=unit.name
@@ -560,21 +536,13 @@ function createBadge(text){
 
 function createRosterUnitCard(unit){
   const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
-  ensurePortraitImage(img, { preferPortrait:true })
   safeImg(img, unit.img, 'images/missing-unit.png')
-  if (img.complete) {
-    flagCardOrientation(img, card)
-  } else {
-    img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
-  }
+  ensurePortraitImage(img, { preferPortrait:true })
+  flagCardOrientation(img, card)
   title.textContent = unit.name
   meta.textContent = `${unit.cost} caps`
   if(unit.unique) badges.appendChild(createBadge('UNIQUE'))
-  const preview=document.createElement('button')
-  preview.className='btn tiny secondary'
-  preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(unit.img) })
-  actions.appendChild(preview)
+  if(!actions.children.length) actions.remove()
   return card
 }
 
@@ -585,13 +553,9 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
-  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
   safeImg(img, item.img, 'images/missing-item.png')
-  if (img.complete) {
-    flagCardOrientation(img, card)
-  } else {
-    img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
-  }
+  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
+  flagCardOrientation(img, card)
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('UNIQUE'))
@@ -599,11 +563,6 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   if(duplicates>1) badges.appendChild(createBadge(`x${duplicates}`))
   if(cardData.locked) badges.appendChild(createBadge('LOCKED'))
   if(itemHasSpecialBars(item)) badges.appendChild(createBadge('S.P.E.C.I.A.L.'))
-  const preview=document.createElement('button')
-  preview.className='btn tiny secondary'
-  preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
-  actions.appendChild(preview)
   if(canAddMod(unit, cardData, item)){
     const modBtn=document.createElement('button')
     modBtn.className='btn tiny'
@@ -661,13 +620,9 @@ function buildModCard(unit, cardIndex, modItem){
   thumb.classList.add('card__thumb')
   const img=document.createElement('img')
   img.className='roster-card__mod-image thumb card__img'
-  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
   safeImg(img, modItem.img, 'images/missing-item.png')
-  if (img.complete) {
-    flagCardOrientation(img, wrap)
-  } else {
-    img.addEventListener('load', () => flagCardOrientation(img, wrap), { once: true })
-  }
+  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
+  flagCardOrientation(img, wrap)
   thumb.appendChild(img)
   wrap.appendChild(thumb)
   const body=document.createElement('div')
@@ -684,11 +639,6 @@ function buildModCard(unit, cardIndex, modItem){
   const actions=document.createElement('div')
   actions.className='mod-actions'
   actions.classList.add('card__actions')
-  const preview=document.createElement('button')
-  preview.className='btn tiny secondary'
-  preview.textContent='Превью'
-  preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
-  actions.appendChild(preview)
   const change=document.createElement('button')
   change.className='btn tiny'
   change.textContent='Изменить'
@@ -700,7 +650,6 @@ function buildModCard(unit, cardIndex, modItem){
   remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
   actions.appendChild(remove)
   wrap.appendChild(actions)
-  img.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(modItem.img) })
   return wrap
 }
 
@@ -854,21 +803,13 @@ function renderUnitPicker(){
     if(u.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-large card__img'; ensurePortraitImage(img, { preferPortrait:true }); safeImg(img, u.img, 'images/missing-unit.png')
-    if (img.complete) {
-      flagCardOrientation(img, card)
-    } else {
-      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
-    }
+    const img=document.createElement('img'); img.className='thumb thumb-large card__img'; safeImg(img, u.img, 'images/missing-unit.png'); ensurePortraitImage(img, { preferPortrait:true }); flagCardOrientation(img, card)
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
     const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique ? ' · <span class="badge">UNIQUE</span>' : ''}`
     const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
-    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(u.img) })
-    actions.appendChild(preview)
     const activate=()=>pickUnit(u.id)
     const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
     add.addEventListener('click', e=>{ e.stopPropagation(); activate() })
@@ -1066,12 +1007,7 @@ function renderItemPicker(unit){
     if(item.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); safeImg(img, item.img, 'images/missing-item.png')
-    if (img.complete) {
-      flagCardOrientation(img, card)
-    } else {
-      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
-    }
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, item.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); flagCardOrientation(img, card)
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1079,11 +1015,7 @@ function renderItemPicker(unit){
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent=infoLine(item)
     body.appendChild(title); body.appendChild(meta)
     const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
-    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
-    actions.appendChild(preview)
     card.appendChild(body)
-    card.appendChild(actions)
     if(!usingModCatalog){
       const activate=()=>addItemToUnit(unit.uid,item.id)
       const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
@@ -1093,12 +1025,16 @@ function renderItemPicker(unit){
       card.tabIndex=0
       card.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate() } })
     }else{
-      card.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(item.img) })
       const hint=document.createElement('div')
       hint.className='meta'
       hint.textContent='Добавьте через «+ мод» у предмета'
       body.appendChild(hint)
+      const info=document.createElement('span')
+      info.className='actions__hint'
+      info.textContent='Только через «+ мод» у карты'
+      actions.appendChild(info)
     }
+    if(actions.children.length) card.appendChild(actions)
     list.appendChild(card)
   })
 }
@@ -1153,12 +1089,7 @@ function renderModPicker(mods){
     if(mod.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); safeImg(img, mod.img, 'images/missing-item.png')
-    if (img.complete) {
-      flagCardOrientation(img, card)
-    } else {
-      img.addEventListener('load', () => flagCardOrientation(img, card), { once: true })
-    }
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, mod.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); flagCardOrientation(img, card)
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1166,11 +1097,9 @@ function renderModPicker(mods){
     const meta=document.createElement('div'); meta.className='meta'; meta.textContent = infoLine(mod)
     body.appendChild(title); body.appendChild(meta)
     const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
-    const preview=document.createElement('button'); preview.className='btn tiny secondary preview'; preview.textContent='Превью'
-    preview.addEventListener('click', e=>{ e.stopPropagation(); openImagePreview(mod.img) })
     const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
     add.addEventListener('click', e=>{ e.stopPropagation(); applyModToUnit(mod.id) })
-    actions.appendChild(preview); actions.appendChild(add)
+    actions.appendChild(add)
     card.appendChild(body)
     card.appendChild(actions)
     card.addEventListener('click', e=>{ if(e.target.closest('button')) return; applyModToUnit(mod.id) })
@@ -1367,15 +1296,9 @@ async function buildPrintSheet(){
       img.className='pdf-card__image'
       const imgLoaded=waitForImageLoad(img)
       loadPromises.push(imgLoaded)
-      const orientation = entry.orientation || 'portrait'
-      const preferPortrait = orientation!=='landscape'
-      ensurePortraitImage(img, { preferPortrait })
-      if(orientation==='landscape'){
-        cell.classList.add('is-landscape-card')
-      }else{
-        cell.classList.add('is-portrait-card')
-      }
       safeImg(img, entry.img, entry.fallback)
+      ensurePortraitImage(img, { preferPortrait:true })
+      flagCardOrientation(img, cell)
       img.decoding='sync'
       img.loading='eager'
       cell.appendChild(img)
@@ -1387,9 +1310,8 @@ async function buildPrintSheet(){
           modImg.className='pdf-card__mod-image'
           const modLoaded=waitForImageLoad(modImg)
           loadPromises.push(modLoaded)
-          const modOrientation = modEntry.orientation || 'portrait'
-          ensurePortraitImage(modImg, { preferPortrait: modOrientation!=='landscape' })
           safeImg(modImg, modEntry.img, modEntry.fallback)
+          ensurePortraitImage(modImg, { preferPortrait:true })
           modImg.decoding='sync'
           modImg.loading='eager'
           modsWrap.appendChild(modImg)
@@ -1402,39 +1324,6 @@ async function buildPrintSheet(){
   })
   await Promise.all(loadPromises)
 
-  async function rotateToOrientation(img, desired /* 'portrait' | 'landscape' */){
-    if(img.decode){ try{ await img.decode() }catch(e){} }
-    const w = img.naturalWidth || img.width
-    const h = img.naturalHeight || img.height
-    const isPortrait = h >= w
-    const needPortrait = desired === 'portrait'
-
-    if((needPortrait && isPortrait) || (!needPortrait && !isPortrait)){
-      img.removeAttribute('data-rotated')
-      img.style.transform = ''
-      return
-    }
-
-    const canvas = document.createElement('canvas')
-    canvas.width = h
-    canvas.height = w
-    const ctx = canvas.getContext('2d')
-    if(!ctx) return
-    ctx.translate(h/2, w/2)
-    ctx.rotate(Math.PI/2)
-    ctx.drawImage(img, -w/2, -h/2, w, h)
-    img.src = canvas.toDataURL('image/png')
-    img.setAttribute('data-rotated', '1')
-    if(img.decode){ try{ await img.decode() }catch(e){} }
-  }
-
-  const imgs = host.querySelectorAll('.pdf-card__image, .pdf-card__mod-image')
-  for(const img of imgs){
-    const card = img.closest('.pdf-card')
-    const desired = card && card.classList.contains('is-portrait-card') ? 'portrait' : 'landscape'
-    await rotateToOrientation(img, desired)
-  }
-
   try{
     const imgs = host.querySelectorAll('.pdf-card__image, .pdf-card__mod-image')
     await Promise.all(Array.from(imgs).map(img=>
@@ -1446,7 +1335,7 @@ async function buildPrintSheet(){
 function buildPrintCardsForUnit(unit){
   const result=[]
   if(!unit) return result
-  result.push({ img:unit.img, fallback:'images/missing-unit.png', mods:[], orientation:'portrait' })
+  result.push({ img:unit.img, fallback:'images/missing-unit.png', mods:[] })
   const cards=(unit.cards||[]).map((card,index)=>{
     const item=getItem(card.itemId)
     if(!item) return null
@@ -1471,13 +1360,10 @@ function createPrintEntryFromCard(entry){
   if(entry.card.modId){
     const modItem=getItem(entry.card.modId)
     if(modItem){
-      const modOrientation = itemHasSpecialBars(modItem)?'landscape':'portrait'
-      mods.push({ img:modItem.img, fallback:'images/missing-item.png', orientation:modOrientation })
+      mods.push({ img:modItem.img, fallback:'images/missing-item.png' })
     }
   }
-  const isSpecialCard = itemHasSpecialBars(entry.item)
-  const orientation = isSpecialCard ? 'landscape' : 'portrait'
-  return { img:entry.item.img, fallback:'images/missing-item.png', mods, orientation }
+  return { img:entry.item.img, fallback:'images/missing-item.png', mods }
 }
 
 
