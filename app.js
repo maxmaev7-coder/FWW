@@ -56,11 +56,12 @@ function ensurePortraitImage(img, opts = {}) {
   if (!img) return;
 
   const apply = () => {
+    const preferPortrait = !!opts.preferPortrait;
     const w = img.naturalWidth;
     const h = img.naturalHeight;
     if (!w || !h) return;
 
-    const isLandscape = w >= h;
+    const isLandscape = preferPortrait ? false : w >= h;
     img.classList.toggle('img--landscape', isLandscape);
     img.classList.toggle('img--portrait', !isLandscape);
 
