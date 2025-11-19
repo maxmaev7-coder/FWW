@@ -6,6 +6,8 @@
 <title>FWW Builder</title>
 <link rel="stylesheet" href="styles.css?v=5">
 <link rel="stylesheet" href="print.css?v=2" media="print">
+<link rel="stylesheet" href="board_ui/board.css">
+<link rel="stylesheet" href="board_ui/board_print.css" media="print">
 </head>
 <body>
 <div id="printSheet" class="print-sheet"></div>
@@ -33,7 +35,7 @@
   </div>
 </header>
 
-<main id="roster" class="roster"></main>
+<section id="board" class="board" aria-label="Растер карт"></section>
 
 <div id="modalRoot" class="modal hidden">
   <div class="backdrop"></div>
@@ -74,5 +76,14 @@
 </template>
 
 <script src="app.js?v=4"></script>
+<script src="board_ui/board.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mount = document.getElementById('board');
+    if (mount && window.BoardUI) {
+      BoardUI.mount(mount);
+    }
+  });
+</script>
 </body>
 </html>
