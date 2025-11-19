@@ -85,7 +85,7 @@ function openImagePreview(src){
 const $ = s => document.querySelector(s)
 const $$ = s => Array.from(document.querySelectorAll(s))
 
-const db = { units: [], items: [], itemMap: new Map(), itemNameMap: new Map() }
+const db = { units: [], items: [], itemMap: new Map(), itemNameMap: new Map(), itemsById: {}, itemsByName: {} }
 
 function createDefaultItemFilter(){
   return { group:null, weapon:null, flags:{ stripes:false, mods:false, chem:false } }
@@ -143,6 +143,49 @@ const ITEM_GROUPS = [
 
 function normalizeNameKey(name){ return typeof name==='string'? name.trim().toLowerCase():'' }
 
+function normalizeLookupKey(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[’'`]/g, '')
+    .replace(/\b(perk|card|weapon|outfit|strike|claws?)\b/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function buildNameMap(items) {
+  const m = new Map()
+  for (const x of items || []) {
+    const name = String(x.name || '')
+    const keys = [name.toLowerCase(), normalizeLookupKey(name)]
+    keys.forEach(k => { if (k) m.set(k, x.id) })
+
+    if (Array.isArray(x.aliases)) {
+      x.aliases.forEach(a => {
+        const k = normalizeLookupKey(a)
+        if (k) m.set(k, x.id)
+      })
+    }
+  }
+  return m
+}
+
+function resolveItemReference(db, raw) {
+  if (!raw) return null
+  const s = String(raw).trim()
+
+  if (db.itemsById && db.itemsById[s]) return db.itemsById[s]
+
+  const lower = s.toLowerCase()
+  if (db.itemsByName && db.itemsByName[lower]) {
+    return db.itemsById[db.itemsByName[lower]]
+  }
+
+  if (!db._nameMap) db._nameMap = buildNameMap(db.items || [])
+  const id = db._nameMap.get(normalizeLookupKey(s))
+  return id ? db.itemsById[id] : null
+}
+
 function normalizeEquippedEntries(source){
   const result=[]
   const visit=value=>{
@@ -180,42 +223,6 @@ function normalizeEquippedEntries(source){
   }
   visit(source)
   return result
-}
-
-function resolveItemReference(ref){
-  if(ref===null || ref===undefined) return null
-  if(typeof ref==='number') return resolveItemReference(String(ref))
-  if(typeof ref==='string'){
-    const trimmed=ref.trim()
-    if(!trimmed) return null
-    const direct=getItem(trimmed)
-    if(direct) return direct.id
-    const alias=getItemIdByName(trimmed)
-    return alias||null
-  }
-  if(typeof ref==='object'){
-    const idKeys=['itemId','id','code','key','uid','cardId']
-    for(const key of idKeys){
-      if(typeof ref[key]==='string'){
-        const resolved=resolveItemReference(ref[key])
-        if(resolved) return resolved
-      }
-    }
-    const nameKeys=['name','item','label','title','card','cardName']
-    for(const key of nameKeys){
-      if(typeof ref[key]==='string'){
-        const resolved=resolveItemReference(ref[key])
-        if(resolved) return resolved
-      }
-    }
-    for(const val of Object.values(ref)){
-      if(typeof val==='string'){
-        const resolved=resolveItemReference(val)
-        if(resolved) return resolved
-      }
-    }
-  }
-  return null
 }
 
 function itemHasWeapon(item, weapon){ return !!(item.weapon && item.weapon[weapon]) }
@@ -278,6 +285,12 @@ function resolveModType(item){
   return null
 }
 
+function isPowerArmorCard(card) {
+  const t = String(card.category || card.type || '').toLowerCase()
+  const n = String(card.name || '').toLowerCase()
+  return t.includes('power armor') || n.includes('power armor')
+}
+
 
 // === dynamic image mapping (to avoid 404 and support mixed extensions) ===
 let ITEMS_MAP={}, UNITS_MAP={};
@@ -294,8 +307,12 @@ async function loadDB(){
   await loadImgMaps(); const [u,i] = await Promise.all([fetch('db/units.json').then(r=>r.json()), fetch('db/items.json').then(r=>r.json())])
   db.units = u.map(normalizeUnit)
   db.items = i.map(normalizeItem)
+  db.itemsById = {}
+  db.items.forEach(item=>{ db.itemsById[item.id]=item })
   db.itemMap = new Map(db.items.map(x=>[x.id,x]))
   db.itemNameMap = new Map(db.items.map(x=>[normalizeNameKey(x.name), x.id]).filter(([key])=>key))
+  db.itemsByName = {}
+  db.items.forEach(item=>{ const key=normalizeNameKey(item.name); if(key) db.itemsByName[key]=item.id })
   fillFactionSelect()
   restoreFromStorage()
   renderRoster()
@@ -328,11 +345,11 @@ function normalizeItem(raw){
   item.modType = resolveModType(item)
   return item
 }
-function getItem(id){ return db.itemMap.get(id) }
+function getItem(id){ if(!id) return null; return db.itemsById[id] || db.itemMap.get(id) || null }
 function getItemIdByName(name){
   const key=normalizeNameKey(name)
   if(!key) return undefined
-  return db.itemNameMap.get(key)
+  return db.itemsByName[key] || db.itemNameMap.get(key)
 }
 function createCardEntry(itemId, locked=false){ return { itemId, modId:null, locked:!!locked } }
 function getUnitByUid(uid){ return state.roster.units.find(x=>x.uid===uid) }
@@ -832,9 +849,9 @@ function pickUnit(id){
   const unit = { uid, id:u.id, name:u.name, factions:u.factions, cost:u.cost, unique:u.unique, prereq:u.prereq, access:u.access, img:u.img, cards:[], faction };
   const equippedEntries = Array.isArray(u.equipped) ? u.equipped : normalizeEquippedEntries(u.equipped)
   equippedEntries.forEach(ref=>{
-    const itemId = resolveItemReference(ref)
-    if(itemId){
-      unit.cards.push(createCardEntry(itemId,true))
+    const item = resolveItemReference(db, ref)
+    if(item){
+      unit.cards.push(createCardEntry(item.id,true))
     }
   })
   state.roster.units.push(unit)
