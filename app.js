@@ -5,6 +5,13 @@ function safeImg(el, src, fallback){
   el.onerror=()=>{ if(el.dataset.fallback!=='1'){ el.dataset.fallback='1'; el.src=fallback; } };
 }
 
+function safeFileName(s) {
+  return (s || 'roster')
+    .replace(/[\\\/:*?"<>|]+/g, '_')
+    .trim()
+    .slice(0, 64);
+}
+
 function waitForImageLoad(img, timeoutMs=1500){
   if(!img) return Promise.resolve();
   if(img.complete && img.naturalWidth>0) return Promise.resolve();
@@ -405,7 +412,17 @@ function fillFactionSelect(){
   const all = new Set()
   db.units.forEach(u=>u.factions.forEach(f=>all.add(f)))
   const select = $('#factionSelect')
-  select.innerHTML = `<option value="">Без ограничений</option>` + Array.from(all).sort().map(f=>`<option value="${f}">${f}</option>`).join('')
+  select.innerHTML = ''
+  const defaultOption = document.createElement('option')
+  defaultOption.value = ''
+  defaultOption.textContent = 'Без ограничений'
+  select.appendChild(defaultOption)
+  Array.from(all).sort().forEach(faction=>{
+    const option = document.createElement('option')
+    option.value = faction
+    option.textContent = faction
+    select.appendChild(option)
+  })
   select.addEventListener('change', ()=>{
     state.roster.faction = select.value
     renderRoster()
@@ -455,8 +472,15 @@ function buildRosterUnit(unit){
   const nameEl=tpl.querySelector('.roster-unit__name')
   const costEl=tpl.querySelector('.roster-unit__cost')
   nameEl.textContent=unit.name
-  const uniq=unit.unique?` · <span class="badge">UNIQUE</span>`:''
-  costEl.innerHTML=`${unit.cost} caps${uniq}`
+  costEl.textContent=`${unit.cost} caps`
+  if(unit.unique){
+    const sep=document.createTextNode(' · ')
+    const badge=document.createElement('span')
+    badge.className='badge'
+    badge.textContent='UNIQUE'
+    costEl.appendChild(sep)
+    costEl.appendChild(badge)
+  }
   tpl.querySelector('[data-act="addItem"]').addEventListener('click',()=>openItemPicker(unit.uid))
   tpl.querySelector('[data-act="dup"]').addEventListener('click',()=>duplicateUnit(unit.uid))
   tpl.querySelector('[data-act="remove"]').addEventListener('click',()=>removeUnit(unit.uid))
@@ -837,7 +861,16 @@ function renderUnitPicker(){
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
-    const meta=document.createElement('div'); meta.className='meta'; meta.innerHTML = `${u.cost} caps${u.unique ? ' · <span class="badge">UNIQUE</span>' : ''}`
+    const meta=document.createElement('div'); meta.className='meta'
+    meta.textContent = `${u.cost} caps`
+    if(u.unique){
+      const sep=document.createTextNode(' · ')
+      const badge=document.createElement('span')
+      badge.className='badge'
+      badge.textContent='UNIQUE'
+      meta.appendChild(sep)
+      meta.appendChild(badge)
+    }
     const actions=document.createElement('div'); actions.className='actions'; actions.classList.add('card__actions')
     const activate=()=>pickUnit(u.id)
     const add=document.createElement('button'); add.className='btn tiny'; add.textContent='Добавить'
@@ -1270,7 +1303,7 @@ $('#modalClose').addEventListener('click', closeModal)
 $('#clearBtn').addEventListener('click', ()=>{ if(confirm('Очистить текущий лист?')){ state.roster={ name:"", faction:"", pointsLimit:0, modelsLimit:0, units:[], leaderTaken:false }; persistToStorage(); renderRoster() }})
 $('#saveBtn').addEventListener('click', ()=>{
   const blob = new Blob([JSON.stringify(serializeRoster())], {type:'application/json'})
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download = (state.roster.name||'roster')+'.json'; a.click()
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download = safeFileName(state.roster.name)+'.json'; a.click()
 })
 $('#loadBtn').addEventListener('click', ()=>$('#loadInput').click())
 $('#loadInput').addEventListener('change', e=>{
