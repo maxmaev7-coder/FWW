@@ -873,6 +873,10 @@ aspect-ratio: 3 / 2;
 /* Если JS определил ориентацию, она имеет приоритет */
 .card.is-landscape .card__thumb{ aspect-ratio: 16 / 9; }
 .card.is-portrait  .card__thumb{ aspect-ratio: 63 / 88; }
+.roster-card.is-landscape .card__thumb,
+.roster-card.is-landscape-card .card__thumb{ aspect-ratio: 16 / 9; }
+.roster-card.is-portrait  .card__thumb,
+.roster-card.is-portrait-card  .card__thumb{ aspect-ratio: 63 / 88; }
 
 /* Панель действий карточки (add/change/remove) */
 .card__actions{
