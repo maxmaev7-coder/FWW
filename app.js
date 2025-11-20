@@ -1340,7 +1340,7 @@ async function buildPrintSheet(){
   if(!host) return
   host.innerHTML=''
   const variant = state.pdfCardSize==='small' ? 'small' : 'large'
-  const perPage = variant==='small' ? 20 : 10
+  const perPage = variant==='small' ? 20 : 8
   let sheet=null
   let grid=null
   let count=0
