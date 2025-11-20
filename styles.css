@@ -310,9 +310,9 @@ a{ color:inherit; }
   width:100%;
   aspect-ratio:3/4;
   object-fit:contain;
-  background:#fff;
+  background:var(--panel);
   border-radius:10px;
-  border:none;
+  border:1px solid var(--border);
   cursor:pointer;
   display:block;
 }
@@ -659,10 +659,10 @@ img.img--landscape{ height: auto; width: 100%; }
 .roster-card__mod-card,
 .mod-card{
   position:relative;
-  background:#f6f8fc;
-  border:1px solid #d8e0ec;
+  background:var(--chip);
+  border:1px solid var(--border);
   border-radius:14px;
-  box-shadow:0 10px 22px rgba(15,23,42,.08);
+  box-shadow:0 10px 22px rgba(0,0,0,.3);
   padding:0;
   display:flex;
   flex-direction:column;
@@ -697,11 +697,11 @@ img.img--landscape{ height: auto; width: 100%; }
   max-width:220px;
   aspect-ratio:63/88;
   object-fit:contain;
-  background:#fff;
-  border:1px solid #d8e0ec;
+  background:var(--panel);
+  border:1px solid var(--border);
   border-radius:12px;
   padding:.35rem;
-  box-shadow:0 6px 14px rgba(0,0,0,.06);
+  box-shadow:0 6px 14px rgba(0,0,0,.22);
   margin:0 auto;
   display:block;
   cursor:pointer;
@@ -719,12 +719,12 @@ img.img--landscape{ height: auto; width: 100%; }
   font-weight:700;
   letter-spacing:.15px;
   margin:0;
-  color:#1d2433;
+  color:var(--text);
 }
 
 .roster-card__mod-meta{
   font-size:12px;
-  color:#5d6475;
+  color:var(--muted);
   margin:0;
   line-height:1.35;
   white-space:normal;
@@ -735,8 +735,8 @@ img.img--landscape{ height: auto; width: 100%; }
 .mod-card__actions{
   margin-top:.35rem;
   padding:.6rem .75rem .75rem;
-  border-top:1px solid #d8e0ec;
-  background:#e9edf5;
+  border-top:1px solid var(--border);
+  background:var(--panel);
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:.5rem;
@@ -750,15 +750,15 @@ img.img--landscape{ height: auto; width: 100%; }
   font-size:14px;
   font-weight:700;
   border-radius:.65rem;
-  background:#2f7de0;
-  border-color:#2f7de0;
-  color:#f8fbff;
+  background:var(--chip);
+  border-color:var(--border);
+  color:var(--text);
 }
 
 .roster-card__mod-card .mod-actions .btn.danger,
 .mod-card__actions .btn.danger{
-  background:#c7393d;
-  border-color:#c7393d;
+  background:#3a1a21;
+  border-color:#5a2731;
 }
 
 .roster-card__mod-card .mod-actions .btn:hover,
@@ -772,9 +772,9 @@ img.img--landscape{ height: auto; width: 100%; }
   box-shadow:0 0 0 2px rgba(199,57,61,.2);
 }
 
-/* === Бейджи, UNIQUE и перетаскивание ======================================== */
+/* === Бейджи, уникальные карты и перетаскивание ============================== */
 
-/* Бейджи (UNIQUE, LOCKED и т.п.) — более "тэговый" вид */
+/* Бейджи (УНИКАЛЬНО, LOCKED и т.п.) — более "тэговый" вид */
 .roster-card__badge{
   display:inline-flex;
   align-items:center;
@@ -789,9 +789,9 @@ img.img--landscape{ height: auto; width: 100%; }
   letter-spacing:.35px;
 }
 
-/* Дополнительно подсвечиваем UNIQUE в заголовке */
+/* Дополнительно подсвечиваем пометку "УНИКАЛЬНО" в заголовке */
 .card[data-tag="unique"] .title::after{
-  content:" • UNIQUE";
+  content:" • УНИКАЛЬНО";
   color:#ffd977;
   font-weight:600;
   margin-left:.25rem;
@@ -799,7 +799,7 @@ img.img--landscape{ height: auto; width: 100%; }
 
 /* При желании можно также использовать data-атрибут на title у ростер-карточек */
 .roster-card__title[data-unique="1"]::after{
-  content:" • UNIQUE";
+  content:" • УНИКАЛЬНО";
   color:#ffd977;
   font-weight:600;
   margin-left:.25rem;
@@ -958,13 +958,13 @@ font-size: 13px;
 line-height: 1.45;
 }
 
-/* Бейдж UNIQUE */
+/* Бейдж "УНИКАЛЬНО" */
 .card[data-tag="unique"] .title::after,
 .roster-card__title[data-unique="1"]::after{
-content: " • UNIQUE";
-color: #ffd977;
-font-weight: 600;
-margin-left: .25rem;
+  content: " • УНИКАЛЬНО";
+  color: #ffd977;
+  font-weight: 600;
+  margin-left: .25rem;
 }
 
 /* Состояние перетаскивания ростер-карточек */

@@ -6,7 +6,7 @@ function safeImg(el, src, fallback){
 }
 
 function safeFileName(s) {
-  return (s || 'roster')
+  return (s || 'отряд')
     .replace(/[\\\/:*?"<>|]+/g, '_')
     .trim()
     .slice(0, 64);
@@ -134,6 +134,36 @@ const state = {
 const WEAPON_KEYS = ['Melee','Pistol','Rifle','Heavy Weapon','Grenade','Mines']
 const ACCESS_KEYS = ['Upgrades','Wasteland Items','Advanced Items','High Tech Items','Usable Items','Robots Items','Automatron Items','Creature Items','Dog Items','Super Mutant Items','Standart Item','Faction Items']
 const CATEGORY_KEYS = ['Chem','Alcohol','Food','Armor','Clothes','Gear','Mod','Perks','Leader','Power Armor','Upgrades','Wasteland Items','Advanced Items','High Tech Items','Usable Items','Robots Items','Automatron Items','Creature Items','Dog Items','Super Mutant Items','Standart Item','Faction Items']
+const TAG_LABELS = {
+  Melee:'Ближний бой',
+  Pistol:'Пистолет',
+  Rifle:'Винтовка',
+  'Heavy Weapon':'Тяжёлое оружие',
+  Grenade:'Граната',
+  Mines:'Мины',
+  Armor:'Броня',
+  'Power Armor':'Силовая броня',
+  Clothes:'Одежда',
+  Gear:'Снаряжение',
+  Chem:'Химия',
+  Alcohol:'Алкоголь',
+  Food:'Еда',
+  Perk:'Перк',
+  Leader:'Лидер',
+  Mod:'Мод',
+  Upgrades:'Улучшения',
+  'Wasteland Items':'Пустошь',
+  'Advanced Items':'Продв. предметы',
+  'High Tech Items':'Хайтек',
+  'Usable Items':'Расходники',
+  'Robots Items':'Для роботов',
+  'Automatron Items':'Автоматрон',
+  'Creature Items':'Для существ',
+  'Dog Items':'Для псов',
+  'Super Mutant Items':'Для супер мутантов',
+  'Standart Item':'Стандартные',
+  'Faction Items':'Фракционные'
+}
 
 const ITEM_GROUPS = [
   { key:'Weapons', label:'Оружие', weapons:WEAPON_KEYS },
@@ -472,12 +502,12 @@ function buildRosterUnit(unit){
   const nameEl=tpl.querySelector('.roster-unit__name')
   const costEl=tpl.querySelector('.roster-unit__cost')
   nameEl.textContent=unit.name
-  costEl.textContent=`${unit.cost} caps`
+  costEl.textContent=`${unit.cost} очков`
   if(unit.unique){
     const sep=document.createTextNode(' · ')
     const badge=document.createElement('span')
     badge.className='badge'
-    badge.textContent='UNIQUE'
+    badge.textContent='УНИКАЛЬНО'
     costEl.appendChild(sep)
     costEl.appendChild(badge)
   }
@@ -593,8 +623,8 @@ function createRosterUnitCard(unit){
   ensurePortraitImage(img, { preferPortrait:true })
   flagCardOrientation(img, card)
   title.textContent = unit.name
-  meta.textContent = `${unit.cost} caps`
-  if(unit.unique) badges.appendChild(createBadge('UNIQUE'))
+  meta.textContent = `${unit.cost} очков`
+  if(unit.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
   if(!actions.children.length) actions.remove()
   return card
 }
@@ -611,10 +641,10 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   flagCardOrientation(img, card)
   title.textContent = item.name
   meta.textContent = infoLine(item)
-  if(item.unique) badges.appendChild(createBadge('UNIQUE'))
+  if(item.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
   const duplicates = unit.cards.filter(c=>c.itemId===item.id).length
   if(duplicates>1) badges.appendChild(createBadge(`x${duplicates}`))
-  if(cardData.locked) badges.appendChild(createBadge('LOCKED'))
+  if(cardData.locked) badges.appendChild(createBadge('ЗАБЛОКИРОВАНО'))
   if(itemHasSpecialBars(item)) badges.appendChild(createBadge('S.P.E.C.I.A.L.'))
   if(canAddMod(unit, cardData, item)){
     const modBtn=document.createElement('button')
@@ -868,12 +898,12 @@ function renderUnitPicker(){
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
     const title=document.createElement('div'); title.className='title'; title.textContent=u.name
     const meta=document.createElement('div'); meta.className='meta'
-    meta.textContent = `${u.cost} caps`
+    meta.textContent = `${u.cost} очков`
     if(u.unique){
       const sep=document.createTextNode(' · ')
       const badge=document.createElement('span')
       badge.className='badge'
-      badge.textContent='UNIQUE'
+      badge.textContent='УНИКАЛЬНО'
       meta.appendChild(sep)
       meta.appendChild(badge)
     }
@@ -1197,23 +1227,29 @@ function removeMod(uid,index){
   renderRoster()
 }
 
+function tagLabel(key){
+  return TAG_LABELS[key] || key
+}
+
 function infoLine(x){
   const tags=[]
-  WEAPON_KEYS.forEach(k=>{ if(x.weapon[k]) tags.push(k) })
-  if(x.cats.Armor) tags.push('Armor')
-  if(x.cats['Power Armor']) tags.push('Power Armor')
-  if(x.cats.Clothes) tags.push('Clothes')
-  if(x.cats.Gear) tags.push('Gear')
-  if(x.cats.Chem) tags.push('Chem')
-  if(x.cats.Alcohol) tags.push('Alcohol')
-  if(x.cats.Food) tags.push('Food')
-  ACCESS_KEYS.forEach(k=>{ if(x.cats[k] && !tags.includes(k)) tags.push(k) })
-  if(x.cats.Perks && !tags.includes('Perk')) tags.push('Perk')
-  if(x.cats.Leader && !tags.includes('Leader')) tags.push('Leader')
-  if(x.is_mod) tags.push('Mod')
-  const uniq = x.unique ? '\u00a0·\u00a0UNIQUE' : ''
+  WEAPON_KEYS.forEach(k=>{ if(x.weapon[k]) tags.push(tagLabel(k)) })
+  if(x.cats.Armor) tags.push(tagLabel('Armor'))
+  if(x.cats['Power Armor']) tags.push(tagLabel('Power Armor'))
+  if(x.cats.Clothes) tags.push(tagLabel('Clothes'))
+  if(x.cats.Gear) tags.push(tagLabel('Gear'))
+  if(x.cats.Chem) tags.push(tagLabel('Chem'))
+  if(x.cats.Alcohol) tags.push(tagLabel('Alcohol'))
+  if(x.cats.Food) tags.push(tagLabel('Food'))
+  ACCESS_KEYS.forEach(k=>{ const label=tagLabel(k); if(x.cats[k] && !tags.includes(label)) tags.push(label) })
+  const perkLabel = tagLabel('Perk')
+  const leaderLabel = tagLabel('Leader')
+  if(x.cats.Perks && !tags.includes(perkLabel)) tags.push(perkLabel)
+  if(x.cats.Leader && !tags.includes(leaderLabel)) tags.push(leaderLabel)
+  if(x.is_mod) tags.push(tagLabel('Mod'))
+  const uniq = x.unique ? '\u00a0·\u00a0УНИКАЛЬНО' : ''
   const descriptor = tags.length ? tags.join(' / ') : '—'
-  return `${x.cost}\u00a0caps\u00a0\u2013\u00a0${descriptor}${uniq}`
+  return `${x.cost}\u00a0крышек\u00a0\u2013\u00a0${descriptor}${uniq}`
 }
 
 function duplicateUnit(uid){
