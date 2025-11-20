@@ -45,35 +45,51 @@
 .card {
   position: relative;
   width: 100%;
-  background: #101014;
-  border-radius: 12px;
+  background: #0f1116;
+  border-radius: 14px;
   border: 1px solid #2c2c33;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 8px;
+  gap: 10px;
+  padding: 10px;
   color: #dfe6f0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
-.card--portrait {
+.card__frame {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: radial-gradient(circle at 20% 20%, #1c2330, #0f121a 55%);
+  border: 1px solid #2f3745;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.card__frame--portrait {
   aspect-ratio: 63 / 88;
 }
 
-.card--landscape {
+.card__frame--landscape {
   aspect-ratio: 88 / 63;
 }
 
-.card--power-armor {
+.card--power-armor .card__frame {
   aspect-ratio: 63 / 88 !important;
 }
 
 .card__img {
   width: 100%;
   height: 100%;
-  border-radius: 8px;
-  object-fit: cover;
+  border-radius: 10px;
+  object-fit: contain;
   background: #0b0b0f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .card__title {
@@ -191,7 +207,7 @@
     color: #000;
   }
 
-  .card--power-armor {
+  .card--power-armor .card__frame {
     aspect-ratio: 63 / 88 !important;
   }
 }

@@ -12,7 +12,7 @@
     display: none !important;
   }
 
-  .card--power-armor {
+  .card--power-armor .card__frame {
     aspect-ratio: 63 / 88 !important;
   }
 
