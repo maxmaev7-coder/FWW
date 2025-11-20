@@ -88,13 +88,14 @@ a{ color:inherit; }
   align-items:flex-start;
 }
 .roster-unit__summary{ display:flex; gap:.85rem; align-items:center; }
+/* маленькая карта в шапке юнита */
 .roster-unit__image{
-  width:120px;
-  aspect-ratio:3/4;
-  object-fit:cover;
-  border-radius:1rem;
-  border:1px solid var(--border);
-  background:var(--panel);
+  width: 120px;
+  aspect-ratio: 63 / 88;   /* то же соотношение, что и у карт FWW */
+  object-fit: contain;      /* показываем целиком, без обрезки */
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--panel);
 }
 @media (max-width: 1100px){
   .roster-unit__image{ width:100px; }
@@ -845,10 +846,25 @@ overflow: hidden;
 
 /* показываем карту целиком, как на старом билдере */
 .card__img{
-width: 100%;
-height: 100%;
-display: block;
-object-fit: contain;   /* ← вместо cover */
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;   /* ← вместо cover */
+}
+
+/* === ЮНИТЫ В РОСТЕРЕ: карта должна подгонять размер рамки === */
+
+/* Рамка у юнитов подстраивается по содержимому (без лишней высоты) */
+.roster-card--unit .card__thumb{
+  aspect-ratio: auto;
+}
+
+/* А картинка внутри просто максимально широкая,
+   высота берётся автоматически из реального соотношения сторон карты */
+.roster-card--unit .card__img{
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* у предметов/модов горизонтальные карты, ближе к 3:2, а не 16:9 */
