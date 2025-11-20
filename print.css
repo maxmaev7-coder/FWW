@@ -31,6 +31,9 @@
     justify-items:stretch;
     align-items:start;
   }
+  .sheet--large .pdf-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
   .sheet--small .pdf-grid{ gap:var(--pdf-gap-small); }
 
   .pdf-card{
