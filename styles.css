@@ -397,114 +397,6 @@ a{ color:inherit; }
 }
 
 body.modal-open{ overflow:hidden; }
-/* === FFF overrides: компактнее и плотнее === */
-:root{
-  --thumb-h: 256px;       /* базовая высота миниатюр карт вещей/модов */
-  --unit-thumb-h: 172px;  /* юнит заметно компактнее (синий прямоугольник) */
-  --gap: 10px;
-}
-
-/* Базовая карточка в ростере: в ряд, с зазором */
-.roster-card{
-  display: flex;
-  align-items: center;
-  gap: var(--gap);
-  padding: 8px 10px;
-}
-
-/* Картинка карточки */
-.roster-card__image.thumb{
-  height: var(--thumb-h);
-  width: auto;
-  aspect-ratio: 63/88;     /* соотношение сторон карточки */
-  object-fit: contain;
-  border-radius: 6px;
-}
-
-/* Юнит (синий) — делаем поменьше */
-.roster-card--unit .roster-card__image.thumb{
-  height: var(--unit-thumb-h);
-  flex: 0 0 auto;
-}
-
-/* Текстовая часть карточки */
-.roster-card__body{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* Кнопки ближе к карточке и компактнее */
-.roster-card__actions{
-  display: flex;
-  gap: 6px;
-  margin-left: auto;
-  align-self: flex-start;
-}
-
-/* Вещи внутри юнита: картинка занимает БОЛЬШУЮ часть ширины */
-.roster-card--item .roster-card__image.thumb{
-  flex: 0 0 68%;
-  max-width: 68%;
-}
-.roster-card--item .roster-card__body{
-  flex: 1 1 32%;
-}
-
-/* Карточка мода внутри карты вещи — плотнее и с большей картой */
-.roster-card__mod-card{
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  column-gap: 8px;
-  align-items: center;
-}
-.roster-card__mod-image.thumb{
-  width: 92px;             /* увеличили саму карту мода */
-  height: auto;
-  aspect-ratio: 63/88;
-}
-.roster-card__mod-title{ font-weight: 600; margin: 0; }
-.roster-card__mod-meta{ opacity: .85; margin: 0; white-space:nowrap; }
-.roster-card__mod-card .mod-actions{ display: flex; gap: 6px; }
-
-/* Карточки в модальных пикерах (предметы/моды) — больше акцента на изображение */
-.card.card-item{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.card.card-item .thumb{
-  flex: 0 0 68%;
-  max-width: 68%;
-  height: var(--thumb-h);
-  width: auto;
-  aspect-ratio: 63/88;
-  object-fit: contain;
-}
-.card.card-item .card-body{ flex: 1 1 32%; }
-.card.card-item .actions{ display: flex; gap: 6px; align-self: center; }
-
-/* Фолбэк: если canvas-поворот заблокирован (CORS), крутим через CSS */
-
-/* Плитки предметов/модов в пикерах */
-.card.card-item.is-landscape-card{
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  gap: 10px;
-}
-.card.card-item.is-landscape-card .thumb{
-  width: 100%;
-  height: auto;
-  max-height: var(--thumb-h);
-}
-.card.card-item:not(.is-landscape-card) .thumb{
-  height: var(--thumb-h);
-  width: auto;
-}
-
-/* На всякий случай (для универсальности) */
-img.img--landscape{ height: auto; width: 100%; }
 /* === Fallout Builder: переработка UI карточек выбора и ростера === */
 
 /* Плавный ховер и лёгкий "подъём" для всех карточек */
@@ -696,7 +588,8 @@ img.img--landscape{ height: auto; width: 100%; }
 .roster-card__mod-image{
   width:100%;
   max-width:220px;
-  aspect-ratio:63/88;
+  height:auto;
+  aspect-ratio:auto;
   object-fit:contain;
   background:var(--panel);
   border:1px solid var(--border);
@@ -1081,4 +974,17 @@ button.preview,
 .btn.preview,
 .card .preview{
   display: none !important;
+}
+
+/* РОСТЕР: обёртка вокруг изображения — это grid-area:image */
+.roster-card--unit  .roster-card__image-thumb,
+.roster-card--item  .roster-card__image-thumb,
+.roster-card--power .roster-card__image-thumb{
+  grid-area: image;
+  align-self: start;
+}
+
+/* Для юнита убираем искусственный min-height, чтобы не было пустого прямоугольника под картой */
+.roster-card--unit .roster-card__image{
+  min-height: 0;
 }
