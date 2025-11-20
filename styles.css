@@ -167,13 +167,7 @@ a{ color:inherit; }
   align-items:flex-start;
   min-width:320px;
 }
-.roster-card--power{
-  grid-column:auto;
-  grid-template-areas:
-    "image body"
-    "image actions"
-    "mods mods";
-}
+.roster-card--power{ grid-column:auto; }
 .roster-card--drag{ box-shadow:0 0 0 2px #3a86ff55 inset; }
 .roster-card--drop{ box-shadow:0 0 0 2px #3a86ff99 inset; }
 .roster-card__drag-handle{
@@ -210,10 +204,10 @@ a{ color:inherit; }
   min-height: 0;
 }
 
-/* Силовая броня в ростере — по фактической горизонтальной карте */
+/* Силовая броня в ростере — портретная, как большая карта */
 .roster-card--power .roster-card__image{
   grid-area: image;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 63 / 88; /* можно 3 / 4, но 63/88 ближе к реальной карте FWW */
   object-fit: contain;
   align-self: start;
   min-height: 0;
@@ -269,7 +263,7 @@ a{ color:inherit; }
 .roster-card--unit .roster-card__body{ grid-area:body; align-self:flex-start; }
 .roster-card--unit .roster-card__actions{ grid-area:actions; justify-content:flex-start; }
 .roster-card--item .roster-card__mods,
-.roster-card--power .roster-card__mods{ grid-area:mods; grid-column:1 / -1; }
+.roster-card--power .roster-card__mods{ grid-area:mods; }
 
 @media (max-width: 720px){
   .roster-card--unit{
@@ -782,14 +776,16 @@ aspect-ratio: 3 / 2;
 
 /* Базовые пропорции по типам карт (fallback) */
 
-/* Юниты остаются вертикальными картами */
-.card--unit .card__thumb{ aspect-ratio: 63 / 88; }
+/* Юниты и силовая броня – вертикальные карты */
+.card--unit .card__thumb,
+.card--power .card__thumb{
+  aspect-ratio: 63 / 88;
+}
 
-/* Силовая броня хранится горизонтально, без поворотов */
-.card--power .card__thumb{ aspect-ratio: 3 / 2; }
 .card--power .card__img{
-  transform: none;
-  width: 100%;
+  transform: rotate(90deg);
+  transform-origin: center;
+  width: auto;
   height: auto;
   max-width: 100%;
   max-height: 100%;
