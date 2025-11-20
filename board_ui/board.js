@@ -51,6 +51,10 @@
       card.classList.add(isPortrait ? 'card--portrait' : 'card--landscape')
       if(meta.powerArmor) card.classList.add('card--power-armor')
 
+      const frame = document.createElement('div')
+      frame.className = 'card__frame'
+      frame.classList.add(isPortrait ? 'card__frame--portrait' : 'card__frame--landscape')
+
       const img = document.createElement('img')
       img.className = 'card__img'
       img.loading = 'lazy'
@@ -58,7 +62,9 @@
       img.alt = meta.title || meta.id || ''
       img.src = meta.img || this._fallbackImg(meta.kind)
       img.onerror = ()=>{ img.src = this._fallbackImg(meta.kind) }
-      card.appendChild(img)
+
+      frame.appendChild(img)
+      card.appendChild(frame)
 
       const title = document.createElement('h3')
       title.className = 'card__title'

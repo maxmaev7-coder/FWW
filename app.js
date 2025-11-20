@@ -730,12 +730,12 @@ function buildModCard(unit, cardIndex, modItem){
   actions.classList.add('card__actions')
   const change=document.createElement('button')
   change.className='btn'
-  change.textContent='Change mod'
+  change.textContent='Сменить мод'
   change.addEventListener('click', e=>{ e.stopPropagation(); openModPicker(unit.uid, cardIndex) })
   actions.appendChild(change)
   const remove=document.createElement('button')
   remove.className='btn danger'
-  remove.textContent='Remove'
+  remove.textContent='Удалить'
   remove.addEventListener('click', e=>{ e.stopPropagation(); removeMod(unit.uid, cardIndex) })
   actions.appendChild(remove)
   wrap.appendChild(actions)
