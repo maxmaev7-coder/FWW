@@ -195,14 +195,22 @@ a{ color:inherit; }
   object-fit:contain;
 }
 
-/* Фолбэк-класс: поворот на 90° */
-.roster-card--item .roster-card__image,
+/* Предметы в ростере — в основном горизонтальные */
+.roster-card--item .roster-card__image{
+  grid-area: image;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  align-self: start;
+  min-height: 0;
+}
+
+/* Силовая броня в ростере — портретная, как большая карта */
 .roster-card--power .roster-card__image{
-  grid-area:image;
-  aspect-ratio:4/3;
-  object-fit:contain;
-  align-self:start;
-  min-height:0;
+  grid-area: image;
+  aspect-ratio: 63 / 88; /* можно 3 / 4, но 63/88 ближе к реальной карте FWW */
+  object-fit: contain;
+  align-self: start;
+  min-height: 0;
 }
 .roster-card__body{ display:flex; flex-direction:column; gap:.3rem; line-height:1.5; }
 .roster-card--item .roster-card__body,
