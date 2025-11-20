@@ -775,21 +775,21 @@ aspect-ratio: 3 / 2;
 }
 
 /* Базовые пропорции по типам карт (fallback) */
-.card--unit   .card__thumb,
-.card--power  .card__thumb{
-aspect-ratio: 63 / 88; /* близко к формату миниатюрной карты */
+
+/* Юниты и прочие вертикальные карты */
+.card--unit .card__thumb{
+  aspect-ratio: 63 / 88;
 }
 
-.card--item   .card__thumb,
-.card--mod    .card__thumb{
-aspect-ratio: 3 / 2;  /* предметы/моды чаще ландшафтные */
+/* Силовая броня и предметы – горизонтальные карты */
+.card--power .card__thumb,
+.card--item  .card__thumb,
+.card--mod   .card__thumb,
+.card--perk  .card__thumb{
+  aspect-ratio: 3 / 2;  /* ближе к реальному формату предметов/силовой брони */
 }
 
-.card--perk   .card__thumb{
-aspect-ratio: 3 / 2;
-}
-
-/* Если JS определил ориентацию, она имеет приоритет */
+/* Если JS определил ориентацию, она имеет приоритет (для пикеров) */
 .card.is-landscape .card__thumb{ aspect-ratio: 16 / 9; }
 .card.is-portrait  .card__thumb{ aspect-ratio: 63 / 88; }
 
