@@ -843,11 +843,18 @@ background: #0d131a;
 overflow: hidden;
 }
 
+/* показываем карту целиком, как на старом билдере */
 .card__img{
 width: 100%;
 height: 100%;
 display: block;
-object-fit: cover;
+object-fit: contain;   /* ← вместо cover */
+}
+
+/* у предметов/модов горизонтальные карты, ближе к 3:2, а не 16:9 */
+.card--item .card__thumb,
+.card--mod  .card__thumb{
+aspect-ratio: 3 / 2;
 }
 
 /* Базовые пропорции по типам карт (fallback) */
@@ -858,7 +865,7 @@ aspect-ratio: 63 / 88; /* близко к формату миниатюрной 
 
 .card--item   .card__thumb,
 .card--mod    .card__thumb{
-aspect-ratio: 16 / 9;  /* предметы/моды чаще ландшафтные */
+aspect-ratio: 3 / 2;  /* предметы/моды чаще ландшафтные */
 }
 
 .card--perk   .card__thumb{
