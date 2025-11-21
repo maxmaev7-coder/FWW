@@ -70,9 +70,6 @@
     flex-wrap:wrap;
     justify-content:center;
   }
-  .pdf-card--power-armor .pdf-card__image{
-    aspect-ratio: 63 / 88;
-  }
   .pdf-card__mod img{ width:100%; }
 
   .sheet--small .pdf-card__mod{ gap:3mm; }

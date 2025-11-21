@@ -71,20 +71,16 @@ function ensurePortraitImage(img, opts = {}) {
   if (img.complete) apply();
 }
 
-function flagCardOrientation(img, cardEl, opts = {}) {
+function flagCardOrientation(img, cardEl) {
   if (!img || !cardEl) return;
-
-  const forcePortrait = !!opts.forcePortrait;
-  const forceLandscape = !!opts.forceLandscape;
 
   const apply = () => {
     const w = img.naturalWidth;
     const h = img.naturalHeight;
     if (!w || !h) return;
 
-    let isLandscape = w >= h;
-    if (forcePortrait) isLandscape = false;
-    if (forceLandscape) isLandscape = true;
+    // Больше не форсируем силовую броню в портрет.
+    const isLandscape = w >= h;
 
     cardEl.classList.toggle('is-landscape', isLandscape);
     cardEl.classList.toggle('is-portrait', !isLandscape);
@@ -643,7 +639,7 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.dataset.cardIndex = String(index)
   safeImg(img, item.img, 'images/missing-item.png')
   ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
-  flagCardOrientation(img, card, { forcePortrait: isPower })
+  flagCardOrientation(img, card)
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
@@ -1110,7 +1106,7 @@ function renderItemPicker(unit){
     if(item.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, item.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); flagCardOrientation(img, card, { forcePortrait: type==='power' })
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, item.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); flagCardOrientation(img, card)
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1401,14 +1397,13 @@ async function buildPrintSheet(){
       }
       const cell=document.createElement('article')
       cell.className='pdf-card'
-      if(entry.isPower) cell.classList.add('pdf-card--power-armor')
       const img=new Image()
       img.className='pdf-card__image'
       const imgLoaded=waitForImageLoad(img)
       loadPromises.push(imgLoaded)
       safeImg(img, entry.img, entry.fallback)
       ensurePortraitImage(img, { preferPortrait:true })
-      flagCardOrientation(img, cell, { forcePortrait: !!entry.isPower })
+      flagCardOrientation(img, cell)
       img.decoding='sync'
       img.loading='eager'
       cell.appendChild(img)
@@ -1473,8 +1468,7 @@ function createPrintEntryFromCard(entry){
       mods.push({ img:modItem.img, fallback:'images/missing-item.png' })
     }
   }
-  const isPower = !!(entry.item.cats && entry.item.cats['Power Armor'])
-  return { img:entry.item.img, fallback:'images/missing-item.png', mods, isPower }
+  return { img:entry.item.img, fallback:'images/missing-item.png', mods }
 }
 
 
