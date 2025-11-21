@@ -212,10 +212,10 @@ a{ color:inherit; }
   min-height: 0;
 }
 
-/* Силовая броня в ростере — отображается как обычный предмет (горизонтально) */
+/* Силовая броня в ростере — вертикальная как юнитные карты */
 .roster-card--power .roster-card__image{
   grid-area: image;
-  aspect-ratio: 4 / 3; /* чтобы было как у 12.7MM Pistol */
+  aspect-ratio: 63 / 88;
   object-fit: contain;
   align-self: start;
   min-height: 0;
@@ -789,12 +789,16 @@ aspect-ratio: 3 / 2;
   aspect-ratio: 63 / 88;
 }
 
-/* Предметы / моды / перки / силовая броня – горизонтальные */
+/* Предметы / моды / перки – горизонтальные */
 .card--item  .card__thumb,
 .card--mod   .card__thumb,
-.card--perk  .card__thumb,
-.card--power .card__thumb {
+.card--perk  .card__thumb {
   aspect-ratio: 3 / 2;
+}
+
+/* Силовая броня – вертикальная, как стандартная карта */
+.card--power .card__thumb {
+  aspect-ratio: 63 / 88;
 }
 
 /* Если JS определил ориентацию, она имеет приоритет (для пикеров) */
