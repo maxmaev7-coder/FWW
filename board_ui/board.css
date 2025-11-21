@@ -79,13 +79,7 @@
 }
 
 .card--power-armor .card__frame {
-  aspect-ratio: 88 / 63 !important; /* горизонтальная карта */
-}
-
-.card--power-armor .card__img {
-  transform: none;
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 63 / 88 !important; /* вертикальная карта */
 }
 
 .card__img {
@@ -214,6 +208,6 @@
   }
 
   .card--power-armor .card__frame {
-    aspect-ratio: 88 / 63 !important;
+    aspect-ratio: 63 / 88 !important;
   }
 }
