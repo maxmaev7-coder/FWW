@@ -581,9 +581,12 @@ function createRosterCardShell(type,{ includeMods=false }={}){
   }
   const thumb=document.createElement('div')
   thumb.classList.add('roster-card__image-thumb','card__thumb')
+  const thumbInner=document.createElement('div')
+  thumbInner.classList.add('card__thumb-inner')
+  thumb.appendChild(thumbInner)
   const img=document.createElement('img')
   img.className='roster-card__image thumb card__img'
-  thumb.appendChild(img)
+  thumbInner.appendChild(img)
   card.appendChild(thumb)
   const body=document.createElement('div')
   body.className='roster-card__body'
@@ -608,7 +611,7 @@ function createRosterCardShell(type,{ includeMods=false }={}){
     mods.className='roster-card__mods'
     card.appendChild(mods)
   }
-  return { card,img,title,meta,badges,actions,mods,thumb }
+  return { card,img,title,meta,badges,actions,mods,thumb,thumbInner }
 }
 
 function createBadge(text){
@@ -633,15 +636,18 @@ function createRosterUnitCard(unit){
 function createRosterItemCard(unit, cardData, index, item, isPower){
   if(!item) return null
   const cardType=isPower?'power':(item.cats?.Perks ? 'perk' : 'item')
-  const { card,img,title,meta,badges,actions,mods,thumb } = createRosterCardShell(cardType,{ includeMods:true })
+  const { card,img,title,meta,badges,actions,mods,thumb,thumbInner } = createRosterCardShell(cardType,{ includeMods:true })
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
   img.alt=item.name||''
   safeImg(img, item.img, 'images/missing-item.png')
   if(isPower){
-    thumb.classList.add('card__thumb--portrait')
-    img.classList.add('card__img--portrait')
+    card.classList.add('roster-card--power-vertical')
+    thumb.classList.add('card__thumb--power-vertical')
+    thumbInner.classList.add('card__thumb-inner--rotated')
+    img.classList.add('card__img--power-rotated')
+    body.classList.add('card__body--power-under-image')
   }else{
     ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
     flagCardOrientation(img, card)
@@ -685,7 +691,11 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   if(mods && !mods.children.length){
     mods.remove()
   }
-  if(!isPower){
+  if(isPower){
+    actions.classList.add('card__actions--power-under-image')
+    body.appendChild(actions)
+    if(mods) body.appendChild(mods)
+  }else{
     card.draggable=true
     card.addEventListener('dragstart', handleCardDragStart)
     card.addEventListener('dragenter', handleCardDragEnter)
