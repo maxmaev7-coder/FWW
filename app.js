@@ -54,13 +54,14 @@ async function waitForImages(selector = '.card__img', timeout = 15000) {
 
 function ensurePortraitImage(img, opts = {}) {
   if (!img) return;
+  const { preferPortrait = false } = opts;
 
   const apply = () => {
     const w = img.naturalWidth;
     const h = img.naturalHeight;
     if (!w || !h) return;
 
-    const isLandscape = w >= h;
+    const isLandscape = preferPortrait ? false : w >= h;
     img.classList.toggle('img--landscape', isLandscape);
     img.classList.toggle('img--portrait', !isLandscape);
 
@@ -71,15 +72,16 @@ function ensurePortraitImage(img, opts = {}) {
   if (img.complete) apply();
 }
 
-function flagCardOrientation(img, cardEl) {
+function flagCardOrientation(img, cardEl, opts = {}) {
   if (!img || !cardEl) return;
+  const { preferPortrait = false } = opts;
 
   const apply = () => {
     const w = img.naturalWidth;
     const h = img.naturalHeight;
     if (!w || !h) return;
 
-    const isLandscape = w >= h;
+    const isLandscape = preferPortrait ? false : w >= h;
 
     cardEl.classList.toggle('is-landscape', isLandscape);
     cardEl.classList.toggle('is-portrait', !isLandscape);
@@ -621,7 +623,7 @@ function createRosterUnitCard(unit){
   const { card,img,title,meta,badges,actions } = createRosterCardShell('unit')
   safeImg(img, unit.img, 'images/missing-unit.png')
   ensurePortraitImage(img, { preferPortrait:true })
-  flagCardOrientation(img, card)
+  flagCardOrientation(img, card, { preferPortrait:true })
   title.textContent = unit.name
   meta.textContent = `${unit.cost} очков`
   if(unit.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
@@ -637,8 +639,9 @@ function createRosterItemCard(unit, cardData, index, item, isPower){
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
   safeImg(img, item.img, 'images/missing-item.png')
-  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
-  flagCardOrientation(img, card)
+  const preferPortrait = itemHasSpecialBars(item)
+  ensurePortraitImage(img, { preferPortrait })
+  flagCardOrientation(img, card, { preferPortrait })
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
@@ -707,8 +710,9 @@ function buildModCard(unit, cardIndex, modItem){
   const img=document.createElement('img')
   img.className='roster-card__mod-image card__img'
   safeImg(img, modItem.img, 'images/missing-item.png')
-  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(modItem) })
-  flagCardOrientation(img, wrap)
+  const preferPortrait = itemHasSpecialBars(modItem)
+  ensurePortraitImage(img, { preferPortrait })
+  flagCardOrientation(img, wrap, { preferPortrait })
   media.appendChild(img)
   content.appendChild(media)
 
@@ -892,7 +896,7 @@ function renderUnitPicker(){
     if(u.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-large card__img'; safeImg(img, u.img, 'images/missing-unit.png'); ensurePortraitImage(img, { preferPortrait:true }); flagCardOrientation(img, card)
+    const img=document.createElement('img'); img.className='thumb thumb-large card__img'; safeImg(img, u.img, 'images/missing-unit.png'); ensurePortraitImage(img, { preferPortrait:true }); flagCardOrientation(img, card, { preferPortrait:true })
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1105,7 +1109,7 @@ function renderItemPicker(unit){
     if(item.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, item.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); flagCardOrientation(img, card)
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, item.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) }); flagCardOrientation(img, card, { preferPortrait: itemHasSpecialBars(item) })
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1187,7 +1191,7 @@ function renderModPicker(mods){
     if(mod.unique) card.dataset.tag='unique'
     const thumb=document.createElement('div')
     thumb.classList.add('card__thumb')
-    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, mod.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); flagCardOrientation(img, card)
+    const img=document.createElement('img'); img.className='thumb thumb-item card__img'; safeImg(img, mod.img, 'images/missing-item.png'); ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(mod) }); flagCardOrientation(img, card, { preferPortrait: itemHasSpecialBars(mod) })
     thumb.appendChild(img)
     card.appendChild(thumb)
     const body=document.createElement('div'); body.className='card-body'; body.classList.add('card__body')
@@ -1402,7 +1406,7 @@ async function buildPrintSheet(){
       loadPromises.push(imgLoaded)
       safeImg(img, entry.img, entry.fallback)
       ensurePortraitImage(img, { preferPortrait:true })
-      flagCardOrientation(img, cell)
+      flagCardOrientation(img, cell, { preferPortrait:true })
       img.decoding='sync'
       img.loading='eager'
       cell.appendChild(img)
