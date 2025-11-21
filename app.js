@@ -608,7 +608,7 @@ function createRosterCardShell(type,{ includeMods=false }={}){
     mods.className='roster-card__mods'
     card.appendChild(mods)
   }
-  return { card,img,title,meta,badges,actions,mods }
+  return { card,img,title,meta,badges,actions,mods,thumb }
 }
 
 function createBadge(text){
@@ -633,13 +633,19 @@ function createRosterUnitCard(unit){
 function createRosterItemCard(unit, cardData, index, item, isPower){
   if(!item) return null
   const cardType=isPower?'power':(item.cats?.Perks ? 'perk' : 'item')
-  const { card,img,title,meta,badges,actions,mods } = createRosterCardShell(cardType,{ includeMods:true })
+  const { card,img,title,meta,badges,actions,mods,thumb } = createRosterCardShell(cardType,{ includeMods:true })
   card.classList.add('roster-card--item')
   card.dataset.unitUid = unit.uid
   card.dataset.cardIndex = String(index)
+  img.alt=item.name||''
   safeImg(img, item.img, 'images/missing-item.png')
-  ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
-  flagCardOrientation(img, card)
+  if(isPower){
+    thumb.classList.add('card__thumb--portrait')
+    img.classList.add('card__img--portrait')
+  }else{
+    ensurePortraitImage(img, { preferPortrait: itemHasSpecialBars(item) })
+    flagCardOrientation(img, card)
+  }
   title.textContent = item.name
   meta.textContent = infoLine(item)
   if(item.unique) badges.appendChild(createBadge('УНИКАЛЬНО'))
