@@ -79,8 +79,8 @@ function flagCardOrientation(img, cardEl) {
     const h = img.naturalHeight;
     if (!w || !h) return;
 
-    const forcePortrait = cardEl.classList.contains('card--power') || cardEl.dataset.cardType === 'power';
-    const isLandscape = forcePortrait ? false : w >= h;
+    // Больше не форсируем силовую броню в портрет.
+    const isLandscape = w >= h;
 
     cardEl.classList.toggle('is-landscape', isLandscape);
     cardEl.classList.toggle('is-portrait', !isLandscape);
