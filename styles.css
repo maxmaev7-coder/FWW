@@ -996,3 +996,27 @@ button.preview,
 .roster-card--unit .roster-card__image{
   min-height: 0;
 }
+
+/* Вертикальное место под картинку силовой брони в списке */
+.roster-card--power .card__thumb--portrait {
+  flex: 0 0 220px;
+  max-width: 220px;
+  aspect-ratio: 63 / 88;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+/* Картинка полностью заполняет этот прямоугольник */
+.roster-card--power .card__img--portrait {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Контейнер всей карточки выравниваем как и раньше */
+.roster-card.roster-card--power.card--power.roster-card--item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
