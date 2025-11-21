@@ -745,12 +745,6 @@ background: #0d131a;
 overflow: hidden;
 }
 
-.card__thumb-inner{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
 /* показываем карту целиком, как на старом билдере */
 .card__img{
   width: 100%;
@@ -1025,55 +1019,4 @@ button.preview,
   display: flex;
   align-items: flex-start;
   gap: 16px;
-}
-
-/* Силовая броня: вертикальная рамка и перевёрнутая картинка */
-.roster-card--power-vertical{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: calc(var(--power-vertical-thumb-width, 260px) + 32px);
-  gap: .25rem;
-}
-
-.roster-card--power-vertical .card__thumb--power-vertical{
-  position: relative;
-  width: var(--power-vertical-thumb-width, 260px);
-  max-width: 100%;
-  aspect-ratio: 63 / 88;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: #0d131a;
-  box-shadow: 0 10px 24px rgba(0,0,0,.35);
-}
-
-.roster-card--power-vertical .card__thumb-inner--rotated{
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.roster-card--power-vertical .card__img--power-rotated{
-  width: auto;
-  height: 140%;
-  display: block;
-  object-fit: cover;
-  transform: rotate(90deg);
-  transform-origin: center center;
-}
-
-.roster-card--power-vertical .card__body--power-under-image{
-  margin-top: 12px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: .35rem;
-}
-
-.roster-card--power-vertical .card__actions--power-under-image{
-  margin-top: .2rem;
-  width: 100%;
 }
