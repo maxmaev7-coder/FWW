@@ -52,8 +52,10 @@
       if(meta.powerArmor) card.classList.add('card--power-armor')
 
       const frame = document.createElement('div')
-      frame.className = 'card__frame'
-      frame.classList.add(isPortrait ? 'card__frame--portrait' : 'card__frame--landscape')
+      frame.className = 'card__frame card-preview'
+      const isLandscapeByType = ['weapon','armor','chem','alcohol','mod'].includes((meta.type || '').toLowerCase())
+      const isLandscape = meta.powerArmor || isLandscapeByType || !isPortrait
+      frame.classList.add(isLandscape ? 'card-preview--landscape' : 'card-preview--portrait')
 
       const img = document.createElement('img')
       img.className = 'card__img'
