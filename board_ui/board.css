@@ -83,15 +83,6 @@
   aspect-ratio: 88 / 63;
 }
 
-.card--power-armor .card__frame {
-  aspect-ratio: 88 / 63 !important; /* горизонтальная карта */
-}
-
-.card--power-armor .card__img {
-  transform: none;
-  width: 100%;
-  height: 100%;
-}
 
 .card-preview img {
   position: absolute;
@@ -195,6 +186,26 @@
   background: #4b5a70;
 }
 
+/* Исправление для силовой брони: делаем её вертикальной */
+.card--power-armor .card__frame {
+  aspect-ratio: 63 / 88 !important; /* Стандартная вертикальная пропорция */
+}
+
+/* Гарантируем, что картинка внутри будет видна полностью */
+.card--power-armor .card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Вписать картинку целиком */
+  transform: none !important;
+}
+
+/* Исправление для Химии, Алкоголя и Модификаций, если JS не сработает сразу */
+.card[data-type="chem"] .card__frame,
+.card[data-type="alcohol"] .card__frame,
+.card[data-type="mod"] .card__frame {
+    aspect-ratio: 63 / 88 !important;
+}
+
 @media print {
   @page {
     size: A4;
@@ -221,7 +232,4 @@
     color: #000;
   }
 
-  .card--power-armor .card__frame {
-    aspect-ratio: 88 / 63 !important;
-  }
 }
