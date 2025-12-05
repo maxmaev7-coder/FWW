@@ -53,8 +53,12 @@
 
       const frame = document.createElement('div')
       frame.className = 'card__frame card-preview'
-      const isLandscapeByType = ['weapon','armor'].includes((meta.type || '').toLowerCase())
-      const isLandscape = meta.powerArmor || isLandscapeByType || !isPortrait
+      // Оставляем только оружие (weapon) горизонтальным.
+      // Броню (armor), химию (chem), алкоголь (alcohol) и моды (mod) убираем из списка, чтобы они были вертикальными.
+      const isLandscapeByType = ['weapon'].includes((meta.type || '').toLowerCase())
+
+      // Убираем meta.powerArmor из условия isLandscape, чтобы силовая броня тоже могла быть вертикальной
+      const isLandscape = isLandscapeByType || (meta.portrait === false)
       frame.classList.add(isLandscape ? 'card-preview--landscape' : 'card-preview--portrait')
 
       const img = document.createElement('img')
