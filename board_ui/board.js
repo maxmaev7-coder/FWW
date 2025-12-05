@@ -53,7 +53,7 @@
 
       const frame = document.createElement('div')
       frame.className = 'card__frame card-preview'
-      const isLandscapeByType = ['weapon','armor','chem','alcohol','mod'].includes((meta.type || '').toLowerCase())
+      const isLandscapeByType = ['weapon','armor'].includes((meta.type || '').toLowerCase())
       const isLandscape = meta.powerArmor || isLandscapeByType || !isPortrait
       frame.classList.add(isLandscape ? 'card-preview--landscape' : 'card-preview--portrait')
 
