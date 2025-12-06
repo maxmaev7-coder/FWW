@@ -1403,34 +1403,15 @@ async function buildPrintSheet() {
   const units = state.roster?.units || []
 
   // 1. Flatten all cards and separate
-  const unitCards = []
-  const itemCards = []
+  let allEntries = []
 
   units.forEach(unit => {
     const entries = buildPrintCardsForUnit(unit)
-    entries.forEach((entry, idx) => {
-      if (!entry) return
-
-      // Heuristic to detect Unit vs Item
-      // The first entry in buildPrintCardsForUnit is always the Unit itself.
-      // But purely by properties: Units have 'modelCount', 'ai', etc. Items don't.
-      // Also, we passed 'item' ref in createPrintEntryFromCard.
-      // For the MAIN unit card (idx 0), buildPrintCardsForUnit constructs it manually.
-      // We need to ensure that manual construction also has 'isUnit' or we detect it.
-
-      // Use explicit flag or safe check
-      const isUnit = entry.isUnit || (entry.item && (entry.item.health || entry.item.modelCount));
-
-      if (isUnit) {
-        unitCards.push(entry)
-      } else {
-        itemCards.push(entry)
-      }
-    })
+    allEntries = allEntries.concat(entries)
   })
 
-  // Concatenate without separator (User requested removal)
-  let allEntries = [...unitCards, ...itemCards]
+  // Filter out nulls
+  allEntries = allEntries.filter(Boolean)
 
 
   if (!allEntries.length) return
@@ -1439,6 +1420,17 @@ async function buildPrintSheet() {
   sheet.className = `sheet sheet--${variant}`
   let grid = document.createElement('div')
   grid.className = 'pdf-grid'
+
+  // Explicitly set columns to ensure layout works regardless of CSS caching
+  if (variant === 'small') {
+    grid.style.gridTemplateColumns = 'repeat(5, 1fr)'
+    grid.style.gap = '2mm'
+  } else {
+    // Large defaults to 3 columns
+    grid.style.gridTemplateColumns = 'repeat(3, 1fr)'
+    grid.style.gap = '4mm'
+  }
+
   sheet.appendChild(grid)
   host.appendChild(sheet)
 

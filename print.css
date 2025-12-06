@@ -1,79 +1,112 @@
-:root{
-  --pdf-gap:12mm;
-  --pdf-gap-small:8mm;
+:root {
+  --pdf-gap: 4mm;
+  --pdf-gap-small: 2mm;
 }
 
-@page{ size:A4 landscape; margin:10mm; }
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
 
-@media print{
-  html,body{ background:#fff; color:#000; }
-  body *{ visibility:hidden !important; }
-  .print-sheet, .print-sheet *{ visibility:visible !important; }
-  .print-sheet{
-    display:block !important;
-    position:relative;
-    width:100%;
-  }
+@media print {
 
-  .sheet{
-    break-inside:avoid;
-    page-break-inside:avoid;
-    margin:0 0 10mm 0;
+  html,
+  body {
+    background: #fff;
+    color: #000;
   }
 
-  .sheet:last-child{ margin-bottom:0; }
+  body * {
+    visibility: hidden !important;
+  }
 
-  .pdf-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    grid-auto-rows:auto;
-    gap:var(--pdf-gap);
-    justify-items:stretch;
-    align-items:start;
+  .print-sheet,
+  .print-sheet * {
+    visibility: visible !important;
   }
-  .sheet--large .pdf-grid{
-    grid-template-columns:repeat(4,1fr);
-  }
-  .sheet--small .pdf-grid{ gap:var(--pdf-gap-small); }
 
-  .pdf-card{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    break-inside:avoid;
-    page-break-inside:avoid;
-    padding:2mm;
+  .print-sheet {
+    display: block !important;
+    position: relative;
+    width: 100%;
   }
-  .pdf-card.is-landscape-card{
-    align-items:stretch;
-  }
-  .pdf-card img{
-    width:100%;
-    height:auto;
-    object-fit:contain;
-  }
-  .pdf-card.is-landscape-card .pdf-card__image{
-    width:100%;
-    height:auto;
-  }
-  .pdf-card__mod{
-    margin-top:4mm;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:4mm;
-  }
-  .pdf-card.is-landscape-card .pdf-card__mod{
-    flex-direction:row;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-  .pdf-card__mod img{ width:100%; }
 
-  .sheet--small .pdf-card__mod{ gap:3mm; }
+  .sheet {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 0 0 10mm 0;
+  }
 
-  *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sheet:last-child {
+    margin-bottom: 0;
+  }
+
+  .pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    gap: var(--pdf-gap);
+    justify-items: stretch;
+    align-items: start;
+  }
+
+  .sheet--large .pdf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sheet--small .pdf-grid {
+    gap: var(--pdf-gap-small);
+  }
+
+  .pdf-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    padding: 2mm;
+  }
+
+  .pdf-card.is-landscape-card {
+    align-items: stretch;
+  }
+
+  .pdf-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .pdf-card.is-landscape-card .pdf-card__image {
+    width: 100%;
+    height: auto;
+  }
+
+  .pdf-card__mod {
+    margin-top: .5mm;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5mm;
+  }
+
+  /* flex-direction row removed */
+
+  .pdf-card__mod img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .sheet--small .pdf-card__mod {
+    gap: 0.5mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
 }
